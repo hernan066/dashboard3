@@ -1,51 +1,46 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState } from "react";
-
-// react-router-dom components
-import { Link } from "react-router-dom";
-
-// @mui material components
+/* eslint-disable no-unused-expressions */
 import Card from "@mui/material/Card";
-import Switch from "@mui/material/Switch";
 import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
 
-// @mui icons
+import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import GoogleIcon from "@mui/icons-material/Google";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-import MDInput from "components/MDInput";
-import MDButton from "components/MDButton";
-
-// Authentication layout components
 import BasicLayout from "layouts/authentication/components/BasicLayout";
-
-// Images
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
+import { Box, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
+import useAuthStore from "hooks/useAuthStore";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import LoadingButton from "@mui/lab/LoadingButton";
+
+const schema = yup.object().shape({
+  email: yup.string().email("Formato incorrecto").required("Requerido"),
+  password: yup.string().min(6, "6 caracteres mínimo").required("Requerido"),
+});
 
 function Basic() {
-  const [rememberMe, setRememberMe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const { startLogin, errorMessage, status } = useAuthStore();
 
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (values) => {
+      startLogin({ email: values.email, password: values.password });
+    },
+    validationSchema: schema,
+  });
+
+  useEffect(() => {
+    status === "checking" ? setIsLoading(true) : setIsLoading(false);
+  }, [status]);
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -82,14 +77,60 @@ function Basic() {
           </Grid>
         </MDBox>
         <MDBox pt={4} pb={3} px={3}>
-          <MDBox component="form" role="form">
-            <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
-            </MDBox>
-            <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
-            </MDBox>
-            <MDBox display="flex" alignItems="center" ml={-1}>
+          {/* form */}
+          <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              error={!!formik.errors.email}
+              helperText={formik.errors.email}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              error={!!formik.errors.password}
+              helperText={formik.errors.password}
+              onChange={formik.handleChange}
+            />
+
+            <LoadingButton
+              type="submit"
+              fullWidth
+              variant="contained"
+              loading={isLoading}
+              sx={{
+                mt: 3,
+                mb: 2,
+                color: "#fff",
+              }}
+            >
+              Ingresar
+            </LoadingButton>
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          </Box>
+          {/* form */}
+        </MDBox>
+      </Card>
+    </BasicLayout>
+  );
+}
+
+export default Basic;
+
+/*  <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
               <MDTypography
                 variant="button"
@@ -98,34 +139,11 @@ function Basic() {
                 onClick={handleSetRememberMe}
                 sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
               >
-                &nbsp;&nbsp;Remember me
+                &nbsp;&nbsp;Recuerdame
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
               <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+                Ingresar
               </MDButton>
-            </MDBox>
-            <MDBox mt={3} mb={1} textAlign="center">
-              <MDTypography variant="button" color="text">
-                Don&apos;t have an account?{" "}
-                <MDTypography
-                  component={Link}
-                  to="/authentication/sign-up"
-                  variant="button"
-                  color="info"
-                  fontWeight="medium"
-                  textGradient
-                >
-                  Sign up
-                </MDTypography>
-              </MDTypography>
-            </MDBox>
-          </MDBox>
-        </MDBox>
-      </Card>
-    </BasicLayout>
-  );
-}
-
-export default Basic;
+            </MDBox> */

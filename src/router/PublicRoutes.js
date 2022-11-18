@@ -5,7 +5,7 @@ import { Navigate } from "react-router-dom";
 function PublicRoute({ children }) {
   const { status } = useSelector((state) => state.auth);
 
-  return status === "authenticated" ? <Navigate to="/" /> : children;
+  return status === "authenticated" ? <Navigate to="/dashboard" /> : children;
 }
 
 export default PublicRoute;

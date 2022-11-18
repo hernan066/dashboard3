@@ -37,6 +37,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
+import useAuthStore from "hooks/useAuthStore";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -53,6 +54,14 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+
+  // check token
+  const { checkAuthToken } = useAuthStore();
+  // const authStatus = 'not-authenticated'; // 'authenticated'; // 'not-authenticated';
+
+  useEffect(() => {
+    checkAuthToken();
+  }, []);
 
   // Cache for the rtl
   useMemo(() => {
@@ -140,7 +149,7 @@ export default function App() {
             <Sidenav
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
-              brandName="Material Dashboard 2"
+              brandName="DR"
               routes={routes}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
