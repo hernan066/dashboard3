@@ -24,6 +24,7 @@ import PublicRoute from "router/PublicRoutes";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
+import CreateNewUser from "pages/users/new-user";
 
 const routes = [
   {
@@ -41,9 +42,9 @@ const routes = [
   {
     type: "collapse",
     name: "Usuarios",
-    key: "usuarios",
+    key: "users",
     icon: <Icon fontSize="small">group</Icon>,
-    route: "/usuarios",
+    route: "/users",
     component: (
       <PrivateRoute>
         <Tables />
@@ -86,11 +87,23 @@ const routes = [
         <Profile />
       </PrivateRoute>
     ),
-    private: true,
   },
 
   {
     type: "collapse",
+    name: "Crear usuario",
+    key: "new",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/users/new",
+    component: (
+      <PrivateRoute>
+        <CreateNewUser />
+      </PrivateRoute>
+    ),
+  },
+
+  {
+    type: "none",
     name: "Sign In",
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
@@ -100,7 +113,6 @@ const routes = [
         <SignIn />
       </PublicRoute>
     ),
-    private: false,
   },
 ];
 

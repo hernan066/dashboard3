@@ -1,11 +1,12 @@
 /* eslint-disable no-underscore-dangle */
-import { Avatar, Box, Button, CircularProgress, IconButton, Stack } from "@mui/material";
+import { Avatar, Box, CircularProgress, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import apiRequest from "api/apiRequest";
+import MDButton from "components/MDButton";
 import PopoverMenu from "./PopoverMenu";
 
 function UserList() {
@@ -87,9 +88,9 @@ function UserList() {
       ) : (
         <Box m="20px">
           <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-            <Button variant="contained" onClick={() => navigate("/users/new")}>
+            <MDButton color="dark" variant="gradient" onClick={() => navigate("/users/new")}>
               Crear
-            </Button>
+            </MDButton>
           </Stack>
           <Box
             m="40px 0 0 0"
