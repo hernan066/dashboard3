@@ -9,7 +9,8 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import UserList from "components/DRUsers";
+// import UserList from "components/DRUsers";
+import AntDesignGrid from "./example";
 
 function Tables() {
   return (
@@ -34,7 +35,8 @@ function Tables() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                <UserList />
+                {/*  <UserList /> */}
+                <AntDesignGrid />
               </MDBox>
             </Card>
           </Grid>

@@ -17,7 +17,7 @@ Coded by www.creative-tim.com
 import colors from "assets/theme-dark/base/colors";
 
 // Material Dashboard 2 React helper functions
-import pxToRem from "assets/theme-dark/functions/pxToRem";
+// import pxToRem from "assets/theme-dark/functions/pxToRem";
 
 const { transparent } = colors;
 
@@ -26,7 +26,7 @@ const select = {
     select: {
       display: "grid",
       alignItems: "center",
-      padding: `0 ${pxToRem(12)} !important`,
+      /*  padding: `0 ${pxToRem(12)} !important`, */
 
       "& .Mui-selected": {
         backgroundColor: transparent.main,
@@ -40,9 +40,9 @@ const select = {
       overflow: "unset",
     },
 
-    icon: {
+    /* icon: {
       display: "none",
-    },
+    }, */
   },
 };
 

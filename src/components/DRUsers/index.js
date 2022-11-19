@@ -1,5 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import { Avatar, Box, CircularProgress, IconButton, Stack } from "@mui/material";
+import {
+  alpha,
+  Avatar,
+  Box,
+  CircularProgress,
+  gridClasses,
+  IconButton,
+  Stack,
+} from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
@@ -7,7 +15,43 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import apiRequest from "api/apiRequest";
 import MDButton from "components/MDButton";
+import colors from "assets/theme-dark/base/colors";
+import styled from "@emotion/styled";
 import PopoverMenu from "./PopoverMenu";
+
+const ODD_OPACITY = 0.2;
+
+const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
+  [`& .${gridClasses.row}.even`]: {
+    backgroundColor: theme.palette.grey[200],
+    "&:hover, &.Mui-hovered": {
+      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
+      "@media (hover: none)": {
+        backgroundColor: "transparent",
+      },
+    },
+    "&.Mui-selected": {
+      backgroundColor: alpha(
+        theme.palette.primary.main,
+        ODD_OPACITY + theme.palette.action.selectedOpacity
+      ),
+      "&:hover, &.Mui-hovered": {
+        backgroundColor: alpha(
+          theme.palette.primary.main,
+          ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity
+        ),
+        // Reset on touch devices, it doesn't add specificity
+        "@media (hover: none)": {
+          backgroundColor: alpha(
+            theme.palette.primary.main,
+            ODD_OPACITY + theme.palette.action.selectedOpacity
+          ),
+        },
+      },
+    },
+  },
+  color: theme.palette.mode === "darkMode" ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,.85)",
+}));
 
 function UserList() {
   const navigate = useNavigate();
@@ -95,33 +139,39 @@ function UserList() {
           <Box
             m="40px 0 0 0"
             height="75vh"
-            /*  sx={{
-              "& .MuiDataGrid-root": {
+            sx={{
+              /*  "& .MuiDataGrid-root": {
                 border: "none",
-              },
-              "& .MuiDataGrid-cell": {
+              }, */
+              /* "& .MuiDataGrid-cell": {
                 borderBottom: "none",
-              },
+              }, */
               "& .name-column--cell": {
-                color: colors.purpleAccent[300],
+                color: colors.info.main,
               },
-              "& .MuiDataGrid-columnHeaders": {
+              "& .MuiDataGrid-row.Mui-selected": {
                 backgroundColor: colors.grey[800],
-                borderBottom: "none",
               },
-              "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: colors.primary[400],
+              /*  "&:hover, &.Mui-hovered": {
+                backgroundColor: colors.info.main,
               },
-              "& .MuiDataGrid-footerContainer": {
+              "@media (hover: none)": {
+                backgroundColor: "transparent",
+              }, */
+              "& .MuiDataGrid-cellContent": {
+                color: colors.grey[600],
+                fontWeight: 800,
+              },
+              /* "& .MuiDataGrid-footerContainer": {
                 borderTop: "none",
-                backgroundColor: colors.grey[800],
-              },
+                backgroundColor: colors.grey[400],
+              }, */
               "& .MuiCheckbox-root": {
-                color: `${colors.purpleAccent[200]} !important`,
+                color: `${colors.info.main} !important`,
               },
-            }} */
+            }}
           >
-            <DataGrid
+            <StripedDataGrid
               checkboxSelection
               disableSelectionOnClick
               rows={users.map((user) => ({

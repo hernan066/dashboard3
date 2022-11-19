@@ -106,6 +106,7 @@ function UserCreate() {
       >
         <Box
           component="form"
+          autoComplete="off"
           noValidate
           onSubmit={formik.handleSubmit}
           sx={{ mt: 1, mx: 2, display: "flex", gap: 3 }}
@@ -114,7 +115,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               required
-              autoComplete={false}
+              autoComplete="user_name"
               fullWidth
               autoFocus
               id="user_name"
@@ -128,7 +129,7 @@ function UserCreate() {
               margin="normal"
               required
               fullWidth
-              autoComplete={false}
+              autoComplete="User_lastName"
               name="lastName"
               label="Apellido"
               id="User_lastName"
@@ -140,7 +141,7 @@ function UserCreate() {
               margin="normal"
               required
               fullWidth
-              autoComplete={false}
+              autoComplete="user_email"
               id="user_email"
               label="Email"
               name="email"
@@ -152,10 +153,10 @@ function UserCreate() {
               margin="normal"
               required
               fullWidth
-              autoComplete={false}
+              autoComplete="user_email"
               name="phone"
               label="Telefono"
-              id="user_phone"
+              id="user_email"
               error={!!formik.errors.phone || error.phone?.msg}
               helperText={formik.errors.phone || error.phone?.msg}
               onChange={formik.handleChange}
@@ -165,7 +166,7 @@ function UserCreate() {
               margin="normal"
               required
               select
-              autoComplete={false}
+              autoComplete="off"
               name="role"
               fullWidth
               label="Rol"
@@ -184,7 +185,7 @@ function UserCreate() {
               margin="normal"
               required
               fullWidth
-              autoComplete={false}
+              autoComplete="user_password"
               name="password"
               label="Password"
               type="password"
@@ -228,7 +229,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="user_address"
               name="address"
               label="Dirección"
               id="user_address"
@@ -239,7 +240,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="off"
               name="flor"
               label="Piso(opcional)"
               id="user_flor"
@@ -250,7 +251,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="user_department"
               name="department"
               label="Departamento(opcional)"
               id="user_department"
@@ -261,7 +262,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="user_province"
               name="province"
               label="Provincia"
               id="user_province"
@@ -272,7 +273,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="user_city"
               name="city"
               label="Ciudad"
               id="user_city"
@@ -283,7 +284,7 @@ function UserCreate() {
             <TextField
               margin="normal"
               fullWidth
-              autoComplete={false}
+              autoComplete="user_zip"
               name="zip"
               label="Código Postal"
               id="user_zip"

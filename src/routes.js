@@ -25,6 +25,7 @@ import PublicRoute from "router/PublicRoutes";
 // @mui icons
 import Icon from "@mui/material/Icon";
 import CreateNewUser from "pages/users/new-user";
+import EditUser from "pages/users/edit-user";
 
 const routes = [
   {
@@ -90,7 +91,7 @@ const routes = [
   },
 
   {
-    type: "collapse",
+    type: "none",
     name: "Crear usuario",
     key: "new",
     icon: <Icon fontSize="small">person</Icon>,
@@ -98,6 +99,18 @@ const routes = [
     component: (
       <PrivateRoute>
         <CreateNewUser />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Editar usuario",
+    key: "edit-user",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/users/edit/:id",
+    component: (
+      <PrivateRoute>
+        <EditUser />
       </PrivateRoute>
     ),
   },
