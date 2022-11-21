@@ -10,6 +10,7 @@ import apiRequest from "api/apiRequest";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import { useGetUsersQuery, useGetUserQuery } from "api/userApi";
 
 import PopoverMenu from "./PopoverMenu";
 
@@ -25,6 +26,13 @@ function UserList() {
 
   const { data: usersData } = useSWR(`/user`, fetcher);
   const users = usersData?.data.data.users;
+
+  // test
+
+  const { data: listUsers, isLoading, error } = useGetUsersQuery();
+  /* const { data: userById } = useGetUserQuery("636a6caf2f4a6a3fb6196858");
+  console.log(listUsers);
+  console.log(userById); */
 
   const handleOpenMenu = (id, event) => {
     setOpen(event.currentTarget);
