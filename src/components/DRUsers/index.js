@@ -1,13 +1,6 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import {
-  alpha,
-  Avatar,
-  Box,
-  CircularProgress,
-  gridClasses,
-  IconButton,
-  Stack,
-} from "@mui/material";
+import { Avatar, Box, CircularProgress, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
@@ -16,44 +9,14 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import apiRequest from "api/apiRequest";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
-import styled from "@emotion/styled";
+import { useMaterialUIController } from "context";
+
 import PopoverMenu from "./PopoverMenu";
 
-const ODD_OPACITY = 0.2;
-
-const StripedDataGrid = styled(DataGrid)(({ theme }) => ({
-  [`& .${gridClasses.row}.even`]: {
-    backgroundColor: theme.palette.grey[200],
-    "&:hover, &.Mui-hovered": {
-      backgroundColor: alpha(theme.palette.primary.main, ODD_OPACITY),
-      "@media (hover: none)": {
-        backgroundColor: "transparent",
-      },
-    },
-    "&.Mui-selected": {
-      backgroundColor: alpha(
-        theme.palette.primary.main,
-        ODD_OPACITY + theme.palette.action.selectedOpacity
-      ),
-      "&:hover, &.Mui-hovered": {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          ODD_OPACITY + theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity
-        ),
-        // Reset on touch devices, it doesn't add specificity
-        "@media (hover: none)": {
-          backgroundColor: alpha(
-            theme.palette.primary.main,
-            ODD_OPACITY + theme.palette.action.selectedOpacity
-          ),
-        },
-      },
-    },
-  },
-  color: theme.palette.mode === "darkMode" ? "rgba(255,255,255,0.85)" : "rgba(0,0,0,.85)",
-}));
-
 function UserList() {
+  const [controller] = useMaterialUIController();
+  const { darkMode } = controller;
+
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [userId, setUserId] = useState(null);
@@ -81,32 +44,38 @@ function UserList() {
       renderCell: (params) => <Avatar src={params.row.avatar} />,
       sortable: false,
       filterable: false,
+      headerClassName: "super-app-theme--header",
     },
     {
       field: "name",
       headerName: "Nombre",
       flex: 1,
       cellClassName: "name-column--cell",
+      headerClassName: "super-app-theme--header",
     },
 
     {
       field: "phone",
       headerName: "Telefono",
       flex: 1,
+      headerClassName: "super-app-theme--header",
     },
     {
       field: "email",
       headerName: "Email",
       flex: 1,
+      headerClassName: "super-app-theme--header",
     },
     {
       field: "role",
       headerName: "Rol",
       flex: 1,
+      headerClassName: "super-app-theme--header",
     },
     {
       field: "accessLevel",
       headerName: "Menu",
+      headerClassName: "super-app-theme--header",
 
       renderCell: ({ row: { _id } }) => (
         <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e)}>
@@ -136,44 +105,11 @@ function UserList() {
               Crear
             </MDButton>
           </Stack>
-          <Box
-            m="40px 0 0 0"
-            height="75vh"
-            sx={{
-              /*  "& .MuiDataGrid-root": {
-                border: "none",
-              }, */
-              /* "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-              }, */
-              "& .name-column--cell": {
-                color: colors.info.main,
-              },
-              "& .MuiDataGrid-row.Mui-selected": {
-                backgroundColor: colors.grey[800],
-              },
-              /*  "&:hover, &.Mui-hovered": {
-                backgroundColor: colors.info.main,
-              },
-              "@media (hover: none)": {
-                backgroundColor: "transparent",
-              }, */
-              "& .MuiDataGrid-cellContent": {
-                color: colors.grey[600],
-                fontWeight: 800,
-              },
-              /* "& .MuiDataGrid-footerContainer": {
-                borderTop: "none",
-                backgroundColor: colors.grey[400],
-              }, */
-              "& .MuiCheckbox-root": {
-                color: `${colors.info.main} !important`,
-              },
-            }}
-          >
-            <StripedDataGrid
+          <Box m="40px 0 0 0" height="75vh">
+            <DataGrid
               checkboxSelection
               disableSelectionOnClick
+              components={{ Toolbar: GridToolbar }}
               rows={users.map((user) => ({
                 _id: user._id,
                 name: `${user.name}  ${user.lastName}`,
@@ -184,7 +120,38 @@ function UserList() {
               }))}
               columns={columns}
               getRowId={(row) => row._id}
-              components={{ Toolbar: GridToolbar }}
+              sx={{
+                "& .MuiDataGrid-cellContent": {
+                  color: `${darkMode ? "#fff" : "#222"} `,
+                },
+                "& .MuiDataGrid-row.Mui-selected": {
+                  backgroundColor: "rgba(0, 100, 255, 0.1)",
+                },
+                "& .MuiDataGrid-row.Mui-selected:hover": {
+                  backgroundColor: "rgba(0, 100, 255, 0.2)",
+                },
+                "& .super-app-theme--header": {
+                  color: `${darkMode ? "#fff" : "#222"} `,
+                },
+                "& .MuiTablePagination-root": {
+                  color: `${darkMode ? "#fff" : "#222"} `,
+                },
+                "& .MuiButtonBase-root": {
+                  color: `${darkMode ? "#fff" : "#222"} `,
+                },
+                "& .MuiDataGrid-selectedRowCount": {
+                  color: `${darkMode ? "#fff" : "#222"} `,
+                },
+              }}
+              componentsProps={{
+                basePopper: {
+                  sx: {
+                    "& .MuiPaper-root": {
+                      backgroundColor: `${darkMode && colors.background.default}`,
+                    },
+                  },
+                },
+              }}
             />
           </Box>
         </Box>
