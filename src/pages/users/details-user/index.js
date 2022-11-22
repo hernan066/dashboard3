@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 // @mui material components
 import Grid from "@mui/material/Grid";
@@ -28,8 +29,8 @@ function ProfileUser() {
     <DashboardLayout>
       <DashboardNavbar />
       <MDBox mb={2} />
-      {isLoading && <Loading />}
-      {error && <Alert severity="error">{error}</Alert>}
+      {isLoading && <Loading key="loading-profile" />}
+      {error && <Alert severity="error">`Ha ocurrido un error: ${error?.data?.msg}`</Alert>}
       {data && (
         <Header data={data}>
           <MDBox mt={5} mb={3}>

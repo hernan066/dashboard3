@@ -12,6 +12,8 @@ import {
 import storage from "redux-persist/lib/storage";
 import { userApi } from "api/userApi";
 import { setupListeners } from "@reduxjs/toolkit/dist/query/react";
+import { productApi } from "api/productApi";
+import { categoryApi } from "api/categoryApi";
 import userReducer from "./userSlice";
 import authReducer from "./authSlice";
 
@@ -25,6 +27,9 @@ const rootReducer = combineReducers({
   user: userReducer,
   auth: authReducer,
   [userApi.reducerPath]: userApi.reducer,
+  [productApi.reducerPath]: productApi.reducer,
+  [productApi.reducerPath]: productApi.reducer,
+  [categoryApi.reducerPath]: categoryApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -37,7 +42,10 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware),
+    })
+      .concat(userApi.middleware)
+      .concat(productApi.middleware)
+      .concat(categoryApi.middleware),
 });
 
 setupListeners(store.dispatch);

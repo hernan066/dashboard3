@@ -27,6 +27,8 @@ import CreateNewUser from "pages/users/new-user";
 import EditUser from "pages/users/edit-user";
 import ListUsers from "pages/users/list-users";
 import ProfileUser from "pages/users/details-user";
+import ListProducts from "pages/products/products-list";
+import CreateProduct from "pages/products/product-create";
 
 const routes = [
   {
@@ -50,6 +52,30 @@ const routes = [
     component: (
       <PrivateRoute>
         <ListUsers />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Productos",
+    key: "products",
+    icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
+    route: "/products",
+    component: (
+      <PrivateRoute>
+        <ListProducts />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Productos",
+    key: "products-create",
+    icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
+    route: "/products/new",
+    component: (
+      <PrivateRoute>
+        <CreateProduct />
       </PrivateRoute>
     ),
   },

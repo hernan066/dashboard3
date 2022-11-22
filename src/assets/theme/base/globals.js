@@ -37,9 +37,9 @@ const globals = {
     color: `${info.main} !important`,
   },
   "input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus": {
-    "-webkit-text-fill-color": "rgb(35, 35, 35)",
-    "-webkit-box-shadow": "0 0 0px 1000px rgb(249, 249, 249) inset",
-    transition: "background-color 5000s ease-in-out 0s",
+    "-WebkitTextFillColor": "rgb(35, 35, 35)",
+    "-WebkitBoxShadow": "0 0 0px 1000px rgb(249, 249, 249) inset",
+    transition: "backgroundColor 5000s ease-in-out 0s",
   },
 };
 
