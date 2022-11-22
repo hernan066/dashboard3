@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /**
 =========================================================
 * Material Dashboard 2 React - v2.1.0
@@ -29,7 +30,7 @@ const tabs = {
   styleOverrides: {
     root: {
       position: "relative",
-      backgroundColor: grey[100],
+      // backgroundColor: grey[100],
       borderRadius: borderRadius.xl,
       minHeight: "unset",
       padding: pxToRem(4),

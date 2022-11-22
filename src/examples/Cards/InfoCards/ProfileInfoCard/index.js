@@ -1,18 +1,5 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 // react-routers components
 import { Link } from "react-router-dom";
 
@@ -33,7 +20,7 @@ import MDTypography from "components/MDTypography";
 import colors from "assets/theme/base/colors";
 import typography from "assets/theme/base/typography";
 
-function ProfileInfoCard({ title, description, info, social, action, shadow }) {
+function ProfileInfoCard({ title, info, social = null, action, shadow }) {
   const labels = [];
   const values = [];
   const { socialMediaColors } = colors;
@@ -66,26 +53,29 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
     </MDBox>
   ));
 
+  let renderSocial;
   // Render the card social media icons
-  const renderSocial = social.map(({ link, icon, color }) => (
-    <MDBox
-      key={color}
-      component="a"
-      href={link}
-      target="_blank"
-      rel="noreferrer"
-      fontSize={size.lg}
-      color={socialMediaColors[color].main}
-      pr={1}
-      pl={0.5}
-      lineHeight={1}
-    >
-      {icon}
-    </MDBox>
-  ));
+  if (social) {
+    renderSocial = social.map(({ link, icon, color }) => (
+      <MDBox
+        key={color}
+        component="a"
+        href={link}
+        target="_blank"
+        rel="noreferrer"
+        fontSize={size.lg}
+        color={socialMediaColors[color].main}
+        pr={1}
+        pl={0.5}
+        lineHeight={1}
+      >
+        {icon}
+      </MDBox>
+    ));
+  }
 
   return (
-    <Card sx={{ height: "100%", boxShadow: !shadow && "none" }}>
+    <Card sx={{ height: "100%", boxShadow: !shadow && "none", width: "100%" }}>
       <MDBox display="flex" justifyContent="space-between" alignItems="center" pt={2} px={2}>
         <MDTypography variant="h6" fontWeight="medium" textTransform="capitalize">
           {title}
@@ -97,22 +87,24 @@ function ProfileInfoCard({ title, description, info, social, action, shadow }) {
         </MDTypography>
       </MDBox>
       <MDBox p={2}>
-        <MDBox mb={2} lineHeight={1}>
+        {/* <MDBox mb={2} lineHeight={1}>
           <MDTypography variant="button" color="text" fontWeight="light">
             {description}
           </MDTypography>
-        </MDBox>
-        <MDBox opacity={0.3}>
+        </MDBox> */}
+        {/* <MDBox opacity={0.3}>
           <Divider />
-        </MDBox>
+        </MDBox> */}
         <MDBox>
           {renderItems}
-          <MDBox display="flex" py={1} pr={2}>
-            <MDTypography variant="button" fontWeight="bold" textTransform="capitalize">
-              social: &nbsp;
-            </MDTypography>
-            {renderSocial}
-          </MDBox>
+          {social && (
+            <MDBox display="flex" py={1} pr={2}>
+              <MDTypography variant="button" fontWeight="bold" textTransform="capitalize">
+                social: &nbsp;
+              </MDTypography>
+              {renderSocial}
+            </MDBox>
+          )}
         </MDBox>
       </MDBox>
     </Card>
@@ -127,9 +119,7 @@ ProfileInfoCard.defaultProps = {
 // Typechecking props for the ProfileInfoCard
 ProfileInfoCard.propTypes = {
   title: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
   info: PropTypes.objectOf(PropTypes.string).isRequired,
-  social: PropTypes.arrayOf(PropTypes.object).isRequired,
   action: PropTypes.shape({
     route: PropTypes.string.isRequired,
     tooltip: PropTypes.string.isRequired,

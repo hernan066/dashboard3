@@ -26,6 +26,7 @@ import Icon from "@mui/material/Icon";
 import CreateNewUser from "pages/users/new-user";
 import EditUser from "pages/users/edit-user";
 import ListUsers from "pages/users/list-users";
+import ProfileUser from "pages/users/details-user";
 
 const routes = [
   {
@@ -111,6 +112,18 @@ const routes = [
     component: (
       <PrivateRoute>
         <EditUser />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Detaller usuario",
+    key: "datails-user",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/users/details/:id",
+    component: (
+      <PrivateRoute>
+        <ProfileUser />
       </PrivateRoute>
     ),
   },
