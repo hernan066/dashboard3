@@ -29,6 +29,7 @@ import ListUsers from "pages/users/list-users";
 import ProfileUser from "pages/users/details-user";
 import ListProducts from "pages/products/products-list";
 import CreateProduct from "pages/products/product-create";
+import EditProduct from "pages/products/product-edit";
 
 const routes = [
   {
@@ -76,6 +77,18 @@ const routes = [
     component: (
       <PrivateRoute>
         <CreateProduct />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Productos",
+    key: "products-edit",
+    icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
+    route: "/products/edit/:id",
+    component: (
+      <PrivateRoute>
+        <EditProduct />
       </PrivateRoute>
     ),
   },

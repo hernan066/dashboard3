@@ -27,11 +27,11 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/users/details/${productId}`)}>
+      <MenuItem onClick={() => navigate(`/products/details/${productId}`)}>
         <VisibilityIcon sx={{ mr: 1 }} />
         Ver
       </MenuItem>
-      <MenuItem onClick={() => navigate(`/users/edit/${productId}`)}>
+      <MenuItem onClick={() => navigate(`/products/edit/${productId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

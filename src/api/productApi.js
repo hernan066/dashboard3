@@ -44,7 +44,7 @@ export const productApi = createApi({
       extraOptions: { maxRetries: 0 },
     }),
     putProduct: builder.mutation({
-      query: (id, editProduct) => ({
+      query: ({ id, ...editProduct }) => ({
         url: `/products/${id}`,
         method: "put",
         body: editProduct,

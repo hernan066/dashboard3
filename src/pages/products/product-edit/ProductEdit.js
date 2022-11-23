@@ -3,45 +3,49 @@
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
 // import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, Card, CardContent, CardMedia, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { usePostProductMutation } from "api/productApi";
+
 import { creteProductSchema } from "validations/products/createProductYup";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { usePutProductMutation } from "api/productApi";
 import ImageUpload from "./ImageUpload";
 
-function ProductCreate({ listCategories }) {
+function ProductEdit({ listCategories, productById }) {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [createProduct, { isLoading, error }] = usePostProductMutation();
+  const [editProduct, { isLoading, error }] = usePutProductMutation();
   const [urlImage, setUrlImage] = useState(null);
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      brand: "",
-      unit: "",
-      type: "",
-      category: "",
-      description: "",
-      img: urlImage || "",
+      name: productById.name,
+      brand: productById.brand,
+      unit: productById.unit,
+      type: productById.type,
+      category: productById.category._id,
+      description: productById.description,
+      img: productById.img,
+      available: productById.available,
     },
     onSubmit: async (values) => {
-      const newProduct = {
+      const editProductValues = {
         ...values,
-        img: urlImage,
+        img: urlImage || productById.img,
       };
-      await createProduct(newProduct).unwrap();
+
+      await editProduct({ id, ...editProductValues }).unwrap();
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
-        title: "Producto creado con exito",
+        title: "Producto editado con exito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -70,6 +74,7 @@ function ProductCreate({ listCategories }) {
               id="product_name"
               label="Nombre del producto"
               name="name"
+              value={formik.values.name}
               error={!!formik.errors.name || error?.name?.msg}
               helperText={formik.errors.name || error?.name?.msg}
               onChange={formik.handleChange}
@@ -82,6 +87,7 @@ function ProductCreate({ listCategories }) {
               name="brand"
               label="Marca"
               id="product_brand"
+              value={formik.values.brand}
               error={!!formik.errors.brand}
               helperText={formik.errors.brand}
               onChange={formik.handleChange}
@@ -94,6 +100,7 @@ function ProductCreate({ listCategories }) {
               id="product_unit"
               label="Unidad"
               name="unit"
+              value={formik.values.unit}
               error={!!formik.errors.unit}
               helperText={formik.errors.unit}
               onChange={formik.handleChange}
@@ -106,6 +113,7 @@ function ProductCreate({ listCategories }) {
               name="type"
               label="Tipo"
               id="product_type"
+              value={formik.values.type}
               error={!!formik.errors.type}
               helperText={formik.errors.type}
               onChange={formik.handleChange}
@@ -120,6 +128,7 @@ function ProductCreate({ listCategories }) {
               name="description"
               label="Descripción"
               id="product_description"
+              value={formik.values.description}
               error={!!formik.errors.description}
               helperText={formik.errors.description}
               onChange={formik.handleChange}
@@ -139,7 +148,11 @@ function ProductCreate({ listCategories }) {
               onChange={formik.handleChange}
             >
               {listCategories.categories.map((option) => (
-                <MenuItem key={option._id} value={option._id}>
+                <MenuItem
+                  key={option._id}
+                  value={option._id}
+                  selected={formik.values.category === option._id}
+                >
                   {option.name}
                 </MenuItem>
               ))}
@@ -158,10 +171,18 @@ function ProductCreate({ listCategories }) {
               helperText={formik.errors.available}
               onChange={formik.handleChange}
             >
-              <MenuItem key="product_available_true" value={true}>
+              <MenuItem
+                key="product_available_true"
+                value={true}
+                selected={formik.values.available === true}
+              >
                 Si
               </MenuItem>
-              <MenuItem key="product_available_false" value={false}>
+              <MenuItem
+                key="product_available_false"
+                value={false}
+                selected={formik.values.available === false}
+              >
                 No
               </MenuItem>
             </TextField>
@@ -173,7 +194,7 @@ function ProductCreate({ listCategories }) {
                 name="img"
                 label="Imagen del producto"
                 id="user_flor"
-                value={urlImage}
+                value={urlImage || formik.values.img}
                 error={!!formik.errors.img}
                 helperText={formik.errors.img}
                 onChange={formik.handleChange}
@@ -192,7 +213,7 @@ function ProductCreate({ listCategories }) {
                 color: "white !important",
               }}
             >
-              Crear
+              Editar
             </LoadingButton>
             <MDButton
               variant="outlined"
@@ -208,7 +229,9 @@ function ProductCreate({ listCategories }) {
             >
               Cancelar
             </MDButton>
-            {error && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
+            {error && (
+              <Alert severity="error">Ha ocurrido un error, producto no ha sido editado</Alert>
+            )}
           </Box>
 
           <Box>
@@ -236,4 +259,4 @@ function ProductCreate({ listCategories }) {
   );
 }
 
-export default ProductCreate;
+export default ProductEdit;
