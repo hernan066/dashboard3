@@ -30,6 +30,7 @@ import ProfileUser from "pages/users/details-user";
 import ListProducts from "pages/products/products-list";
 import CreateProduct from "pages/products/product-create";
 import EditProduct from "pages/products/product-edit";
+import ListOferts from "pages/oferts/oferts-list";
 
 const routes = [
   {
@@ -89,6 +90,18 @@ const routes = [
     component: (
       <PrivateRoute>
         <EditProduct />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Ofertas",
+    key: "ofets",
+    icon: <Icon fontSize="small">loyalty</Icon>,
+    route: "/oferts",
+    component: (
+      <PrivateRoute>
+        <ListOferts /> {/* import LoyaltyIcon from '@mui/icons-material/Loyalty'; */}
       </PrivateRoute>
     ),
   },

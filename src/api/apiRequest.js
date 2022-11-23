@@ -3,9 +3,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3040/api";
 
-const user = JSON.parse(localStorage.getItem("persist:root"))?.auth;
-const currentUser = user && JSON.parse(user).user;
-export const TOKEN = currentUser?.token;
+const token = localStorage.getItem("token");
 
 const apiRequest = axios.create({
   baseURL: BASE_URL,
@@ -15,7 +13,7 @@ const apiRequest = axios.create({
 apiRequest.interceptors.request.use((config) => {
   config.headers = {
     ...config.headers,
-    "x-token": TOKEN,
+    "x-token": token,
   };
 
   return config;

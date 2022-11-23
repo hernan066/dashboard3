@@ -4,9 +4,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 
 const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
 
-const userParse = JSON.parse(localStorage.getItem("persist:root"))?.auth;
-const currentUser = userParse && JSON.parse(userParse).user;
-const token = currentUser?.token;
+const token = localStorage.getItem("token");
 
 export const userApi = createApi({
   reducerPath: "userApi",

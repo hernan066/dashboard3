@@ -6,8 +6,8 @@ const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
 
 const token = localStorage.getItem("token");
 
-export const categoryApi = createApi({
-  reducerPath: "categoryApi",
+export const ofertApi = createApi({
+  reducerPath: "ofertApi",
   baseQuery: retry(fetchBaseQuery({ baseUrl: API, headers: { "x-token": token } }), {
     maxRetries: 2,
   }),
@@ -17,54 +17,54 @@ export const categoryApi = createApi({
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
 
-  tagTypes: ["category"],
+  tagTypes: ["Oferts"],
 
   endpoints: (builder) => ({
-    getcategories: builder.query({
-      query: () => "/categories",
+    getOferts: builder.query({
+      query: () => "/oferts",
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
-      providesTags: ["category"],
+      providesTags: ["Oferts"],
     }),
-    getCategory: builder.query({
-      query: (id) => `/categories/${id}`,
+    getOfert: builder.query({
+      query: (id) => `/oferts/${id}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 3 },
-      providesTags: ["category"],
+      providesTags: ["Oferts"],
     }),
-    postCategory: builder.mutation({
-      query: (newProduct) => ({
-        url: "/categories",
+    postOfert: builder.mutation({
+      query: (newOfert) => ({
+        url: "/oferts",
         method: "post",
-        body: newProduct,
+        body: newOfert,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["Oferts"],
       extraOptions: { maxRetries: 0 },
     }),
-    putCategory: builder.mutation({
-      query: (id, editProduct) => ({
-        url: `/categories/${id}`,
+    putOfert: builder.mutation({
+      query: ({ id, ...editOfert }) => ({
+        url: `/oferts/${id}`,
         method: "put",
-        body: editProduct,
+        body: editOfert,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["Oferts"],
       extraOptions: { maxRetries: 0 },
     }),
-    deleteCategory: builder.mutation({
+    deleteOfert: builder.mutation({
       query: (id) => ({
-        url: `/categories/${id}`,
+        url: `/oferts/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["Oferts"],
       extraOptions: { maxRetries: 0 },
     }),
   }),
 });
 
 export const {
-  useGetcategoriesQuery,
-  useGetCategoryQuery,
-  usePostCategoryMutation,
-  usePutCategoryMutation,
-  useDeleteCategoryMutation,
-} = categoryApi;
+  useGetOfertsQuery,
+  useGetOfertQuery,
+  usePostOfertMutation,
+  usePutOfertMutation,
+  useDeleteOfertMutation,
+} = ofertApi;
