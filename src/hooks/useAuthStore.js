@@ -12,6 +12,8 @@ function useAuthStore() {
     dispatch(onChecking());
     try {
       const { data } = await apiRequest.post("/auth/admin/login", { email, password });
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
       dispatch(
         onLogin({
           name: data?.user.name,
@@ -46,13 +48,13 @@ function useAuthStore() {
     } */
 
   const checkAuthToken = async () => {
-    const userParse = JSON.parse(localStorage.getItem("persist:root"))?.auth;
-    const currentUser = userParse && JSON.parse(userParse).user;
-    const token = currentUser?.token;
+    const token = localStorage.getItem("token");
     if (!token) return dispatch(onLogout());
 
     try {
       const { data } = await apiRequest.get("auth/revalidate_token");
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("token-init-date", new Date().getTime());
 
       return dispatch(
         onLogin({

@@ -1,4 +1,5 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+/* eslint-disable import/prefer-default-export */
+/* import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
   persistStore,
   persistReducer,
@@ -50,3 +51,26 @@ export const store = configureStore({
 
 setupListeners(store.dispatch);
 export const persistor = persistStore(store);
+ */
+
+import { configureStore } from "@reduxjs/toolkit";
+import { categoryApi } from "api/categoryApi";
+import { productApi } from "api/productApi";
+import { userApi } from "api/userApi";
+import authReducer from "./authSlice";
+
+export const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [productApi.reducerPath]: productApi.reducer,
+    [categoryApi.reducerPath]: categoryApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    })
+      .concat(userApi.middleware)
+      .concat(productApi.middleware)
+      .concat(categoryApi.middleware),
+});
