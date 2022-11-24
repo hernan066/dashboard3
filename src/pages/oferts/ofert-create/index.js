@@ -8,14 +8,14 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useGetcategoriesQuery } from "api/categoryApi";
+import { useGetProductsQuery } from "api/productApi";
 
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import ProductCreate from "./ProductCreate";
+import OfertCreate from "./OfertCreate";
 
-function CreateProduct() {
-  const { data: listCategories, isLoading, error } = useGetcategoriesQuery();
+function CreateOfert() {
+  const { data: listProducts, isLoading, error } = useGetProductsQuery();
 
   return (
     <DashboardLayout>
@@ -35,13 +35,13 @@ function CreateProduct() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Crear nuevo producto
+                  Crear nueva oferta
                 </MDTypography>
               </MDBox>
               <MDBox>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-                {listCategories && <ProductCreate listCategories={listCategories} />}
+                {listProducts && <OfertCreate listProducts={listProducts} />}
               </MDBox>
             </Card>
           </Grid>
@@ -51,4 +51,4 @@ function CreateProduct() {
   );
 }
 
-export default CreateProduct;
+export default CreateOfert;

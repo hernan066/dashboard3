@@ -8,9 +8,12 @@ const token = localStorage.getItem("token");
 
 export const ofertApi = createApi({
   reducerPath: "ofertApi",
-  baseQuery: retry(fetchBaseQuery({ baseUrl: API, headers: { "x-token": token } }), {
-    maxRetries: 2,
-  }),
+  baseQuery: retry(
+    fetchBaseQuery({ baseUrl: API, headers: { "x-token": localStorage.getItem("token") } }),
+    {
+      maxRetries: 2,
+    }
+  ),
   keepUnusedDataFor: 60, // duracion de datos en cache
 
   refetchOnMountOrArgChange: true, // revalida al montar el componente

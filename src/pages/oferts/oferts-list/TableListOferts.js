@@ -17,7 +17,7 @@ function TableListOferts({ oferts }) {
   const { darkMode } = controller;
   const listOferts = oferts.data.oferts;
 
-  console.log(listOferts[0].prices[0].price1);
+  console.log(listOferts);
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
@@ -130,7 +130,7 @@ function TableListOferts({ oferts }) {
             rows={listOferts.map((ofert) => ({
               _id: ofert._id,
               img:
-                ofert.img ||
+                ofert.product.img ||
                 "https://ik.imagekit.io/mrprwema7/No_image_available.svg_f8oa-E8hq.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669124011945",
               product: ofert.product.name,
               description: ofert.description,

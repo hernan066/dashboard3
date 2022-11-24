@@ -31,6 +31,7 @@ import ListProducts from "pages/products/products-list";
 import CreateProduct from "pages/products/product-create";
 import EditProduct from "pages/products/product-edit";
 import ListOferts from "pages/oferts/oferts-list";
+import CreateOfert from "pages/oferts/ofert-create";
 
 const routes = [
   {
@@ -102,6 +103,18 @@ const routes = [
     component: (
       <PrivateRoute>
         <ListOferts /> {/* import LoyaltyIcon from '@mui/icons-material/Loyalty'; */}
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Ofertas",
+    key: "ofert-new",
+    icon: <Icon fontSize="small">loyalty</Icon>,
+    route: "/oferts/new",
+    component: (
+      <PrivateRoute>
+        <CreateOfert /> {/* import LoyaltyIcon from '@mui/icons-material/Loyalty'; */}
       </PrivateRoute>
     ),
   },
