@@ -1,10 +1,13 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
 // import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import {
   Alert,
@@ -26,10 +29,11 @@ import Swal from "sweetalert2";
 import { creteOfertSchema } from "validations/oferts/creteOfertYup";
 import { usePostOfertMutation } from "api/ofertApi";
 
-function OfertCreate({ listProducts }) {
+function OfertEdit({ listProducts, ofertById }) {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [createOfert, { isLoading, isError }] = usePostOfertMutation();
+  const [editOfert, { isLoading, isError }] = usePostOfertMutation();
 
   const autoCompleteProducts = listProducts.products
     .map((product) => {
@@ -38,30 +42,37 @@ function OfertCreate({ listProducts }) {
         id: product._id,
         unit: product.unit,
         product: product.name,
-        img: product.img,
+        img: product.img || "",
         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
       };
     })
     .sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter));
-  const [inputValue, setInputValue] = useState(autoCompleteProducts[0]);
+
+  const firstLetter = ofertById.data.ofert.product.name[0].toUpperCase();
+  const [inputValue, setInputValue] = useState({
+    id: ofertById.data.ofert.product._id,
+    unit: ofertById.data.ofert.product.unit,
+    product: ofertById.data.ofert.product.name,
+    img: ofertById.data.ofert.product.name.img || "",
+    firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
+  });
 
   const formik = useFormik({
     initialValues: {
-      product: "",
-      description: "",
-      price1: null,
-      price2: null,
-      price3: null,
-      quantity1: null,
-      quantity2: null,
-      quantity3: null,
-      visible: null,
+      product: ofertById.data.ofert.product.name,
+      description: ofertById.data.ofert.description,
+      price1: ofertById.data.ofert.prices[0].price1,
+      price2: ofertById.data.ofert.prices[0].price2,
+      price3: ofertById.data.ofert.prices[0].price3,
+      quantity1: ofertById.data.ofert.quantities[0].quantity1,
+      quantity2: ofertById.data.ofert.quantities[0].quantity2,
+      quantity3: ofertById.data.ofert.quantities[0].quantity3,
+      visible: ofertById.data.ofert.visible,
     },
     onSubmit: async (values) => {
-      const newOfert = {
+      const editOfertValues = {
         product: inputValue.id,
         description: values.description,
-        visible: values.visible,
         prices: [{ price1: values.price1, price2: values.price2, price3: values.price3 }],
         quantities: [
           {
@@ -71,11 +82,12 @@ function OfertCreate({ listProducts }) {
           },
         ],
       };
-      await createOfert(newOfert).unwrap();
+
+      await editOfert({ id, ...editOfertValues }).unwrap();
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Oferta creada con exito",
+        title: "Oferta editada con exito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -128,6 +140,7 @@ function OfertCreate({ listProducts }) {
               name="description"
               label="Descripción"
               id="product_description"
+              value={formik.values.description}
               error={!!formik.errors.description}
               helperText={formik.errors.description}
               onChange={formik.handleChange}
@@ -271,7 +284,7 @@ function OfertCreate({ listProducts }) {
                 color: "white !important",
               }}
             >
-              Crear
+              Editar
             </LoadingButton>
             <MDButton
               variant="outlined"
@@ -299,14 +312,14 @@ function OfertCreate({ listProducts }) {
               <CardMedia
                 component="img"
                 image={
-                  inputValue.img ||
+                  inputValue?.img ||
                   "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
                 }
                 alt="image product"
               />
               <CardContent sx={{ textAlign: "center" }}>
-                <MDTypography variant="h2">{inputValue.product}</MDTypography>
-                <MDTypography variant="h5">{`${formik.values.description} - Unidad: (${inputValue.unit})`}</MDTypography>
+                <MDTypography variant="h2">{inputValue?.product}</MDTypography>
+                <MDTypography variant="h5">{`${formik.values.description} - Unidad: (${ofertById.data.ofert.product?.unit})`}</MDTypography>
                 <MDTypography variant="h4">${formik.values.price1}</MDTypography>
               </CardContent>
             </Card>
@@ -317,4 +330,4 @@ function OfertCreate({ listProducts }) {
   );
 }
 
-export default OfertCreate;
+export default OfertEdit;

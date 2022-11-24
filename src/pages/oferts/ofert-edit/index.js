@@ -8,23 +8,22 @@ import MDTypography from "components/MDTypography";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useGetcategoriesQuery } from "api/categoryApi";
+import { useGetProductsQuery } from "api/productApi";
 
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetProductQuery } from "api/productApi";
+import { useGetOfertQuery } from "api/ofertApi";
 import { useParams } from "react-router-dom";
-import ProductEdit from "./ProductEdit";
+import OfertEdit from "./OfertEdit";
 
-function EditProduct() {
+function EditOfert() {
   const { id } = useParams();
-
-  const { data: listCategories, isLoading, error } = useGetcategoriesQuery();
+  const { data: listProducts, isLoading, error } = useGetProductsQuery();
   const {
-    data: productById,
+    data: ofertById,
     isLoading: isLoadingProduct,
     error: errorProduct,
-  } = useGetProductQuery(id);
+  } = useGetOfertQuery(id);
 
   return (
     <DashboardLayout>
@@ -44,14 +43,14 @@ function EditProduct() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Editar producto
+                  Editar oferta
                 </MDTypography>
               </MDBox>
               <MDBox>
                 {(isLoading || isLoadingProduct) && <Loading />}
-                {(error || errorProduct) && <Alert severity="error">{error?.data?.msg}</Alert>}
-                {listCategories && productById && (
-                  <ProductEdit listCategories={listCategories} productById={productById} />
+                {(error || errorProduct) && <Alert severity="error">{error.error}</Alert>}
+                {listProducts && ofertById && (
+                  <OfertEdit listProducts={listProducts} ofertById={ofertById} />
                 )}
               </MDBox>
             </Card>
@@ -62,4 +61,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct;
+export default EditOfert;

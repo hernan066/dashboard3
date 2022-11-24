@@ -32,6 +32,7 @@ import CreateProduct from "pages/products/product-create";
 import EditProduct from "pages/products/product-edit";
 import ListOferts from "pages/oferts/oferts-list";
 import CreateOfert from "pages/oferts/ofert-create";
+import EditOfert from "pages/oferts/ofert-edit";
 
 const routes = [
   {
@@ -114,7 +115,19 @@ const routes = [
     route: "/oferts/new",
     component: (
       <PrivateRoute>
-        <CreateOfert /> {/* import LoyaltyIcon from '@mui/icons-material/Loyalty'; */}
+        <CreateOfert />
+      </PrivateRoute>
+    ),
+  },
+  {
+    type: "none",
+    name: "Ofertas",
+    key: "ofert-edit",
+    icon: <Icon fontSize="small">loyalty</Icon>,
+    route: "/oferts/edit/:id",
+    component: (
+      <PrivateRoute>
+        <EditOfert />
       </PrivateRoute>
     ),
   },

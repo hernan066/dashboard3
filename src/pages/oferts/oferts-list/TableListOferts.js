@@ -9,6 +9,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 
 import MenuListUsers from "./MenuListOferts";
 
@@ -100,6 +102,44 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "visible",
+      headerName: "Visible",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.visible ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
+    },
 
     {
       field: "accessLevel",
@@ -134,6 +174,7 @@ function TableListOferts({ oferts }) {
                 "https://ik.imagekit.io/mrprwema7/No_image_available.svg_f8oa-E8hq.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669124011945",
               product: ofert.product.name,
               description: ofert.description,
+              visible: ofert.visible,
               unit: ofert.product.unit,
               price1: ofert.prices[0]?.price1 || "",
               price2: ofert.prices[0]?.price2 || "",
