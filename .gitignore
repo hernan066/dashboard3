@@ -27,3 +27,4 @@ yarn.lock
 commit.sh
 
 .env
+.vscode
