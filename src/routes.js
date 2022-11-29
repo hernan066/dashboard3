@@ -19,7 +19,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import PrivateRoute from "router/PrivateRoutes";
-import PublicRoute from "router/PublicRoutes";
+// import PublicRoute from "router/PublicRoutes";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -212,11 +212,7 @@ const routes = [
     key: "sign-in",
     icon: <Icon fontSize="small">login</Icon>,
     route: "/authentication/sign-in",
-    component: (
-      <PublicRoute>
-        <SignIn />
-      </PublicRoute>
-    ),
+    component: <SignIn />,
   },
 ];
 

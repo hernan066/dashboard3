@@ -1,12 +1,6 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-// import { useState } from "react";
+/* eslint-disable react/prop-types */
 import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import {
@@ -53,7 +47,7 @@ function OfertEdit({ listProducts, ofertById }) {
     id: ofertById.data.ofert.product._id,
     unit: ofertById.data.ofert.product.unit,
     product: ofertById.data.ofert.product.name,
-    img: ofertById.data.ofert.product.name.img || "",
+    img: ofertById.data.ofert.product.img || "",
     firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
   });
 
@@ -87,7 +81,7 @@ function OfertEdit({ listProducts, ofertById }) {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Oferta editada con exito",
+        title: "Oferta editada con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -293,9 +287,6 @@ function OfertEdit({ listProducts, ofertById }) {
               sx={{
                 mt: 3,
                 mb: 2,
-                /*   borderColor: colors.blueAccent[400],
-                    color: colors.blueAccent[400],
-                    "&:hover": { backgroundColor: colors.blueAccent[900] }, */
               }}
             >
               Cancelar

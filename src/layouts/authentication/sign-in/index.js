@@ -16,6 +16,7 @@ import useAuthStore from "hooks/useAuthStore";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   email: yup.string().email("Formato incorrecto").required("Requerido"),
@@ -26,6 +27,8 @@ function Basic() {
   const [isLoading, setIsLoading] = useState(false);
 
   const { startLogin, errorMessage, status } = useAuthStore();
+
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -40,6 +43,9 @@ function Basic() {
 
   useEffect(() => {
     status === "checking" ? setIsLoading(true) : setIsLoading(false);
+    if (status === "authenticated") {
+      navigate("/");
+    }
   }, [status]);
   return (
     <BasicLayout image={bgImage}>

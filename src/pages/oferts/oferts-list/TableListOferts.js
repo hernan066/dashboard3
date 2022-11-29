@@ -11,6 +11,8 @@ import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
+// import moment from "moment-timezone";
+import { dateToLocalDate } from "utils/dateFormat";
 
 import MenuListUsers from "./MenuListOferts";
 
@@ -19,7 +21,12 @@ function TableListOferts({ oferts }) {
   const { darkMode } = controller;
   const listOferts = oferts.data.oferts;
 
-  console.log(listOferts);
+  /* console.log(listOferts[0].createdAt);
+  const hora = listOferts[0].createdAt;
+  const dateFormat = "DD-MM-YYYY HH:mm:ss";
+  const testDateUtc = moment.utc(hora);
+  const localDate = testDateUtc.local();
+  console.log(localDate.format(dateFormat)); */
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
@@ -103,6 +110,12 @@ function TableListOferts({ oferts }) {
       headerClassName: "super-app-theme--header",
     },
     {
+      field: "createdAt",
+      headerName: "Creado",
+      flex: 2,
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "visible",
       headerName: "Visible",
       flex: 1,
@@ -156,13 +169,13 @@ function TableListOferts({ oferts }) {
 
   return (
     <>
-      <Box m="20px">
+      <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
           <MDButton color="dark" variant="gradient" onClick={() => navigate("/oferts/new")}>
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh">
+        <Box m="40px 0 0 0" height="75vh" width="1500px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -182,6 +195,7 @@ function TableListOferts({ oferts }) {
               quantity1: ofert.quantities[0]?.quantity1 || "",
               quantity2: ofert.quantities[0]?.quantity2 || "",
               quantity3: ofert.quantities[0]?.quantity3 || "",
+              createdAt: dateToLocalDate(ofert.createdAt),
             }))}
             columns={columns}
             getRowId={(row) => row._id}
