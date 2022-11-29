@@ -49,13 +49,13 @@ function OfertCreate({ listProducts }) {
     initialValues: {
       product: "",
       description: "",
-      price1: null,
-      price2: null,
-      price3: null,
-      quantity1: null,
-      quantity2: null,
-      quantity3: null,
-      visible: null,
+      price1: undefined,
+      price2: undefined,
+      price3: undefined,
+      quantity1: undefined,
+      quantity2: undefined,
+      quantity3: undefined,
+      visible: undefined,
     },
     onSubmit: async (values) => {
       const newOfert = {
@@ -73,9 +73,9 @@ function OfertCreate({ listProducts }) {
       };
       await createOfert(newOfert).unwrap();
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
-        title: "Oferta creada con exito",
+        title: "Oferta creada con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -280,9 +280,6 @@ function OfertCreate({ listProducts }) {
               sx={{
                 mt: 3,
                 mb: 2,
-                /*   borderColor: colors.blueAccent[400],
-                    color: colors.blueAccent[400],
-                    "&:hover": { backgroundColor: colors.blueAccent[900] }, */
               }}
             >
               Cancelar

@@ -79,7 +79,7 @@ function OfertEdit({ listProducts, ofertById }) {
 
       await editOfert({ id, ...editOfertValues }).unwrap();
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
         title: "Oferta editada con éxito",
         showConfirmButton: false,

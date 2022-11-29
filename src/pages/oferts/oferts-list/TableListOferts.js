@@ -11,7 +11,7 @@ import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-// import moment from "moment-timezone";
+
 import { dateToLocalDate } from "utils/dateFormat";
 
 import MenuListUsers from "./MenuListOferts";
@@ -20,13 +20,6 @@ function TableListOferts({ oferts }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
   const listOferts = oferts.data.oferts;
-
-  /* console.log(listOferts[0].createdAt);
-  const hora = listOferts[0].createdAt;
-  const dateFormat = "DD-MM-YYYY HH:mm:ss";
-  const testDateUtc = moment.utc(hora);
-  const localDate = testDateUtc.local();
-  console.log(localDate.format(dateFormat)); */
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
@@ -189,9 +182,9 @@ function TableListOferts({ oferts }) {
               description: ofert.description,
               visible: ofert.visible,
               unit: ofert.product.unit,
-              price1: ofert.prices[0]?.price1 || "",
-              price2: ofert.prices[0]?.price2 || "",
-              price3: ofert.prices[0]?.price3 || "",
+              price1: `$${ofert.prices[0]?.price1}` || "",
+              price2: `$${ofert.prices[0]?.price2}` || "",
+              price3: `$${ofert.prices[0]?.price3}` || "",
               quantity1: ofert.quantities[0]?.quantity1 || "",
               quantity2: ofert.quantities[0]?.quantity2 || "",
               quantity3: ofert.quantities[0]?.quantity3 || "",

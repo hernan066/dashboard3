@@ -5,18 +5,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import { useDeleteProductMutation } from "api/productApi";
+import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
 
 function MenuListOferts({ open, handleCloseMenu, ofertId }) {
   const navigate = useNavigate();
 
-  const [deleteProduct, { isError, isSuccess }] = useDeleteProductMutation();
+  const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este producto?",
+      title: "Deseas borrar este oferta?",
       text: "Este cambio no se puede revertir",
       icon: "danger",
       showCancelButton: true,
@@ -26,28 +26,27 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteProduct(ofertId).unwrap();
+        /*  if (isSuccess)
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Oferta borrada con éxito",
+            showConfirmButton: false,
+            timer: 2500,
+          });
+
+        if (isError)
+          Swal.fire({
+            position: "center",
+            icon: "error",
+            title: "Error",
+            text: "Ha ocurrido un error, oferta no borrada",
+            showConfirmButton: false,
+            timer: 2500,
+          }); */
       }
     });
   };
-
-  if (isSuccess)
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Producto borrado con exito",
-      showConfirmButton: false,
-      timer: 2500,
-    });
-
-  if (isError)
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Error",
-      text: "Ha ocurrido un error, producto no borrado",
-      showConfirmButton: false,
-      timer: 2500,
-    });
 
   return (
     <Popover
