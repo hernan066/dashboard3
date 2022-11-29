@@ -176,12 +176,12 @@ function TableListOferts({ oferts }) {
             rows={listOferts.map((ofert) => ({
               _id: ofert._id,
               img:
-                ofert.product.img ||
+                ofert?.product?.img ||
                 "https://ik.imagekit.io/mrprwema7/No_image_available.svg_f8oa-E8hq.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669124011945",
-              product: ofert.product.name,
-              description: ofert.description,
-              visible: ofert.visible,
-              unit: ofert.product.unit,
+              product: ofert?.product?.name,
+              description: ofert?.description,
+              visible: ofert?.visible,
+              unit: ofert.product?.unit,
               price1: `$${ofert.prices[0]?.price1}` || "",
               price2: `$${ofert.prices[0]?.price2}` || "",
               price3: `$${ofert.prices[0]?.price3}` || "",

@@ -21,13 +21,13 @@ import { useState } from "react";
 import MDTypography from "components/MDTypography";
 import Swal from "sweetalert2";
 import { creteOfertSchema } from "validations/oferts/creteOfertYup";
-import { usePostOfertMutation } from "api/ofertApi";
+import { usePutOfertMutation } from "api/ofertApi";
 
 function OfertEdit({ listProducts, ofertById }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [editOfert, { isLoading, isError }] = usePostOfertMutation();
+  const [editOfert, { isLoading, isError }] = usePutOfertMutation();
 
   const autoCompleteProducts = listProducts.products
     .map((product) => {
@@ -67,6 +67,7 @@ function OfertEdit({ listProducts, ofertById }) {
       const editOfertValues = {
         product: inputValue.id,
         description: values.description,
+        visible: values.visible,
         prices: [{ price1: values.price1, price2: values.price2, price3: values.price3 }],
         quantities: [
           {
