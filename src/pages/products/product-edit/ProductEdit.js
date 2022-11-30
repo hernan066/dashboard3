@@ -243,7 +243,7 @@ function ProductEdit({ listCategories, productById }) {
               <CardMedia
                 component="img"
                 image={
-                  urlImage ||
+                  productById.img ||
                   "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
                 }
                 alt="image product"
