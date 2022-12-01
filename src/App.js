@@ -27,6 +27,7 @@ import themeDarkRTL from "assets/theme-dark/theme-rtl";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
+import SignIn from "layouts/authentication/sign-in";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -37,7 +38,7 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-import useAuthStore from "hooks/useAuthStore";
+import PersistLogin from "router/PersistRoute";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
@@ -54,14 +55,6 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
-
-  // check token
-  const { checkAuthToken } = useAuthStore();
-  // const authStatus = 'not-authenticated'; // 'authenticated'; // 'not-authenticated';
-
-  useEffect(() => {
-    checkAuthToken();
-  }, []);
 
   // Cache for the rtl
   useMemo(() => {
@@ -160,8 +153,11 @@ export default function App() {
         )}
         {layout === "vr" && <Configurator />}
         <Routes>
-          {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="/authentication/sign-in" element={<SignIn />} />
+          <Route element={<PersistLogin />}>
+            {getRoutes(routes)}
+            <Route path="*" element={<Navigate to="/dashboard" />} />
+          </Route>
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -184,8 +180,11 @@ export default function App() {
       )}
       {layout === "vr" && <Configurator />}
       <Routes>
-        {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="/authentication/sign-in" element={<SignIn />} />
+        <Route element={<PersistLogin />}>
+          {getRoutes(routes)}
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );

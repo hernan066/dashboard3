@@ -54,6 +54,7 @@ export const persistor = persistStore(store);
  */
 
 import { configureStore } from "@reduxjs/toolkit";
+import { authApi } from "api/authApi";
 import { categoryApi } from "api/categoryApi";
 import { ofertApi } from "api/ofertApi";
 import { productApi } from "api/productApi";
@@ -67,6 +68,7 @@ export const store = configureStore({
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,
     [ofertApi.reducerPath]: ofertApi.reducer,
+    [authApi.reducerPath]: authApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -75,5 +77,6 @@ export const store = configureStore({
       .concat(userApi.middleware)
       .concat(productApi.middleware)
       .concat(categoryApi.middleware)
-      .concat(ofertApi.middleware),
+      .concat(ofertApi.middleware)
+      .concat(authApi.middleware),
 });

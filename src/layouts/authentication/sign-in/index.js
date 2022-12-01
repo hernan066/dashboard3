@@ -1,7 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-
 import MuiLink from "@mui/material/Link";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import GitHubIcon from "@mui/icons-material/GitHub";
@@ -11,12 +10,14 @@ import MDTypography from "components/MDTypography";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
 import { Box, TextField } from "@mui/material";
-import { useEffect, useState } from "react";
-import useAuthStore from "hooks/useAuthStore";
+import { useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { useNavigate } from "react-router-dom";
+import { useLoginMutation } from "api/authApi";
+import { setCredentials } from "redux/authSlice";
+import { useDispatch } from "react-redux";
 
 const schema = yup.object().shape({
   email: yup.string().email("Formato incorrecto").required("Requerido"),
@@ -24,9 +25,11 @@ const schema = yup.object().shape({
 });
 
 function Basic() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
 
-  const { startLogin, errorMessage, status } = useAuthStore();
+  // const { startLogin, errorMessage, status } = useAuthStore();
+  const dispatch = useDispatch();
+  const [login, { isLoading }] = useLoginMutation();
 
   const navigate = useNavigate();
 
@@ -36,17 +39,26 @@ function Basic() {
       password: "",
     },
     onSubmit: async (values) => {
-      startLogin({ email: values.email, password: values.password });
+      try {
+        const userData = await login({ email: values.email, password: values.password }).unwrap();
+        dispatch(setCredentials({ ...userData, user: values.email }));
+        navigate("/");
+      } catch (err) {
+        if (!err?.originalStatus) {
+          // isLoading: true until timeout occurs
+          setErrMsg("No Server Response");
+        } else if (err.originalStatus === 400) {
+          setErrMsg("Missing Username or Password");
+        } else if (err.originalStatus === 401) {
+          setErrMsg("Unauthorized");
+        } else {
+          setErrMsg("Login Failed");
+        }
+      }
     },
     validationSchema: schema,
   });
 
-  useEffect(() => {
-    status === "checking" ? setIsLoading(true) : setIsLoading(false);
-    if (status === "authenticated") {
-      navigate("/");
-    }
-  }, [status]);
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -125,7 +137,7 @@ function Basic() {
             >
               Ingresar
             </LoadingButton>
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            {errMsg && <p style={{ color: "red" }}>{errMsg}</p>}
           </Box>
           {/* form */}
         </MDBox>

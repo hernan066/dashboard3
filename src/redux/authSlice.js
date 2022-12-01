@@ -1,38 +1,25 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from "@reduxjs/toolkit";
 
-export const authSlice = createSlice({
+const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    status: "not-authenticated", // 'authenticated','not-authenticated',
-    user: {},
-    errorMessage: undefined,
-  },
+  initialState: { user: null, token: null },
   reducers: {
-    onChecking: (state) => {
-      state.status = "checking";
-      state.user = {};
-      state.errorMessage = undefined;
+    setCredentials: (state, action) => {
+      const { user, accessToken } = action.payload;
+      state.user = user;
+      state.token = accessToken;
     },
-    onLogin: (state, { payload }) => {
-      state.status = "authenticated";
-      state.user = payload;
-      state.errorMessage = undefined;
-    },
-    onLogout: (state, { payload }) => {
-      state.status = "not-authenticated";
-      state.user = {};
-      state.errorMessage = payload;
-    },
-    clearErrorMessage: (state) => {
-      state.errorMessage = undefined;
-    },
-    updateAvatar: (state, { payload }) => {
-      state.user = { ...state.user, avatar: payload };
+    logOut: (state) => {
+      state.user = null;
+      state.token = null;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { onChecking, onLogin, onLogout, clearErrorMessage, updateAvatar } = authSlice.actions;
+export const { setCredentials, logOut } = authSlice.actions;
+
 export default authSlice.reducer;
+
+export const selectCurrentUser = (state) => state.auth.user;
+export const selectCurrentToken = (state) => state.auth.token;

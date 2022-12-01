@@ -17,8 +17,8 @@ import Dashboard from "layouts/dashboard";
 import Billing from "layouts/billing";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import PrivateRoute from "router/PrivateRoutes";
+// import SignIn from "layouts/authentication/sign-in";
+
 // import PublicRoute from "router/PublicRoutes";
 
 // @mui icons
@@ -33,6 +33,7 @@ import EditProduct from "pages/products/product-edit";
 import ListOferts from "pages/oferts/oferts-list";
 import CreateOfert from "pages/oferts/ofert-create";
 import EditOfert from "pages/oferts/ofert-edit";
+import RequireAuth from "router/RequireAuth";
 
 const routes = [
   {
@@ -42,9 +43,9 @@ const routes = [
     icon: <Icon fontSize="small">dashboard</Icon>,
     route: "/dashboard",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <Dashboard />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -54,9 +55,9 @@ const routes = [
     icon: <Icon fontSize="small">group</Icon>,
     route: "/users",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <ListUsers />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -66,9 +67,9 @@ const routes = [
     icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
     route: "/products",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <ListProducts />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -78,9 +79,9 @@ const routes = [
     icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
     route: "/products/new",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <CreateProduct />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -90,9 +91,9 @@ const routes = [
     icon: <Icon fontSize="small">shoppingCartIcon</Icon>,
     route: "/products/edit/:id",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <EditProduct />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -102,9 +103,9 @@ const routes = [
     icon: <Icon fontSize="small">loyalty</Icon>,
     route: "/oferts",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <ListOferts /> {/* import LoyaltyIcon from '@mui/icons-material/Loyalty'; */}
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -114,9 +115,9 @@ const routes = [
     icon: <Icon fontSize="small">loyalty</Icon>,
     route: "/oferts/new",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <CreateOfert />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -126,9 +127,9 @@ const routes = [
     icon: <Icon fontSize="small">loyalty</Icon>,
     route: "/oferts/edit/:id",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <EditOfert />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -138,9 +139,9 @@ const routes = [
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <Billing />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -150,9 +151,9 @@ const routes = [
     icon: <Icon fontSize="small">notifications</Icon>,
     route: "/notifications",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <Notifications />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
 
@@ -163,9 +164,9 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <Profile />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
 
@@ -176,9 +177,9 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/users/new",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <CreateNewUser />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -188,9 +189,9 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/users/edit/:id",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <EditUser />
-      </PrivateRoute>
+      </RequireAuth>
     ),
   },
   {
@@ -200,19 +201,10 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/users/details/:id",
     component: (
-      <PrivateRoute>
+      <RequireAuth>
         <ProfileUser />
-      </PrivateRoute>
+      </RequireAuth>
     ),
-  },
-
-  {
-    type: "none",
-    name: "Sign In",
-    key: "sign-in",
-    icon: <Icon fontSize="small">login</Icon>,
-    route: "/authentication/sign-in",
-    component: <SignIn />,
   },
 ];
 

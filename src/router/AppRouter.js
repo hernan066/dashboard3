@@ -12,27 +12,21 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import PrivateRoute from "./PrivateRoutes";
 import PublicRoute from "./PublicRoutes";
 
-
 function AppRouter() {
   return (
     <Routes>
       {/* public */}
-      <Route path="/authentication/sign-in"element={    <PublicRoute> <SignIn /> </PublicRoute>}/>
+      <Route path="/authentication/sign-in" element={<SignIn />} />
       {/* private */}
-      <Route path="/" element={                    <Dashboard />       }/>
-      <Route path="/billing" element={             <Billing />        } />
-      <Route path="/notifications" element={       <Notifications />  } />
-      <Route path="/profile" element={            <Profile />        } />
-      
-     
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/billing" element={<Billing />} />
+      <Route path="/notifications" element={<Notifications />} />
+      <Route path="/profile" element={<Profile />} />
 
-      <Route path="/users" element={              <Tables />        } key="users"/>
-      {/* <Route path="/users/new" element={          <PrivateRoute> <UserCreate />     </PrivateRoute>} />
-      <Route path="/users/edit/:id" element={     <PrivateRoute> <UserEdit />       </PrivateRoute>} />
-      <Route path="/users/details/:id" element={  <PrivateRoute> <UserDetails/>     </PrivateRoute>} /> */}
-      {/*  <Route path="*" element={<Navigate to="/dashboard" />} /> */}
+      <Route path="/users" element={<Tables />} key="users" />
+      
     </Routes>
-  )
+  );
 }
 
 export default AppRouter;

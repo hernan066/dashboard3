@@ -11,7 +11,6 @@ import MDButton from "components/MDButton";
 import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
-import useAuthStore from "hooks/useAuthStore";
 
 // Material Dashboard 2 React context
 import {
@@ -26,7 +25,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
-  const { startLogout } = useAuthStore();
 
   let textColor = "white";
 
@@ -160,7 +158,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           variant="gradient"
           color={sidenavColor}
           fullWidth
-          onClick={() => startLogout()}
+          /* onClick={() => startLogout()} */
         >
           Logout
         </MDButton>
