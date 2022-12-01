@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation, NavLink } from "react-router-dom";
+import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -19,8 +19,13 @@ import {
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import { useDispatch } from "react-redux";
+import axios from "api/axios";
+import { logOut } from "redux/authSlice";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
+  const dispatch1 = useDispatch();
+  const navigate = useNavigate();
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
@@ -35,6 +40,19 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
+
+  const handlerLogout = async () => {
+    try {
+      const res = await axios.get("/auth/logout2", {
+        withCredentials: true,
+      });
+      console.log(res);
+      dispatch1(logOut());
+      navigate("/authentication/sign-in");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     // A function that sets the mini state of the sidenav.
@@ -158,7 +176,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           variant="gradient"
           color={sidenavColor}
           fullWidth
-          /* onClick={() => startLogout()} */
+          onClick={handlerLogout}
         >
           Logout
         </MDButton>
