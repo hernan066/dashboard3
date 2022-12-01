@@ -10,11 +10,8 @@ import { Alert } from "@mui/material";
 import { useGetOfertsQuery } from "api/ofertApi";
 import TableListOferts from "./TableListOferts";
 
-
 function ListOferts() {
   const { data: listOferts, isLoading, error } = useGetOfertsQuery();
-
-  console.log(listOferts)
 
   return (
     <DashboardLayout>
@@ -40,7 +37,7 @@ function ListOferts() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-               {listOferts && <TableListOferts oferts={listOferts} />} 
+                {listOferts && <TableListOferts oferts={listOferts} />}
               </MDBox>
             </Card>
           </Grid>

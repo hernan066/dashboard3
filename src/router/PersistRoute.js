@@ -32,10 +32,10 @@ function PersistLogin() {
     return () => (isMounted = false);
   }, []);
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log(`isLoading: ${isLoading}`);
     console.log(`aT: ${token}`);
-  }, [isLoading]);
+  }, [isLoading]); */
 
   return isLoading ? <Loading /> : <Outlet />;
 }

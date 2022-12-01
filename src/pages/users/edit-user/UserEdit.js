@@ -110,8 +110,7 @@ function UserEdit() {
         }
         setIsLoading(false);
       } catch (err) {
-        await setError(error.response.data);
-        console.log(err);
+        setError(error.response.data);
         setIsLoading(false);
       }
     },

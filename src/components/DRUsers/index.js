@@ -30,9 +30,6 @@ function UserList() {
   // test
 
   const { data: listUsers, isLoading, error } = useGetUsersQuery();
-  /* const { data: userById } = useGetUserQuery("636a6caf2f4a6a3fb6196858");
-  console.log(listUsers);
-  console.log(userById); */
 
   const handleOpenMenu = (id, event) => {
     setOpen(event.currentTarget);
