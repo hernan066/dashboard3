@@ -1,19 +1,19 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Loading from "components/DRLoading";
+import { useGetSupplierQuery } from "api/supplierApi";
+import { useParams } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { useGetProductsLotsQuery } from "api/productsLotsApi";
-import TableListProductsLots from "./TableListProductsLots";
+import Loading from "components/DRLoading";
+import SupplierEdit from "./SupplierEdit";
 
-function ListProductsLots() {
-  const { data, isLoading, error } = useGetProductsLotsQuery();
-  console.log(data);
+function EditSupplier() {
+  const { id } = useParams();
+  const { data, isLoading, isError } = useGetSupplierQuery(id);
 
   return (
     <DashboardLayout>
@@ -33,13 +33,13 @@ function ListProductsLots() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de Proveedores
+                  Editar proveedor
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
+              <MDBox>
                 {isLoading && <Loading />}
-                {error && <Alert severity="error">{error.error}</Alert>}
-                {data && <TableListProductsLots productsLots={data.data.productLots} />}
+                {isError && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {data && <SupplierEdit supplier={data.data.supplier} />}
               </MDBox>
             </Card>
           </Grid>
@@ -49,4 +49,4 @@ function ListProductsLots() {
   );
 }
 
-export default ListProductsLots;
+export default EditSupplier;

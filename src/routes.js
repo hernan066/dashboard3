@@ -36,6 +36,8 @@ import EditOfert from "pages/oferts/ofert-edit";
 import RequireAuth from "router/RequireAuth";
 import ListSuppliers from "pages/suppliers/list-suppliers";
 import ListProductsLots from "pages/productsLots/list-productsLots";
+import CreateNewSupplier from "pages/suppliers/create-suppliers";
+import EditSupplier from "pages/suppliers/edit-suppliers";
 
 const routes = [
   {
@@ -143,6 +145,30 @@ const routes = [
     component: (
       <RequireAuth>
         <ListSuppliers />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Proveedores",
+    key: "suppliers_new",
+    icon: <Icon fontSize="small">factory</Icon>,
+    route: "/suppliers/new",
+    component: (
+      <RequireAuth>
+        <CreateNewSupplier />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Proveedores",
+    key: "suppliers_edit",
+    icon: <Icon fontSize="small">factory</Icon>,
+    route: "/suppliers/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditSupplier />
       </RequireAuth>
     ),
   },

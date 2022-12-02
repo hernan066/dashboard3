@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
 
-function MenuListOferts({ open, handleCloseMenu, ofertId }) {
+function MenuListOferts({ open, handleCloseMenu, suppliersId }) {
   const navigate = useNavigate();
 
   const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
@@ -25,7 +25,7 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteProduct(ofertId).unwrap();
+        await deleteProduct(suppliersId).unwrap();
         /*  if (isSuccess)
           Swal.fire({
             position: "center",
@@ -68,11 +68,11 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/oferts/details/${ofertId}`)}>
+      <MenuItem onClick={() => navigate(`/suppliers/details/${suppliersId}`)}>
         <VisibilityIcon sx={{ mr: 1 }} />
         Ver
       </MenuItem>
-      <MenuItem onClick={() => navigate(`/oferts/edit/${ofertId}`)}>
+      <MenuItem onClick={() => navigate(`/suppliers/edit/${suppliersId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

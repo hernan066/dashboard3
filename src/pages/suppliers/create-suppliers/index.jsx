@@ -1,20 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Loading from "components/DRLoading";
-import { Alert } from "@mui/material";
-import { useGetProductsLotsQuery } from "api/productsLotsApi";
-import TableListProductsLots from "./TableListProductsLots";
+import SupplierCreate from "./SupplierCreate";
 
-function ListProductsLots() {
-  const { data, isLoading, error } = useGetProductsLotsQuery();
-  console.log(data);
-
+function CreateNewSupplier() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -33,13 +25,11 @@ function ListProductsLots() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de Proveedores
+                  Crear nuevo proveedor
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                {isLoading && <Loading />}
-                {error && <Alert severity="error">{error.error}</Alert>}
-                {data && <TableListProductsLots productsLots={data.data.productLots} />}
+              <MDBox>
+                <SupplierCreate />
               </MDBox>
             </Card>
           </Grid>
@@ -49,4 +39,4 @@ function ListProductsLots() {
   );
 }
 
-export default ListProductsLots;
+export default CreateNewSupplier;
