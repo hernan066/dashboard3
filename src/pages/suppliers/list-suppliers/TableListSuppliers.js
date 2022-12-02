@@ -8,7 +8,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-import MenuListUsers from "./MenuListOferts";
+import MenuListSuppliers from "./MenuListSuppliers";
 
 function TableListOferts({ suppliers }) {
   const [controller] = useMaterialUIController();
@@ -139,7 +139,7 @@ function TableListOferts({ suppliers }) {
         </Box>
       </Box>
 
-      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} suppliersId={suppliersId} />
+      <MenuListSuppliers open={open} handleCloseMenu={handleCloseMenu} suppliersId={suppliersId} />
     </>
   );
 }

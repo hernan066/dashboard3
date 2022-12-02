@@ -37,7 +37,7 @@ function SupplierEdit({ supplier }) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Oferta creada con éxito",
+          title: "Proveedor editado con éxito",
           showConfirmButton: false,
           timer: 2500,
         });

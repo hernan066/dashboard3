@@ -7,16 +7,17 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
+import { useDeleteSuppliersMutation } from "api/supplierApi";
 
-function MenuListOferts({ open, handleCloseMenu, suppliersId }) {
+function MenuListSuppliers({ open, handleCloseMenu, suppliersId }) {
   const navigate = useNavigate();
 
-  const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
+  const [deleteProduct, { isError, isSuccess }] = useDeleteSuppliersMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este oferta?",
+      title: "Deseas borrar este Proveedor?",
       text: "Este cambio no se puede revertir",
       icon: "danger",
       showCancelButton: true,
@@ -26,24 +27,6 @@ function MenuListOferts({ open, handleCloseMenu, suppliersId }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteProduct(suppliersId).unwrap();
-        /*  if (isSuccess)
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Oferta borrada con éxito",
-            showConfirmButton: false,
-            timer: 2500,
-          });
-
-        if (isError)
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Error",
-            text: "Ha ocurrido un error, oferta no borrada",
-            showConfirmButton: false,
-            timer: 2500,
-          }); */
       }
     });
   };
@@ -85,4 +68,4 @@ function MenuListOferts({ open, handleCloseMenu, suppliersId }) {
   );
 }
 
-export default MenuListOferts;
+export default MenuListSuppliers;
