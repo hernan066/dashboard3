@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import { Avatar, Box, IconButton, Stack } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -9,50 +8,44 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import MenuListUsers from "./MenuListOferts";
 
-import MenuListUsers from "./MenuListUsers";
-
-function TableListUsers({ users }) {
+function TableListOferts({ suppliers }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const [pageSize, setPageSize] = useState(5);
-  const listUsers = users.data.users;
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [suppliersId, setSuppliersId] = useState(null);
 
   const handleOpenMenu = (id, event) => {
     setOpen(event.currentTarget);
-    setUserId(id);
+    setSuppliersId(id);
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
-    setUserId(null);
+    setSuppliersId(null);
   };
 
   const columns = [
     {
-      field: "avatar",
-      headerName: "Avatar",
-      width: 100,
-      renderCell: (params) => <Avatar src={params.row.avatar} />,
-      sortable: false,
-      filterable: false,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "name",
-      headerName: "Nombre",
+      field: "businessName",
+      headerName: "Razón social",
       flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
 
     {
+      field: "cuit",
+      headerName: "CUIT",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "phone",
-      headerName: "Telefono",
+      headerName: "Teléfono",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
@@ -63,11 +56,24 @@ function TableListUsers({ users }) {
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "role",
-      headerName: "Rol",
+      field: "province",
+      headerName: "Provincia",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "city",
+      headerName: "Ciudad",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "zip",
+      headerName: "CP",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+
     {
       field: "accessLevel",
       headerName: "Menu",
@@ -83,31 +89,20 @@ function TableListUsers({ users }) {
 
   return (
     <>
-      <Box m="20px">
+      <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/users/new")}>
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/suppliers/new")}>
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh">
+        <Box m="40px 0 0 0" height="75vh" width="1500px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
-            rows={listUsers.map((user) => ({
-              _id: user._id,
-              name: `${user.name}  ${user.lastName}`,
-              email: user.email,
-              phone: user.phone,
-              avatar: user.avatar,
-              role: user.role.role,
-            }))}
+            rows={suppliers}
             columns={columns}
             getRowId={(row) => row._id}
-            pageSize={pageSize}
-            onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[5, 10, 20]}
-            pagination
             sx={{
               "& .MuiDataGrid-cellContent": {
                 color: `${darkMode ? "#fff" : "#222"} `,
@@ -144,9 +139,9 @@ function TableListUsers({ users }) {
         </Box>
       </Box>
 
-      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} userId={userId} />
+      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} suppliersId={suppliersId} />
     </>
   );
 }
 
-export default TableListUsers;
+export default TableListOferts;

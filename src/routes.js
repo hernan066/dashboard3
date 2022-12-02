@@ -34,6 +34,8 @@ import ListOferts from "pages/oferts/oferts-list";
 import CreateOfert from "pages/oferts/ofert-create";
 import EditOfert from "pages/oferts/ofert-edit";
 import RequireAuth from "router/RequireAuth";
+import ListSuppliers from "pages/suppliers/list-suppliers";
+import ListProductsLots from "pages/productsLots/list-productsLots";
 
 const routes = [
   {
@@ -129,6 +131,32 @@ const routes = [
     component: (
       <RequireAuth>
         <EditOfert />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Proveedores",
+    key: "suppliers",
+    icon: <Icon fontSize="small">factory</Icon>,
+    route: "/suppliers",
+    component: (
+      <RequireAuth>
+        <ListSuppliers />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Lote de productos",
+    key: "products_lots",
+    icon: (
+      <Icon fontSize="small">list_alt</Icon>
+    ) /* import ListAltIcon from '@mui/icons-material/ListAlt'; */,
+    route: "/products_lots",
+    component: (
+      <RequireAuth>
+        <ListProductsLots />
       </RequireAuth>
     ),
   },
