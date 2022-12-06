@@ -5,20 +5,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useDeleteProductsLotMutation } from "api/productsLotsApi";
 
-function MenuListOferts({ open, handleCloseMenu, productsLotsId }) {
+function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
   const navigate = useNavigate();
 
-  const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
+  const [deleteProduct, { isError, isSuccess }] = useDeleteProductsLotMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este oferta?",
+      title: "Deseas borrar este lote de productos?",
       text: "Este cambio no se puede revertir",
-      icon: "danger",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
@@ -26,27 +26,31 @@ function MenuListOferts({ open, handleCloseMenu, productsLotsId }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteProduct(productsLotsId).unwrap();
-        /*  if (isSuccess)
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Oferta borrada con éxito",
-            showConfirmButton: false,
-            timer: 2500,
-          });
-
-        if (isError)
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Error",
-            text: "Ha ocurrido un error, oferta no borrada",
-            showConfirmButton: false,
-            timer: 2500,
-          }); */
       }
     });
   };
+
+  useEffect(() => {
+    if (isError)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error",
+        text: "Ha ocurrido un error, lote de productos no borrado",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isError]);
+  useEffect(() => {
+    if (isSuccess)
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Lote de productos borrado con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isSuccess]);
 
   return (
     <Popover
@@ -85,4 +89,4 @@ function MenuListOferts({ open, handleCloseMenu, productsLotsId }) {
   );
 }
 
-export default MenuListOferts;
+export default MenuProductsLots;

@@ -11,7 +11,7 @@ const baseQuery = fetchBaseQuery({
     const token = getState().auth.token;
 
     if (token) {
-      headers.set("x-token", `${token}`);
+      headers.set("x-token", token);
     }
     return headers;
   },

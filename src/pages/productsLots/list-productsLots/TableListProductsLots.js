@@ -9,10 +9,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-
 import { dateToLocalDate } from "utils/dateFormat";
-
-import MenuListUsers from "./MenuListOferts";
+import MenuProductsLots from "./MenuProductsLots";
 
 function TableListProductsLots({ productsLots }) {
   const [controller] = useMaterialUIController();
@@ -164,7 +162,7 @@ function TableListProductsLots({ productsLots }) {
         </Box>
       </Box>
 
-      <MenuListUsers
+      <MenuProductsLots
         open={open}
         handleCloseMenu={handleCloseMenu}
         productsLotsId={productsLotsId}
