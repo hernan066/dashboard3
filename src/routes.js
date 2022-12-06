@@ -38,6 +38,8 @@ import ListSuppliers from "pages/suppliers/list-suppliers";
 import ListProductsLots from "pages/productsLots/list-productsLots";
 import CreateNewSupplier from "pages/suppliers/create-suppliers";
 import EditSupplier from "pages/suppliers/edit-suppliers";
+import CreateProductsLots from "pages/productsLots/create-productsLots";
+import EditProductsLots from "pages/productsLots/edit-productsLots";
 
 const routes = [
   {
@@ -183,6 +185,34 @@ const routes = [
     component: (
       <RequireAuth>
         <ListProductsLots />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Lote de productos",
+    key: "products_lots_create",
+    icon: (
+      <Icon fontSize="small">list_alt</Icon>
+    ) /* import ListAltIcon from '@mui/icons-material/ListAlt'; */,
+    route: "/products_lots/new",
+    component: (
+      <RequireAuth>
+        <CreateProductsLots />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Lote de productos",
+    key: "products_lots_edit",
+    icon: (
+      <Icon fontSize="small">list_alt</Icon>
+    ) /* import ListAltIcon from '@mui/icons-material/ListAlt'; */,
+    route: "/products_lots/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditProductsLots />
       </RequireAuth>
     ),
   },

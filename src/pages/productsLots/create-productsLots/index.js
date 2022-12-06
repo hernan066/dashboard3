@@ -1,19 +1,19 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useGetProductsQuery } from "api/productApi";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetProductsLotsQuery } from "api/productsLotsApi";
-import TableListProductsLots from "./TableListProductsLots";
+import { useGetSuppliersQuery } from "api/supplierApi";
+import ProductsLotsCreate from "./ProductsLotsCreate";
 
-function ListProductsLots() {
-  const { data, isLoading, error } = useGetProductsLotsQuery();
-  console.log(data);
+function CreateProductsLots() {
+  const { data: listProducts, isLoading: l1, isError: e1 } = useGetProductsQuery();
+  const { data: ListSuppliers, isLoading: l2, isError: e2 } = useGetSuppliersQuery();
 
   return (
     <DashboardLayout>
@@ -33,13 +33,15 @@ function ListProductsLots() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lote de productos
+                  Nuevo Lote de Productos
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                {isLoading && <Loading />}
-                {error && <Alert severity="error">{error.error}</Alert>}
-                {data && <TableListProductsLots productsLots={data.data.productLots} />}
+              <MDBox>
+                {(l1 || l2) && <Loading />}
+                {(e1 || e2) && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {listProducts && ListSuppliers && (
+                  <ProductsLotsCreate listProducts={listProducts} ListSuppliers={ListSuppliers} />
+                )}
               </MDBox>
             </Card>
           </Grid>
@@ -49,4 +51,4 @@ function ListProductsLots() {
   );
 }
 
-export default ListProductsLots;
+export default CreateProductsLots;
