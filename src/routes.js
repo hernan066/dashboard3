@@ -40,6 +40,8 @@ import CreateNewSupplier from "pages/suppliers/create-suppliers";
 import EditSupplier from "pages/suppliers/edit-suppliers";
 import CreateProductsLots from "pages/productsLots/create-productsLots";
 import EditProductsLots from "pages/productsLots/edit-productsLots";
+import ListOrders from "pages/orders/order-list";
+import OrderDetails from "pages/orders/order-datails";
 
 const routes = [
   {
@@ -213,6 +215,34 @@ const routes = [
     component: (
       <RequireAuth>
         <EditProductsLots />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Ordenes",
+    key: "orders",
+    icon: (
+      <Icon fontSize="small">view_list_icon</Icon>
+    ) /* import ViewListIcon from '@mui/icons-material/ViewList'; */,
+    route: "/orders",
+    component: (
+      <RequireAuth>
+        <ListOrders />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Ordenes",
+    key: "orders_details",
+    icon: (
+      <Icon fontSize="small">view_list_icon</Icon>
+    ) /* import ViewListIcon from '@mui/icons-material/ViewList'; */,
+    route: "/orders/details/:id",
+    component: (
+      <RequireAuth>
+        <OrderDetails />
       </RequireAuth>
     ),
   },
