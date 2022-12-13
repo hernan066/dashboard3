@@ -11,6 +11,8 @@ import AddressForm from "./AddressForm";
 function Address({ users }) {
   const [filterUser, setFilterUser] = useState([]);
   const [search, setSearch] = useState("");
+  const [userAddress, setUserAddress] = useState(null);
+  const [manualForm, setManualForm] = useState(false);
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
@@ -29,6 +31,8 @@ function Address({ users }) {
 
     filtrar(users);
   };
+
+  const handleClick = () => setManualForm(true);
 
   return (
     <Box
@@ -70,8 +74,8 @@ function Address({ users }) {
               marginBottom: "20px",
             }}
           >
-            <MDTypography variant="h6">{`${user.phone} // ${user.name} ${user.lastName} // ${user.userAddresses[0].address}`}</MDTypography>
-            <MDButton color="info" size="small">
+            <MDTypography variant="body2">{`${user.phone} // ${user.name} ${user.lastName} // ${user.userAddresses[0].address}`}</MDTypography>
+            <MDButton color="info" size="small" onClick={() => setUserAddress(user)}>
               Cargar
             </MDButton>
           </Box>
@@ -83,11 +87,25 @@ function Address({ users }) {
           flexDirection: "column",
           width: "50%",
           padding: "25px",
+          alignSelf: "flex-start",
         }}
       >
-        <MDTypography variant="h6">Cargar dirección manualmente</MDTypography>
+        <MDTypography variant="h6">Datos de envío</MDTypography>
+        {!userAddress && (
+          <MDButton
+            color="info"
+            variant="gradient"
+            sx={{
+              margin: "15px 0",
+            }}
+            onClick={handleClick}
+          >
+            Cargar manualmente
+          </MDButton>
+        )}
+        {manualForm && <AddressForm setManualForm={setManualForm} />}
 
-        <AddressForm />
+        {userAddress && <AddressForm userAddress={userAddress} setManualForm={setManualForm} />}
       </Card>
     </Box>
   );

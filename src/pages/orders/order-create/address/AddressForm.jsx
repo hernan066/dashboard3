@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-duplicate-props */
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
@@ -8,23 +10,24 @@ import { useFormik } from "formik";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 import { usePostSuppliersMutation } from "api/supplierApi";
-import { creteSupplierSchema } from "validations/suppliers/createSupplierYup";
+import { creteOrderAddressSchema } from "validations/oferts/createOrderAddressYup";
 import Swal from "sweetalert2";
 
-function AddressForm() {
+function AddressForm({ userAddress, setManualForm }) {
   const navigate = useNavigate();
   const [createSupplier, { isLoading, isError }] = usePostSuppliersMutation();
 
   const formik = useFormik({
     initialValues: {
-      businessName: "",
-      cuit: "",
-      email: "",
-      phone: "",
-      address: "",
-      province: "",
-      city: "",
-      zip: undefined,
+      name: userAddress?.name || "",
+      lastName: userAddress?.lastName || "",
+      phone: userAddress?.phone || "",
+      address: userAddress?.userAddresses[0].address || "",
+      flor: userAddress?.userAddresses[0].flor || "",
+      department: userAddress?.userAddresses[0].department || "",
+      province: userAddress?.userAddresses[0].province || "",
+      city: userAddress?.userAddresses[0].city || "",
+      zip: userAddress?.userAddresses[0].zip || undefined,
     },
     onSubmit: async (values) => {
       const res = await createSupplier(values).unwrap();
@@ -39,7 +42,7 @@ function AddressForm() {
         navigate("/suppliers");
       }
     },
-    validationSchema: creteSupplierSchema,
+    validationSchema: creteOrderAddressSchema,
   });
 
   return (
@@ -57,6 +60,7 @@ function AddressForm() {
           fullWidth
           label="Nombre/s"
           name="name"
+          value={formik.values.name}
           error={!!formik.errors.name}
           helperText={formik.errors.name}
           onChange={formik.handleChange}
@@ -67,6 +71,7 @@ function AddressForm() {
           fullWidth
           name="lastName"
           label="Apellido"
+          value={formik.values.lastName}
           error={!!formik.errors.lastName}
           helperText={formik.errors.lastName}
           onChange={formik.handleChange}
@@ -77,6 +82,7 @@ function AddressForm() {
           fullWidth
           name="phone"
           label="Telefono"
+          value={formik.values.phone}
           error={!!formik.errors.phone}
           helperText={formik.errors.phone}
           onChange={formik.handleChange}
@@ -89,6 +95,7 @@ function AddressForm() {
           name="address"
           label="Dirección"
           id="user_address"
+          value={formik.values.address}
           error={!!formik.errors.address}
           helperText={formik.errors.address}
           onChange={formik.handleChange}
@@ -100,6 +107,7 @@ function AddressForm() {
           name="flor"
           label="Piso (opcional)"
           id="user_flor"
+          value={formik.values.flor}
           error={!!formik.errors.flor}
           helperText={formik.errors.flor}
           onChange={formik.handleChange}
@@ -111,6 +119,7 @@ function AddressForm() {
           name="department"
           label="Departamento (opcional)"
           id="user_department"
+          value={formik.values.department}
           error={formik.errors.department}
           helperText={formik.errors.department}
           onChange={formik.handleChange}
@@ -123,6 +132,7 @@ function AddressForm() {
           name="province"
           label="Provincia"
           id="user_province"
+          value={formik.values.province}
           error={!!formik.errors.province}
           helperText={formik.errors.province}
           onChange={formik.handleChange}
@@ -135,6 +145,7 @@ function AddressForm() {
           name="city"
           label="Ciudad"
           id="user_city"
+          value={formik.values.city}
           error={!!formik.errors.city}
           helperText={formik.errors.city}
           onChange={formik.handleChange}
@@ -148,6 +159,7 @@ function AddressForm() {
           label="Código Postal"
           id="user_zip"
           type="number"
+          value={formik.values.zip}
           error={!!formik.errors.zip}
           helperText={formik.errors.zip}
           onChange={formik.handleChange}
@@ -170,7 +182,7 @@ function AddressForm() {
         <MDButton
           variant="outlined"
           color="info"
-          onClick={() => navigate(-1)}
+          onClick={() => setManualForm(false)}
           sx={{
             mt: 3,
             mb: 2,

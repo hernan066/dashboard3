@@ -16,7 +16,6 @@ function CreateOrder({ oferts: ofertsList, users }) {
   const { products } = useSelector((store) => store.cart);
 
   const handleChange = (event, newValue) => {
-    console.log(newValue);
     setPage(newValue);
   };
 
