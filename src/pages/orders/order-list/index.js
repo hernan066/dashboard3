@@ -8,13 +8,14 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
+import { useGetOfertsQuery } from "api/ofertApi";
 import { useGetOrdersQuery } from "api/orderApi";
 import TableListOrders from "./TableListOrders";
 
 
 
 function ListOrders() {
-  const { data: listOrders, isLoading, error } = useGetOrdersQuery()
+  const { data: listOrders, isLoading, error } = useGetOrdersQuery();
 
   console.log(listOrders);
 

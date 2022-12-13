@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Box, MenuItem, TextField } from "@mui/material";
@@ -11,20 +12,11 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 
-function UserCreate() {
+function UserCreate({ roles }) {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
   const [error, setError] = useState([]);
-
-  useEffect(() => {
-    const getRoles = async () => {
-      const { data } = await apiRequest.get("/roles");
-      setRoles(data.data.roles);
-    };
-    getRoles();
-  }, [setRoles]);
 
   const formik = useFormik({
     initialValues: {

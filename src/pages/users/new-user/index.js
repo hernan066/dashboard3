@@ -1,16 +1,18 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useGetRolesQuery } from "api/roleApi";
+import Loading from "components/DRLoading";
+import { Alert } from "@mui/material";
 import UserCreate from "./UserCreate";
 
 function CreateNewUser() {
+  const { data: roles, isLoading: l1, isError: e1 } = useGetRolesQuery();
+  console.log(roles);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -33,7 +35,9 @@ function CreateNewUser() {
                 </MDTypography>
               </MDBox>
               <MDBox>
-                <UserCreate />
+                {l1 && <Loading />}
+                {e1 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {roles && <UserCreate roles={roles.data.roles} />}
               </MDBox>
             </Card>
           </Grid>

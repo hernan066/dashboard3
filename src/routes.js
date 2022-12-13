@@ -42,6 +42,7 @@ import CreateProductsLots from "pages/productsLots/create-productsLots";
 import EditProductsLots from "pages/productsLots/edit-productsLots";
 import ListOrders from "pages/orders/order-list";
 import OrderDetails from "pages/orders/order-datails";
+import OrderCreate from "pages/orders/order-create";
 
 const routes = [
   {
@@ -243,6 +244,20 @@ const routes = [
     component: (
       <RequireAuth>
         <OrderDetails />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Ordenes",
+    key: "orders_details",
+    icon: (
+      <Icon fontSize="small">view_list_icon</Icon>
+    ) /* import ViewListIcon from '@mui/icons-material/ViewList'; */,
+    route: "/orders/new",
+    component: (
+      <RequireAuth>
+        <OrderCreate />
       </RequireAuth>
     ),
   },
