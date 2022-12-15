@@ -16,34 +16,34 @@ const cartSlice = createSlice({
     addProduct: (state, action) => {
       state.products = [...state.products, action.payload];
 
-      /*  const sub = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
+      const sub = state.products.reduce((acc, cur) => {
+        return acc + cur.finalPrice;
       }, 0);
 
-      state.subTotal = sub; */
+      state.subTotal = sub;
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter((product) => product._id !== action.payload);
-      /*  state.subTotal = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
-      }, 0); */
+      state.subTotal = state.products.reduce((acc, cur) => {
+        return acc + cur.finalPrice;
+      }, 0);
     },
     updateProduct: (state, action) => {
       state.products = state.products.map((product) => {
         if (product._id === action.payload.id) {
           return {
             ...product,
-            finalPrice: action.payload.finalPrice,
-            finalQuantity: action.payload.finalQuantity,
+            finalPrice: +action.payload.finalPrice,
+            finalQuantity: +action.payload.finalQuantity,
           };
         } else {
           return product;
         }
       });
 
-      /*  state.subTotal = state.products.reduce((acc, cur) => {
-        return acc + cur.combo_price;
-      }, 0); */
+      state.subTotal = state.products.reduce((acc, cur) => {
+        return acc + cur.finalPrice;
+      }, 0);
     },
     addShippingAddress: (state, action) => {
       state.shippingAddress = action.payload.shippingAddress;

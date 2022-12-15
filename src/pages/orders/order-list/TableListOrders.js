@@ -40,23 +40,23 @@ function TableListOrders({ orders }) {
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "status1",
+      field: "status",
       headerName: "Estado",
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => {
-        if (params.status === "delivered") {
+        if (params.row.status === "Entregada") {
           return (
             <div
               style={{
                 height: "30px",
-                width: "85px",
+                width: "100px",
                 borderRadius: "10px",
                 backgroundColor: "green",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                color: "black",
+                color: "white",
                 boxShadow: "0 0 2px #555",
               }}
             >
@@ -64,12 +64,12 @@ function TableListOrders({ orders }) {
             </div>
           );
         }
-        if (params.status === "reject") {
+        if (params.row.status === "Rechazada") {
           return (
             <div
               style={{
                 height: "30px",
-                width: "85px",
+                width: "100px",
                 borderRadius: "10px",
                 backgroundColor: "red",
                 display: "flex",
@@ -86,7 +86,7 @@ function TableListOrders({ orders }) {
           <div
             style={{
               height: "30px",
-              width: "85px",
+              width: "100px",
               borderRadius: "10px",
               backgroundColor: "yellow",
               display: "flex",
@@ -96,7 +96,7 @@ function TableListOrders({ orders }) {
               boxShadow: "0 0 2px #555",
             }}
           >
-            Pendiente
+            {params.row.status}
           </div>
         );
       },
@@ -173,7 +173,7 @@ function TableListOrders({ orders }) {
             rows={listOrders.map((order) => ({
               ...order,
               createdAt: dateToLocalDate(order.createdAt),
-              client: `${order.shippingAddress.name} ${order.shippingAddress.lastname}`,
+              client: `${order.shippingAddress.name} ${order.shippingAddress.lastName}`,
               address: order.shippingAddress.address,
             }))}
             columns={columns}

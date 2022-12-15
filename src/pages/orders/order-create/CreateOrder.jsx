@@ -3,7 +3,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import { Box, Divider, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Address from "./address/Address";

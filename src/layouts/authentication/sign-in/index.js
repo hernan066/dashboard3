@@ -41,7 +41,7 @@ function Basic() {
     onSubmit: async (values) => {
       try {
         const userData = await login({ email: values.email, password: values.password }).unwrap();
-        dispatch(setCredentials({ ...userData, user: values.email }));
+        dispatch(setCredentials({ ...userData }));
         navigate("/");
       } catch (err) {
         if (!err?.originalStatus) {
