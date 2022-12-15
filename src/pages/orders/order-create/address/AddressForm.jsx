@@ -5,17 +5,16 @@
 /* eslint-disable no-underscore-dangle */
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, TextField } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { usePostSuppliersMutation } from "api/supplierApi";
 import { creteOrderAddressSchema } from "validations/oferts/createOrderAddressYup";
-import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { addShippingAddress } from "redux/cartSlice";
 
-function AddressForm({ userAddress, setManualForm }) {
-  const navigate = useNavigate();
-  const [createSupplier, { isLoading, isError }] = usePostSuppliersMutation();
+function AddressForm({ userAddress, setManualForm, setPage }) {
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
@@ -28,19 +27,16 @@ function AddressForm({ userAddress, setManualForm }) {
       province: userAddress?.userAddresses[0].province || "",
       city: userAddress?.userAddresses[0].city || "",
       zip: userAddress?.userAddresses[0].zip || undefined,
+      shippingCost: undefined,
     },
     onSubmit: async (values) => {
-      const res = await createSupplier(values).unwrap();
-      if (res) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Oferta creada con éxito",
-          showConfirmButton: false,
-          timer: 2500,
-        });
-        navigate("/suppliers");
-      }
+      dispatch(
+        addShippingAddress({
+          shippingAddress: values,
+          shippingCost: values.shippingCost,
+        })
+      );
+      setPage(1);
     },
     validationSchema: creteOrderAddressSchema,
   });
@@ -164,11 +160,24 @@ function AddressForm({ userAddress, setManualForm }) {
           helperText={formik.errors.zip}
           onChange={formik.handleChange}
         />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          autoComplete="shippingCost"
+          name="shippingCost"
+          label="Costo de envío"
+          id="shippingCost"
+          type="number"
+          value={formik.values.shippingCost}
+          error={!!formik.errors.shippingCost}
+          helperText={formik.errors.shippingCost}
+          onChange={formik.handleChange}
+        />
 
         <LoadingButton
           type="submit"
           variant="contained"
-          loading={isLoading}
           sx={{
             mt: 3,
             mb: 2,
@@ -190,7 +199,6 @@ function AddressForm({ userAddress, setManualForm }) {
         >
           Cancelar
         </MDButton>
-        {isError && <Alert severity="error">Error — Proveedor no creado</Alert>}
       </Box>
     </Box>
   );

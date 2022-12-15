@@ -8,7 +8,7 @@ import MDTypography from "components/MDTypography";
 import { useState } from "react";
 import AddressForm from "./AddressForm";
 
-function Address({ users }) {
+function Address({ users, setPage }) {
   const [filterUser, setFilterUser] = useState([]);
   const [search, setSearch] = useState("");
   const [userAddress, setUserAddress] = useState(null);
@@ -103,9 +103,11 @@ function Address({ users }) {
             Cargar manualmente
           </MDButton>
         )}
-        {manualForm && <AddressForm setManualForm={setManualForm} />}
+        {manualForm && <AddressForm setManualForm={setManualForm} setPage={setPage} />}
 
-        {userAddress && <AddressForm userAddress={userAddress} setManualForm={setManualForm} />}
+        {userAddress && (
+          <AddressForm userAddress={userAddress} setManualForm={setManualForm} setPage={setPage} />
+        )}
       </Card>
     </Box>
   );

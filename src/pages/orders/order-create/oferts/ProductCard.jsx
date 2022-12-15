@@ -1,16 +1,16 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Box, Card } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "redux/cartSlice";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
-
-  const [disable, setDisable] = useState(false);
+  const { products } = useSelector((store) => store.cart);
+  const itemCart = products.find((item) => item._id === product._id);
 
   const handlerClick = () => {
     dispatch(
@@ -20,7 +20,6 @@ function ProductCard({ product }) {
         finalQuantity: product.quantities[0].quantity1,
       })
     );
-    setDisable(true);
   };
 
   return (
@@ -65,8 +64,8 @@ function ProductCard({ product }) {
         <MDTypography variant="subtitle2" sx={{ width: "33%" }}>
           ${product.prices[0].price1}
         </MDTypography>
-        <MDButton color="dark" variant="gradient" onClick={handlerClick} disabled={disable}>
-          {disable ? "Agregado" : "Agregar"}
+        <MDButton color="dark" variant="gradient" onClick={handlerClick} disabled={itemCart}>
+          {!itemCart ? "Agregar" : "Agregado"}
         </MDButton>
       </Box>
     </Card>

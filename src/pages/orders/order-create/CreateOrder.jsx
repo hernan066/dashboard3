@@ -7,7 +7,7 @@ import { Box, Divider, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import Address from "./address/Address";
-import Cart from "./card/Cart";
+import Cart from "./cart/Cart";
 import Oferts from "./oferts/Oferts";
 
 function CreateOrder({ oferts: ofertsList, users }) {
@@ -34,7 +34,7 @@ function CreateOrder({ oferts: ofertsList, users }) {
         <Tab label={`3.Confirmar pedido(${products.length})`} />
       </Tabs>
 
-      {page === 0 && <Address users={users} />}
+      {page === 0 && <Address users={users} setPage={setPage} />}
       {page === 1 && <Oferts oferts={oferts} />}
       {page === 2 && <Cart />}
     </Box>

@@ -8,6 +8,8 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     products: [],
+    shippingAddress: null,
+    shippingCost: 0,
     subTotal: 0,
   },
   reducers: {
@@ -43,8 +45,12 @@ const cartSlice = createSlice({
         return acc + cur.combo_price;
       }, 0); */
     },
+    addShippingAddress: (state, action) => {
+      state.shippingAddress = action.payload.shippingAddress;
+      state.shippingCost = action.payload.shippingCost;
+    },
   },
 });
 
-export const { addProduct, deleteProduct, updateProduct } = cartSlice.actions;
+export const { addProduct, deleteProduct, updateProduct, addShippingAddress } = cartSlice.actions;
 export default cartSlice.reducer;

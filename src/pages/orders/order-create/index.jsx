@@ -12,7 +12,6 @@ function OrderCreate() {
   const { data: oferts, isLoading: l1, isError: e1 } = useGetOfertsQuery();
   const { data: users, isLoading: l2, isError: e2 } = useGetUsersQuery();
 
-  console.log(users);
   return (
     <DashboardLayout>
       <DashboardNavbar />
