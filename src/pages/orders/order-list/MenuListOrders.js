@@ -5,49 +5,53 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
+import { useDeleteOrderMutation } from "api/orderApi";
 
 function MenuListOrders({ open, handleCloseMenu, orderId }) {
   const navigate = useNavigate();
 
-  const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
+  const [deleteOrder, { isError, isSuccess }] = useDeleteOrderMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este oferta?",
+      title: "Deseas borrar esta orden?",
       text: "Este cambio no se puede revertir",
-      icon: "danger",
+
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteProduct(orderId).unwrap();
-        /*  if (isSuccess)
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Oferta borrada con éxito",
-            showConfirmButton: false,
-            timer: 2500,
-          });
-
-        if (isError)
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Error",
-            text: "Ha ocurrido un error, oferta no borrada",
-            showConfirmButton: false,
-            timer: 2500,
-          }); */
+        await deleteOrder(orderId).unwrap();
       }
     });
   };
 
+  useEffect(() => {
+    if (isError)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error",
+        text: "Ha ocurrido un error, orden no borrada",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isError]);
+  useEffect(() => {
+    if (isSuccess)
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Order borrada con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isSuccess]);
   return (
     <Popover
       open={Boolean(open)}

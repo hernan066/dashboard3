@@ -10,7 +10,7 @@ const useRefreshToken = () => {
       withCredentials: true,
     });
 
-    dispatch(setCredentials({ accessToken: response.data.accessToken }));
+    dispatch(setCredentials({ ...response.data }));
     return response.data.accessToken;
   };
   return refresh;
