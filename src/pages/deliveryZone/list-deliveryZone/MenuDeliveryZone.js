@@ -6,12 +6,12 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { useDeleteProductsLotMutation } from "api/productsLotsApi";
+import { useDeleteDeliveryZoneMutation } from "api/deliveryZoneApi";
 
 function MenuProductsLots({ open, handleCloseMenu, menuId }) {
   const navigate = useNavigate();
 
-  const [deleteProduct, { isError, isSuccess }] = useDeleteProductsLotMutation();
+  const [deleteDeliveryZone, { isError, isSuccess }] = useDeleteDeliveryZoneMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
@@ -24,7 +24,7 @@ function MenuProductsLots({ open, handleCloseMenu, menuId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteProduct(menuId).unwrap();
+        await deleteDeliveryZone(menuId).unwrap();
       }
     });
   };
