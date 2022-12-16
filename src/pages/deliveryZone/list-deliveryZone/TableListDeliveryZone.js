@@ -9,7 +9,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-import { dateToLocalDate } from "utils/dateFormat";
 import MenuProductsLots from "./MenuDeliveryZone";
 
 function TableListDeliveryZone({ deliveryZones }) {
@@ -94,7 +93,7 @@ function TableListDeliveryZone({ deliveryZones }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/products_lots/new")}>
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/delivery_zone/new")}>
             Crear
           </MDButton>
         </Stack>
