@@ -46,6 +46,7 @@ import OrderCreate from "pages/orders/order-create";
 import OrderEdit from "pages/orders/order-edit";
 import ListDeliveryZone from "pages/deliveryZone/list-deliveryZone";
 import CreateNewDeliveryZone from "pages/deliveryZone/create-deliveryZone";
+import EditDeliveryZone from "pages/deliveryZone/edit-deliveryZone";
 
 const routes = [
   {
@@ -303,6 +304,20 @@ const routes = [
     component: (
       <RequireAuth>
         <CreateNewDeliveryZone />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Zonas de reparto",
+    key: "delivery_zone_edit",
+    icon: (
+      <Icon fontSize="small">home_work_icon</Icon>
+    ) /* import HomeWorkIcon from '@mui/icons-material/HomeWork'; */,
+    route: "/delivery_zone/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditDeliveryZone />
       </RequireAuth>
     ),
   },

@@ -3,13 +3,12 @@
 import { MenuItem, Popover } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useDeleteProductsLotMutation } from "api/productsLotsApi";
 
-function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
+function MenuProductsLots({ open, handleCloseMenu, menuId }) {
   const navigate = useNavigate();
 
   const [deleteProduct, { isError, isSuccess }] = useDeleteProductsLotMutation();
@@ -25,7 +24,7 @@ function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteProduct(productsLotsId).unwrap();
+        await deleteProduct(menuId).unwrap();
       }
     });
   };
@@ -72,11 +71,7 @@ function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/products_lots/details/${productsLotsId}`)}>
-        <VisibilityIcon sx={{ mr: 1 }} />
-        Ver
-      </MenuItem>
-      <MenuItem onClick={() => navigate(`/products_lots/edit/${productsLotsId}`)}>
+      <MenuItem onClick={() => navigate(`/delivery_zone/edit/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>
