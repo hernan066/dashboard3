@@ -49,6 +49,12 @@ const cartSlice = createSlice({
       state.shippingAddress = action.payload.shippingAddress;
       state.shippingCost = action.payload.shippingCost;
     },
+    clearCart: (state) => {
+      state.products = [];
+      state.shippingAddress = null;
+      state.shippingCost = 0;
+      state.subTotal = 0;
+    },
   },
 });
 

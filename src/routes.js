@@ -44,6 +44,7 @@ import ListOrders from "pages/orders/order-list";
 import OrderDetails from "pages/orders/order-datails";
 import OrderCreate from "pages/orders/order-create";
 import OrderEdit from "pages/orders/order-edit";
+import ListDeliveryZone from "pages/deliveryZone/list-deliveryZone";
 
 const routes = [
   {
@@ -273,6 +274,20 @@ const routes = [
     component: (
       <RequireAuth>
         <OrderEdit />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Zonas de reparto",
+    key: "delivery_zone",
+    icon: (
+      <Icon fontSize="small">home_work_icon</Icon>
+    ) /* import HomeWorkIcon from '@mui/icons-material/HomeWork'; */,
+    route: "/delivery_zone",
+    component: (
+      <RequireAuth>
+        <ListDeliveryZone />
       </RequireAuth>
     ),
   },

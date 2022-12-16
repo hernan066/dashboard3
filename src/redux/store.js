@@ -2,6 +2,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authApi } from "api/authApi";
 import { categoryApi } from "api/categoryApi";
+import { deliveryZoneApi } from "api/deliveryZoneApi";
 import { ofertApi } from "api/ofertApi";
 import { orderApi } from "api/orderApi";
 import { productApi } from "api/productApi";
@@ -19,6 +20,7 @@ export const store = configureStore({
     [ofertApi.reducerPath]: ofertApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
     [orderApi.reducerPath]: orderApi.reducer,
+    [deliveryZoneApi.reducerPath]: deliveryZoneApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -29,5 +31,5 @@ export const store = configureStore({
       .concat(categoryApi.middleware)
       .concat(ofertApi.middleware)
       .concat(authApi.middleware)
-      .concat(orderApi.middleware),
+      .concat(deliveryZoneApi.middleware),
 });
