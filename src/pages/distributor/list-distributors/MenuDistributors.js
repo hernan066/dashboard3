@@ -6,17 +6,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { useDeleteDeliveryZoneMutation } from "api/deliveryZoneApi";
+import { useDeleteDistributorMutation } from "api/distributorApi";
 
 function MenuDistributors({ open, handleCloseMenu, menuId }) {
   const navigate = useNavigate();
 
-  const [deleteDeliveryZone, { isError, isSuccess }] = useDeleteDeliveryZoneMutation();
+  const [deleteDistributors, { isError, isSuccess }] = useDeleteDistributorMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este lote de productos?",
+      title: "Deseas borrar esta distribuidora?",
       text: "Este cambio no se puede revertir",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -24,7 +24,7 @@ function MenuDistributors({ open, handleCloseMenu, menuId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteDeliveryZone(menuId).unwrap();
+        await deleteDistributors(menuId).unwrap();
       }
     });
   };
