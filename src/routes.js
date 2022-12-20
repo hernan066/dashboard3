@@ -47,6 +47,8 @@ import OrderEdit from "pages/orders/order-edit";
 import ListDeliveryZone from "pages/deliveryZone/list-deliveryZone";
 import CreateNewDeliveryZone from "pages/deliveryZone/create-deliveryZone";
 import EditDeliveryZone from "pages/deliveryZone/edit-deliveryZone";
+import ListDistributors from "pages/distributor/list-distributors";
+import ListDeliveryTruck from "pages/deliveryTruck/list-deliveryTruck";
 
 const routes = [
   {
@@ -318,6 +320,34 @@ const routes = [
     component: (
       <RequireAuth>
         <EditDeliveryZone />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Distribuidoras",
+    key: "distributors",
+    icon: (
+      <Icon fontSize="small">store_icon</Icon>
+    ) /* import StoreIcon from '@mui/icons-material/Store'; */,
+    route: "/distributors",
+    component: (
+      <RequireAuth>
+        <ListDistributors />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Repartidores",
+    key: "delivery_truck",
+    icon: (
+      <Icon fontSize="small">local_shipping_icon</Icon>
+    ) /* import LocalShippingIcon from '@mui/icons-material/LocalShipping'; */,
+    route: "/delivery_trucks",
+    component: (
+      <RequireAuth>
+        <ListDeliveryTruck />
       </RequireAuth>
     ),
   },

@@ -8,11 +8,12 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetDistributorsQuery } from "api/distributorApi";
-import TableListDistributors from "./TableListDistrubutors";
+import { useGetDeliveryTrucksQuery } from "api/deliveryTruckApi";
 
-function ListDistributors() {
-  const { data, isLoading, isError } = useGetDistributorsQuery();
+
+
+function ListDeliveryTruck() {
+  const { data, isLoading, isError } = useGetDeliveryTrucksQuery();
   console.log(data);
 
   return (
@@ -33,13 +34,13 @@ function ListDistributors() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de distribuidoras
+                  Lista de repartidores
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {isError && <Alert severity="error">Ha ocurrido un error</Alert>}
-                {data && <TableListDistributors distributors={data.data.distributors} />}
+              {/*  {data && <TableListDistributor deliveryZones={data.data.deliveryZones} />}  */}
               </MDBox>
             </Card>
           </Grid>
@@ -49,4 +50,4 @@ function ListDistributors() {
   );
 }
 
-export default ListDistributors;
+export default ListDeliveryTruck;
