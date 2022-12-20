@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useDeleteDeliveryZoneMutation } from "api/deliveryZoneApi";
 
-function MenuProductsLots({ open, handleCloseMenu, menuId }) {
+function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
   const navigate = useNavigate();
 
   const [deleteDeliveryZone, { isError, isSuccess }] = useDeleteDeliveryZoneMutation();
@@ -84,4 +84,4 @@ function MenuProductsLots({ open, handleCloseMenu, menuId }) {
   );
 }
 
-export default MenuProductsLots;
+export default MenuDeliveryTruck;

@@ -1,22 +1,12 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable prettier/prettier */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Loading from "components/DRLoading";
-import { Alert } from "@mui/material";
-import { useGetDeliveryTrucksQuery } from "api/deliveryTruckApi";
-import TableListDeliveryTruck from "./TableListDeliveryTruck";
+import DistributorCreate from "./SupplierCreate";
 
-
-
-function ListDeliveryTruck() {
-  const { data, isLoading, isError } = useGetDeliveryTrucksQuery();
-  console.log(data);
-
+function CreateNewDistributor() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -35,13 +25,11 @@ function ListDeliveryTruck() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de repartidores
+                  Crear nueva distribuidora
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
-                {isLoading && <Loading />}
-                {isError && <Alert severity="error">Ha ocurrido un error</Alert>}
-              {data && <TableListDeliveryTruck deliveryTrucks={data.data.deliveryTrucks} />} 
+              <MDBox>
+                <DistributorCreate />
               </MDBox>
             </Card>
           </Grid>
@@ -51,4 +39,4 @@ function ListDeliveryTruck() {
   );
 }
 
-export default ListDeliveryTruck;
+export default CreateNewDistributor;

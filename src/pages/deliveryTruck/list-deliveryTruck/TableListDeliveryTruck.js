@@ -9,9 +9,9 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-import MenuProductsLots from "./MenuDeliveryZone";
+import MenuProductsLots from "./MenuDeliveryTruck";
 
-function TableListDeliveryZone({ deliveryZones }) {
+function TableListDeliveryTruck({ deliveryTrucks }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -31,32 +31,33 @@ function TableListDeliveryZone({ deliveryZones }) {
 
   const columns = [
     {
-      field: "name",
-      headerName: "Zona",
+      field: "patent",
+      headerName: "Patente",
       flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "city",
-      headerName: "Ciudad",
+      field: "deliveryName",
+      headerName: "Repartidor",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "coldChamber",
+      headerName: "Cam. frio",
       flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
 
     {
-      field: "cost",
-      headerName: "Costo",
+      field: "maximumLoad",
+      headerName: "Carga Max.",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-    {
-      field: "north",
-      headerName: "L.Norte",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
+
     {
       field: "south",
       headerName: "L.Sur",
@@ -102,12 +103,9 @@ function TableListDeliveryZone({ deliveryZones }) {
             checkboxSelection
             disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
-            rows={deliveryZones.map((zone) => ({
-              ...zone,
-              east: zone.limits[0]?.east,
-              north: zone.limits[0]?.north,
-              south: zone.limits[0]?.south,
-              west: zone.limits[0]?.west,
+            rows={deliveryTrucks.map((delivery) => ({
+              ...delivery,
+              deliveryName: `${delivery.deliveryName} ${delivery.deliveryLastname}`,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
@@ -152,4 +150,4 @@ function TableListDeliveryZone({ deliveryZones }) {
   );
 }
 
-export default TableListDeliveryZone;
+export default TableListDeliveryTruck;
