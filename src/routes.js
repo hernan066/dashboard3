@@ -50,6 +50,7 @@ import EditDeliveryZone from "pages/deliveryZone/edit-deliveryZone";
 import ListDistributors from "pages/distributor/list-distributors";
 import ListDeliveryTruck from "pages/deliveryTruck/list-deliveryTruck";
 import CreateNewDistributor from "pages/distributor/create-distributors";
+import EditDistributor from "pages/distributor/edit-distributors";
 
 const routes = [
   {
@@ -349,6 +350,20 @@ const routes = [
     component: (
       <RequireAuth>
         <CreateNewDistributor />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Distribuidoras",
+    key: "distributors_edit",
+    icon: (
+      <Icon fontSize="small">store_icon</Icon>
+    ) /* import StoreIcon from '@mui/icons-material/Store'; */,
+    route: "/distributors/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditDistributor />
       </RequireAuth>
     ),
   },
