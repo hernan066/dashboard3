@@ -51,6 +51,7 @@ import ListDistributors from "pages/distributor/list-distributors";
 import ListDeliveryTruck from "pages/deliveryTruck/list-deliveryTruck";
 import CreateNewDistributor from "pages/distributor/create-distributors";
 import EditDistributor from "pages/distributor/edit-distributors";
+import CreateDeliveryTruck from "pages/deliveryTruck/create-deliveryTruck";
 
 const routes = [
   {
@@ -378,6 +379,20 @@ const routes = [
     component: (
       <RequireAuth>
         <ListDeliveryTruck />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Repartidores",
+    key: "delivery_truck_new",
+    icon: (
+      <Icon fontSize="small">local_shipping_icon</Icon>
+    ) /* import LocalShippingIcon from '@mui/icons-material/LocalShipping'; */,
+    route: "/delivery_trucks/new",
+    component: (
+      <RequireAuth>
+        <CreateDeliveryTruck />
       </RequireAuth>
     ),
   },
