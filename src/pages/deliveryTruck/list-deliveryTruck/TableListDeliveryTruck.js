@@ -9,6 +9,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuProductsLots from "./MenuDeliveryTruck";
 
 function TableListDeliveryTruck({ deliveryTrucks }) {
@@ -44,10 +46,15 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "coldChamber",
-      headerName: "Cam. frio",
+      field: "email",
+      headerName: "Usuario",
       flex: 1,
-      cellClassName: "name-column--cell",
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "phone",
+      headerName: "Telefono",
+      flex: 1,
       headerClassName: "super-app-theme--header",
     },
 
@@ -59,22 +66,49 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
     },
 
     {
-      field: "south",
-      headerName: "L.Sur",
+      field: "zone",
+      headerName: "Zona Reparto",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+
     {
-      field: "east",
-      headerName: "L.Este",
+      field: "coldChamber",
+      headerName: "Cam. frio",
       flex: 1,
       headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "west",
-      headerName: "L.Oeste",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.coldChamber ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
     },
 
     {
@@ -105,7 +139,10 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
             components={{ Toolbar: GridToolbar }}
             rows={deliveryTrucks.map((delivery) => ({
               ...delivery,
-              deliveryName: `${delivery.deliveryName} ${delivery.deliveryLastname}`,
+              deliveryName: `${delivery.user.name} ${delivery.user.lastName}`,
+              email: delivery.user.email,
+              phone: delivery.user.phone,
+              zone: delivery.defaultZone.name,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
