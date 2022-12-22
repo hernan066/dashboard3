@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -12,31 +12,32 @@ import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 import Swal from "sweetalert2";
-import { usePostDeliveryTruckMutation } from "api/deliveryTruckApi";
 import { createDeliveryTruckSchema } from "validations/deliveryTruck/createDeliveryTruckYup";
+import { usePutDeliveryTruckMutation } from "api/deliveryTruckApi";
 
-function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones }) {
+function DeliveryTruckEdit({ listUsers, ListDistributors, listDeliveryZones, deliveryTruck }) {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [createDeliveryTruck, { isLoading, isError }] = usePostDeliveryTruckMutation();
+  const [editDeliveryTruck, { isLoading, isError }] = usePutDeliveryTruckMutation();
 
   const deliveryFilterUsers = listUsers.filter((user) => user.role.role === "DELIVERY_ROLE");
 
   const formik = useFormik({
     initialValues: {
-      user: "",
-      distributor: "",
-      defaultZone: "",
-      patent: "",
-      coldChamber: "",
-      maximumLoad: undefined,
+      user: deliveryTruck?.user,
+      distributor: deliveryTruck?.distributor,
+      defaultZone: deliveryTruck?.defaultZone,
+      patent: deliveryTruck?.patent,
+      coldChamber: deliveryTruck?.coldChamber,
+      maximumLoad: deliveryTruck?.maximumLoad,
     },
     onSubmit: async (values) => {
-      await createDeliveryTruck(values).unwrap();
+      await editDeliveryTruck({ id, ...values }).unwrap();
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Repartidor creado con éxito",
+        title: "Repartidor editado con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -86,6 +87,7 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
               required
               name="patent"
               label="Patente"
+              value={formik.values.patent}
               error={!!formik.errors.patent}
               helperText={formik.errors.patent}
               onChange={formik.handleChange}
@@ -134,6 +136,7 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
               type="number"
               name="maximumLoad"
               label="Carga maxima"
+              value={formik.values.maximumLoad}
               error={!!formik.errors.maximumLoad}
               helperText={formik.errors.maximumLoad}
               onChange={formik.handleChange}
@@ -166,7 +169,7 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
                 color: "white !important",
               }}
             >
-              Crear
+              Editar
             </LoadingButton>
             <MDButton
               variant="outlined"
@@ -187,4 +190,4 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
   );
 }
 
-export default DeliveryTruckCreate;
+export default DeliveryTruckEdit;
