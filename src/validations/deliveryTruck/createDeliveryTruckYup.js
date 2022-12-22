@@ -9,6 +9,10 @@ export const createDeliveryTruckSchema = yup.object().shape({
     .string()
     .required("Requerido")
     .matches(lettersNumbersAndSpaces, "Solo letras y números"),
+  truckId: yup
+    .string()
+    .required("Requerido")
+    .matches(lettersNumbersAndSpaces, "Solo letras y números"),
 
   distributor: yup
     .string()

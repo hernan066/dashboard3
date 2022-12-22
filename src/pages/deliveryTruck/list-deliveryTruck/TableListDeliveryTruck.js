@@ -33,6 +33,20 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
 
   const columns = [
     {
+      field: "truckId",
+      headerName: "Id",
+      flex: 1,
+      cellClassName: "name-column--cell",
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "distributor",
+      headerName: "Distribuidora",
+      flex: 1,
+      cellClassName: "name-column--cell",
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "patent",
       headerName: "Patente",
       flex: 1,
@@ -147,6 +161,7 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
               email: delivery.user.email,
               phone: delivery.user.phone,
               zone: delivery.defaultZone.name,
+              distributor: delivery.distributor.businessName,
             }))}
             columns={columns}
             getRowId={(row) => row._id}

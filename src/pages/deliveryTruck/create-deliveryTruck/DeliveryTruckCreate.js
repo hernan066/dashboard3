@@ -26,6 +26,7 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
     initialValues: {
       user: "",
       distributor: "",
+      truckId: "",
       defaultZone: "",
       patent: "",
       coldChamber: "",
@@ -82,16 +83,6 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
             </TextField>
             <TextField
               margin="normal"
-              fullWidth
-              required
-              name="patent"
-              label="Patente"
-              error={!!formik.errors.patent}
-              helperText={formik.errors.patent}
-              onChange={formik.handleChange}
-            />
-            <TextField
-              margin="normal"
               required
               select
               name="distributor"
@@ -108,6 +99,27 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
                 </MenuItem>
               ))}
             </TextField>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="truckId"
+              label="ID (Distribuidora_Numero)"
+              error={!!formik.errors.truckId}
+              helperText={formik.errors.truckId}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="patent"
+              label="Patente"
+              error={!!formik.errors.patent}
+              helperText={formik.errors.patent}
+              onChange={formik.handleChange}
+            />
+
             <TextField
               margin="normal"
               required

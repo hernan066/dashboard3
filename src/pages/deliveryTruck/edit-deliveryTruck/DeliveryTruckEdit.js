@@ -26,6 +26,7 @@ function DeliveryTruckEdit({ listUsers, ListDistributors, listDeliveryZones, del
   const formik = useFormik({
     initialValues: {
       user: deliveryTruck?.user,
+      truckId: deliveryTruck?.truckId,
       distributor: deliveryTruck?.distributor,
       defaultZone: deliveryTruck?.defaultZone,
       patent: deliveryTruck?.patent,
@@ -83,17 +84,6 @@ function DeliveryTruckEdit({ listUsers, ListDistributors, listDeliveryZones, del
             </TextField>
             <TextField
               margin="normal"
-              fullWidth
-              required
-              name="patent"
-              label="Patente"
-              value={formik.values.patent}
-              error={!!formik.errors.patent}
-              helperText={formik.errors.patent}
-              onChange={formik.handleChange}
-            />
-            <TextField
-              margin="normal"
               required
               select
               name="distributor"
@@ -110,6 +100,29 @@ function DeliveryTruckEdit({ listUsers, ListDistributors, listDeliveryZones, del
                 </MenuItem>
               ))}
             </TextField>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="truckId"
+              label="ID(Distribuidora_Numero)"
+              value={formik.values.truckId}
+              error={!!formik.errors.truckId}
+              helperText={formik.errors.truckId}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="patent"
+              label="Patente"
+              value={formik.values.patent}
+              error={!!formik.errors.patent}
+              helperText={formik.errors.patent}
+              onChange={formik.handleChange}
+            />
+
             <TextField
               margin="normal"
               required
