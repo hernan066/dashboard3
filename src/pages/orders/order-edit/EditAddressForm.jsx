@@ -3,57 +3,65 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Box, MenuItem, TextField } from "@mui/material";
+import { Alert, Box, Divider, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { creteOrderAddressSchema } from "validations/oferts/createOrderAddressYup";
-import { useDispatch, useSelector } from "react-redux";
-import { addShippingAddress, clearClient } from "redux/cartSlice";
+import { editOrderAddressSchema } from "validations/orders/editOrderAddressYup";
+import MDTypography from "components/MDTypography";
+import { usePutOrderMutation } from "api/orderApi";
+import Swal from "sweetalert2";
 
-function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
-  const { client } = useSelector((store) => store.cart);
-  const dispatch = useDispatch();
+function EditAddressForm({ zones, deliveryTrucks, order }) {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [editOrder, { isLoading, isError }] = usePutOrderMutation();
 
   const formik = useFormik({
     initialValues: {
-      name: client?.name || "",
-      lastName: client?.lastName || "",
-      phone: client?.phone || "",
-      address: client?.userAddresses[0].address || "",
-      flor: client?.userAddresses[0].flor || "",
-      department: client?.userAddresses[0].department || "",
-      province: client?.userAddresses[0].province || "",
-      city: client?.userAddresses[0].city || "",
-      zip: client?.userAddresses[0].zip || undefined,
-      shippingCost: undefined,
-      deliveryZone: "",
-      deliveryTruck: "",
+      name: order.shippingAddress.name,
+      lastName: order.shippingAddress.lastName,
+      phone: order.shippingAddress.phone,
+      address: order.shippingAddress.address,
+      flor: order.shippingAddress.flor,
+      department: order.shippingAddress.department,
+      province: order.shippingAddress.province,
+      city: order.shippingAddress.city,
+      zip: order.shippingAddress.zip,
+      tax: order.tax,
+      deliveryZone: order.deliveryZone._id,
+      deliveryTruck: order.deliveryTruck._id,
+      status: order.status,
     },
     onSubmit: async (values) => {
-      dispatch(
-        addShippingAddress({
-          shippingAddress: values,
-          shippingCost: values.shippingCost,
-          deliveryZone: values.deliveryZone,
-          deliveryTruck: values.deliveryTruck,
-        })
-      );
-      if (setPage) {
-        setPage(1);
-      }
+      const editOrderValues = {
+        ...values,
+        shippingAddress: {
+          name: values.name,
+          lastName: values.lastName,
+          phone: values.phone,
+          address: values.address,
+          flor: values.flor,
+          department: values.department,
+          province: values.province,
+          city: values.city,
+          zip: values.zip,
+        },
+      };
+      await editOrder({ id, ...editOrderValues }).unwrap();
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Orden editado con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      navigate("/orders");
     },
-    validationSchema: creteOrderAddressSchema,
+    validationSchema: editOrderAddressSchema,
   });
-
-  const handlerCancel = () => {
-    dispatch(clearClient());
-    if (setManualForm) {
-      setManualForm(false);
-    }
-  };
 
   return (
     <Box
@@ -174,38 +182,41 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
           helperText={formik.errors.zip}
           onChange={formik.handleChange}
         />
-        <TextField
-          margin="normal"
-          fullWidth
-          required
-          autoComplete="shippingCost"
-          name="shippingCost"
-          label="Costo de envío"
-          id="shippingCost"
-          type="number"
-          value={formik.values.shippingCost}
-          error={!!formik.errors.shippingCost}
-          helperText={formik.errors.shippingCost}
-          onChange={formik.handleChange}
-        />
+
+        <Divider />
+        <MDTypography variant="h6">Zona de reparto</MDTypography>
         <TextField
           margin="normal"
           required
           select
           name="deliveryZone"
           fullWidth
-          label="Distribuidora"
+          label="Zona de reparto"
           value={formik.values.deliveryZone}
           error={!!formik.errors.deliveryZone}
           helperText={formik.errors.deliveryZone}
           onChange={formik.handleChange}
         >
           {zones.map((zone) => (
-            <MenuItem key={zone._id} value={`${zone._id}-${zone.name}`}>
+            <MenuItem key={zone._id} value={zone._id}>
               {zone.name}
             </MenuItem>
           ))}
         </TextField>
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="tax"
+          label="Costo de envío"
+          type="number"
+          value={formik.values.tax}
+          error={!!formik.errors.tax}
+          helperText={formik.errors.tax}
+          onChange={formik.handleChange}
+        />
+        <Divider />
+        <MDTypography variant="h6">Repartidor</MDTypography>
         <TextField
           margin="normal"
           required
@@ -219,15 +230,34 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
           onChange={formik.handleChange}
         >
           {deliveryTrucks.map((delivery) => (
-            <MenuItem key={delivery._id} value={`${delivery._id}-${delivery.truckId}`}>
+            <MenuItem key={delivery._id} value={delivery._id}>
               {delivery.truckId}
             </MenuItem>
           ))}
+        </TextField>
+        <Divider />
+        <MDTypography variant="h6">Estado de la orden</MDTypography>
+        <TextField
+          margin="normal"
+          required
+          select
+          name="status"
+          fullWidth
+          label="Estado"
+          value={formik.values.status}
+          error={!!formik.errors.status}
+          helperText={formik.errors.status}
+          onChange={formik.handleChange}
+        >
+          <MenuItem value="Pendiente">Pendiente</MenuItem>
+          <MenuItem value="Entregada">Entregada</MenuItem>
+          <MenuItem value="Rechazada">Rechazada</MenuItem>
         </TextField>
 
         <LoadingButton
           type="submit"
           variant="contained"
+          loading={isLoading}
           sx={{
             mt: 3,
             mb: 2,
@@ -236,12 +266,12 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
             color: "white !important",
           }}
         >
-          Confirmar
+          Editar
         </LoadingButton>
         <MDButton
           variant="outlined"
           color="info"
-          onClick={handlerCancel}
+          onClick={() => navigate(-1)}
           sx={{
             mt: 3,
             mb: 2,
@@ -249,9 +279,10 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
         >
           Cancelar
         </MDButton>
+        {isError && <Alert severity="error">Ha ocurrido un error, orden no editada</Alert>}
       </Box>
     </Box>
   );
 }
 
-export default AddressForm;
+export default EditAddressForm;

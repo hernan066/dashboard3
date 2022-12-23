@@ -1,4 +1,6 @@
 import { Alert, Grid } from "@mui/material";
+import { useGetDeliveryTrucksQuery } from "api/deliveryTruckApi";
+import { useGetDeliveryZonesQuery } from "api/deliveryZoneApi";
 import { useGetOrderQuery } from "api/orderApi";
 import Loading from "components/DRLoading";
 import MDBox from "components/MDBox";
@@ -10,9 +12,13 @@ import Details from "./Details";
 
 function OrderEdit() {
   const { id } = useParams();
-  const { data: order, isLoading, error } = useGetOrderQuery(id);
+  const { data: order, isLoading: l1, isError: e1 } = useGetOrderQuery(id);
+  const { data: deliveryZones, isLoading: l2, isError: e2 } = useGetDeliveryZonesQuery();
+  const { data: deliveryTrucks, isLoading: l3, isError: e3 } = useGetDeliveryTrucksQuery();
 
   console.log(order);
+  console.log(deliveryZones);
+  console.log(deliveryTrucks);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -34,9 +40,15 @@ function OrderEdit() {
               </MDTypography>
             </MDBox>
             <MDBox pt={3} px={2}>
-              {isLoading && <Loading />}
-              {error && <Alert severity="error">Ha ocurrido un error</Alert>}
-              {order && <Details order={order} />}
+              {(l1 || l2 || l3) && <Loading />}
+              {(e1 || e2 || e3) && <Alert severity="error">Ha ocurrido un error</Alert>}
+              {order && deliveryZones && deliveryTrucks && (
+                <Details
+                  order={order.data.order}
+                  deliveryZones={deliveryZones.data.deliveryZones}
+                  deliveryTrucks={deliveryTrucks.data.deliveryTrucks}
+                />
+              )}
             </MDBox>
           </Grid>
         </Grid>
