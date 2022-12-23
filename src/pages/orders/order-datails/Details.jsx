@@ -4,7 +4,7 @@ import { Box, Card, Divider } from "@mui/material";
 import MDTypography from "components/MDTypography";
 
 function Details({ order }) {
-  const { orderItems, shippingAddress } = order.data.order;
+  const { orderItems, shippingAddress, deliveryZone, deliveryTruck } = order.data.order;
   const { order: orderDetail } = order.data;
 
   return (
@@ -83,7 +83,7 @@ function Details({ order }) {
         <Divider />
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Nombre</MDTypography>
-          <MDTypography variant="h6">{`${shippingAddress.name} ${shippingAddress.lastname}`}</MDTypography>
+          <MDTypography variant="h6">{`${shippingAddress.name} ${shippingAddress.lastName}`}</MDTypography>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Dirección</MDTypography>
@@ -116,7 +116,7 @@ function Details({ order }) {
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Zona</MDTypography>
-          <MDTypography variant="h6">Cargar despues</MDTypography>
+          <MDTypography variant="h6">{deliveryZone.name}</MDTypography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between">
@@ -126,7 +126,7 @@ function Details({ order }) {
         <Divider />
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Repartidor</MDTypography>
-          <MDTypography variant="h6">Cargar despues</MDTypography>
+          <MDTypography variant="h6">{deliveryTruck.truckId}</MDTypography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between">

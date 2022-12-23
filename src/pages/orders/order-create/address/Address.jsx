@@ -6,13 +6,16 @@ import { Box, Card, TextField } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addClient } from "redux/cartSlice";
 import AddressForm from "./AddressForm";
 
-function Address({ users, setPage }) {
+function Address({ users, setPage, zones, deliveryTrucks }) {
   const [filterUser, setFilterUser] = useState([]);
   const [search, setSearch] = useState("");
-  const [userAddress, setUserAddress] = useState(null);
   const [manualForm, setManualForm] = useState(false);
+  const { client } = useSelector((store) => store.cart);
+  const dispatch = useDispatch();
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
@@ -75,7 +78,7 @@ function Address({ users, setPage }) {
             }}
           >
             <MDTypography variant="body2">{`${user.phone} // ${user.name} ${user.lastName} // ${user.userAddresses[0].address}`}</MDTypography>
-            <MDButton color="info" size="small" onClick={() => setUserAddress(user)}>
+            <MDButton color="info" size="small" onClick={() => dispatch(addClient(user))}>
               Cargar
             </MDButton>
           </Box>
@@ -91,7 +94,7 @@ function Address({ users, setPage }) {
         }}
       >
         <MDTypography variant="h6">Datos de envío</MDTypography>
-        {!userAddress && (
+        {!client && (
           <MDButton
             color="info"
             variant="gradient"
@@ -103,10 +106,22 @@ function Address({ users, setPage }) {
             Cargar manualmente
           </MDButton>
         )}
-        {manualForm && <AddressForm setManualForm={setManualForm} setPage={setPage} />}
+        {manualForm && (
+          <AddressForm
+            setManualForm={setManualForm}
+            setPage={setPage}
+            zones={zones}
+            deliveryTrucks={deliveryTrucks}
+          />
+        )}
 
-        {userAddress && (
-          <AddressForm userAddress={userAddress} setManualForm={setManualForm} setPage={setPage} />
+        {client && (
+          <AddressForm
+            setManualForm={setManualForm}
+            setPage={setPage}
+            zones={zones}
+            deliveryTrucks={deliveryTrucks}
+          />
         )}
       </Card>
     </Box>

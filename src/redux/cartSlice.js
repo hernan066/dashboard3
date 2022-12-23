@@ -8,6 +8,7 @@ const cartSlice = createSlice({
   name: "cart",
   initialState: {
     products: [],
+    client: null,
     shippingAddress: null,
     shippingCost: 0,
     subTotal: 0,
@@ -21,6 +22,12 @@ const cartSlice = createSlice({
       }, 0);
 
       state.subTotal = sub;
+    },
+    addClient: (state, action) => {
+      state.client = action.payload;
+    },
+    clearClient: (state) => {
+      state.client = null;
     },
     deleteProduct: (state, action) => {
       state.products = state.products.filter((product) => product._id !== action.payload);
@@ -52,11 +59,20 @@ const cartSlice = createSlice({
     clearCart: (state) => {
       state.products = [];
       state.shippingAddress = null;
+      state.client = null;
       state.shippingCost = 0;
       state.subTotal = 0;
     },
   },
 });
 
-export const { addProduct, deleteProduct, updateProduct, addShippingAddress } = cartSlice.actions;
+export const {
+  addProduct,
+  deleteProduct,
+  updateProduct,
+  addShippingAddress,
+  clearCart,
+  addClient,
+  clearClient,
+} = cartSlice.actions;
 export default cartSlice.reducer;

@@ -3,20 +3,25 @@
 
 import { Alert, Box, Card, Divider } from "@mui/material";
 import MDTypography from "components/MDTypography";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import colors from "assets/theme/base/colors";
 import { LoadingButton } from "@mui/lab";
 import Swal from "sweetalert2";
 import { usePostOrderMutation } from "api/orderApi";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "redux/cartSlice";
 import ItemCart from "./ItemCart";
 
 function Cart() {
   const { products, shippingAddress, shippingCost, subTotal } = useSelector((store) => store.cart);
   const { user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [createOrder, { isLoading, isError }] = usePostOrderMutation();
+
+  const deliveryTruckSlit = shippingAddress ? shippingAddress.deliveryTruck.split("-") : "";
+  const deliveryZoneSplit = shippingAddress ? shippingAddress.deliveryZone.split("-") : "";
 
   const handlerCreate = async () => {
     const productsOrder = products.map((item) => ({
@@ -33,9 +38,9 @@ function Cart() {
       userId: user,
       orderItems: productsOrder,
       shippingAddress,
-      deliveryTruckId: null,
+      deliveryTruck: deliveryTruckSlit[0],
       employeeId: null,
-      deliveryZoneId: null,
+      deliveryZone: deliveryZoneSplit[0],
       numberOfItems: products.length,
       tax: shippingCost,
       subTotal,
@@ -52,6 +57,7 @@ function Cart() {
         showConfirmButton: false,
         timer: 2500,
       });
+      dispatch(clearCart());
       navigate("/orders");
     }
   };
@@ -135,13 +141,13 @@ function Cart() {
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Zona</MDTypography>
-          <MDTypography variant="h6">Cargar despues</MDTypography>
+          <MDTypography variant="h6">{deliveryZoneSplit[1]}</MDTypography>
         </Box>
 
         <Divider />
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Repartidor</MDTypography>
-          <MDTypography variant="h6">Cargar despues</MDTypography>
+          <MDTypography variant="h6">{deliveryTruckSlit[1]}</MDTypography>
         </Box>
         <LoadingButton
           type="submit"

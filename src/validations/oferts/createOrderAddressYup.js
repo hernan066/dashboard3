@@ -24,4 +24,6 @@ export const creteOrderAddressSchema = yup.object().shape({
     .matches(lettersNumbersAndSpaces, "Solo letras y números"),
   zip: yup.number().required("Requerido"),
   shippingCost: yup.number().required("Requerido"),
+  deliveryZone: yup.string().required("Requerido"),
+  deliveryTruck: yup.string().required("Requerido"),
 });

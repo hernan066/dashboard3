@@ -121,6 +121,12 @@ function TableListOrders({ orders }) {
       headerClassName: "super-app-theme--header",
     },
     {
+      field: "deliveryTruck",
+      headerName: "Repartidor",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
       field: "numberOfItems",
       headerName: "Cant. Productos",
       headerClassName: "super-app-theme--header",
@@ -175,6 +181,8 @@ function TableListOrders({ orders }) {
               createdAt: dateToLocalDate(order.createdAt),
               client: `${order.shippingAddress.name} ${order.shippingAddress.lastName}`,
               address: order.shippingAddress.address,
+              zone: order?.deliveryZone?.name,
+              deliveryTruck: order?.deliveryTruck?.truckId,
             }))}
             columns={columns}
             getRowId={(row) => row._id}

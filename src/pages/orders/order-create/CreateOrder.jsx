@@ -10,7 +10,7 @@ import Address from "./address/Address";
 import Cart from "./cart/Cart";
 import Oferts from "./oferts/Oferts";
 
-function CreateOrder({ oferts: ofertsList, users }) {
+function CreateOrder({ oferts: ofertsList, users, zones, deliveryTrucks }) {
   const { oferts } = ofertsList.data;
   const [page, setPage] = useState(0);
   const { products } = useSelector((store) => store.cart);
@@ -34,7 +34,9 @@ function CreateOrder({ oferts: ofertsList, users }) {
         <Tab label={`3.Confirmar pedido(${products.length})`} />
       </Tabs>
 
-      {page === 0 && <Address users={users} setPage={setPage} />}
+      {page === 0 && (
+        <Address users={users} setPage={setPage} zones={zones} deliveryTrucks={deliveryTrucks} />
+      )}
       {page === 1 && <Oferts oferts={oferts} />}
       {page === 2 && <Cart />}
     </Box>

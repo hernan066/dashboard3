@@ -5,35 +5,40 @@
 /* eslint-disable no-underscore-dangle */
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Box, TextField } from "@mui/material";
+import { Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 import { creteOrderAddressSchema } from "validations/oferts/createOrderAddressYup";
-import { useDispatch } from "react-redux";
-import { addShippingAddress } from "redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addShippingAddress, clearClient } from "redux/cartSlice";
 
-function AddressForm({ userAddress, setManualForm, setPage }) {
+function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
+  const { client } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      name: userAddress?.name || "",
-      lastName: userAddress?.lastName || "",
-      phone: userAddress?.phone || "",
-      address: userAddress?.userAddresses[0].address || "",
-      flor: userAddress?.userAddresses[0].flor || "",
-      department: userAddress?.userAddresses[0].department || "",
-      province: userAddress?.userAddresses[0].province || "",
-      city: userAddress?.userAddresses[0].city || "",
-      zip: userAddress?.userAddresses[0].zip || undefined,
+      name: client?.name || "",
+      lastName: client?.lastName || "",
+      phone: client?.phone || "",
+      address: client?.userAddresses[0].address || "",
+      flor: client?.userAddresses[0].flor || "",
+      department: client?.userAddresses[0].department || "",
+      province: client?.userAddresses[0].province || "",
+      city: client?.userAddresses[0].city || "",
+      zip: client?.userAddresses[0].zip || undefined,
       shippingCost: undefined,
+      deliveryZone: "",
+      deliveryTruck: "",
     },
     onSubmit: async (values) => {
       dispatch(
         addShippingAddress({
           shippingAddress: values,
           shippingCost: values.shippingCost,
+          deliveryZone: values.deliveryZone,
+          deliveryTruck: values.deliveryTruck,
         })
       );
       setPage(1);
@@ -174,6 +179,42 @@ function AddressForm({ userAddress, setManualForm, setPage }) {
           helperText={formik.errors.shippingCost}
           onChange={formik.handleChange}
         />
+        <TextField
+          margin="normal"
+          required
+          select
+          name="deliveryZone"
+          fullWidth
+          label="Distribuidora"
+          value={formik.values.deliveryZone}
+          error={!!formik.errors.deliveryZone}
+          helperText={formik.errors.deliveryZone}
+          onChange={formik.handleChange}
+        >
+          {zones.map((zone) => (
+            <MenuItem key={zone._id} value={`${zone._id}-${zone.name}`}>
+              {zone.name}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          margin="normal"
+          required
+          select
+          name="deliveryTruck"
+          fullWidth
+          label="Repartidor"
+          value={formik.values.deliveryTruck}
+          error={!!formik.errors.deliveryTruck}
+          helperText={formik.errors.deliveryTruck}
+          onChange={formik.handleChange}
+        >
+          {deliveryTrucks.map((delivery) => (
+            <MenuItem key={delivery._id} value={`${delivery._id}-${delivery.truckId}`}>
+              {delivery.truckId}
+            </MenuItem>
+          ))}
+        </TextField>
 
         <LoadingButton
           type="submit"
@@ -191,7 +232,7 @@ function AddressForm({ userAddress, setManualForm, setPage }) {
         <MDButton
           variant="outlined"
           color="info"
-          onClick={() => setManualForm(false)}
+          onClick={() => dispatch(clearClient())}
           sx={{
             mt: 3,
             mb: 2,
