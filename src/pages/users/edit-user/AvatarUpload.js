@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import { Box, Card, LinearProgress } from "@mui/material";
