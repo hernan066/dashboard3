@@ -14,9 +14,7 @@
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Billing from "layouts/billing";
-import Notifications from "layouts/notifications";
-import Profile from "layouts/profile";
+
 // import SignIn from "layouts/authentication/sign-in";
 
 // import PublicRoute from "router/PublicRoutes";
@@ -408,43 +406,6 @@ const routes = [
     component: (
       <RequireAuth>
         <EditDeliveryTruck />
-      </RequireAuth>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Billing",
-    key: "billing",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/billing",
-    component: (
-      <RequireAuth>
-        <Billing />
-      </RequireAuth>
-    ),
-  },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: (
-      <RequireAuth>
-        <Notifications />
-      </RequireAuth>
-    ),
-  },
-
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: (
-      <RequireAuth>
-        <Profile />
       </RequireAuth>
     ),
   },
