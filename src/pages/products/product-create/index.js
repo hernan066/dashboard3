@@ -1,21 +1,16 @@
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useGetcategoriesQuery } from "api/categoryApi";
-
+import { useGetCategoriesQuery } from "api/categoryApi";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
 import ProductCreate from "./ProductCreate";
 
 function CreateProduct() {
-  const { data: listCategories, isLoading, error } = useGetcategoriesQuery();
+  const { data: listCategories, isLoading, error } = useGetCategoriesQuery();
 
   return (
     <DashboardLayout>

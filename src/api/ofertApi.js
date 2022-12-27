@@ -1,64 +1,53 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./apiSlice";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
-
-const token = localStorage.getItem("token");
-
-export const ofertApi = createApi({
-  reducerPath: "ofertApi",
-  baseQuery: retry(
-    fetchBaseQuery({ baseUrl: API, headers: { "x-token": localStorage.getItem("token") } }),
-    {
-      maxRetries: 2,
-    }
-  ),
-  keepUnusedDataFor: 60, // duracion de datos en cache
-
+export const ofertApi = apiSlice.injectEndpoints({
+  keepUnusedDataFor: 60, // duración de datos en cache
   refetchOnMountOrArgChange: true, // revalida al montar el componente
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
-
-  tagTypes: ["Oferts"],
+  tagTypes: ["oferts"],
 
   endpoints: (builder) => ({
     getOferts: builder.query({
       query: () => "/oferts",
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
-      providesTags: ["Oferts"],
+      providesTags: ["oferts"],
     }),
+
     getOfert: builder.query({
       query: (id) => `/oferts/${id}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 3 },
-      providesTags: ["Oferts"],
+      providesTags: ["oferts"],
     }),
+
     postOfert: builder.mutation({
-      query: (newOfert) => ({
+      query: (items) => ({
         url: "/oferts",
         method: "post",
-        body: newOfert,
+        body: items,
       }),
-      invalidatesTags: ["Oferts"],
+      invalidatesTags: ["oferts"],
       extraOptions: { maxRetries: 0 },
     }),
+
     putOfert: builder.mutation({
-      query: ({ id, ...editOfert }) => ({
+      query: ({ id, ...items }) => ({
         url: `/oferts/${id}`,
         method: "put",
-        body: editOfert,
+        body: items,
       }),
-      invalidatesTags: ["Oferts"],
+      invalidatesTags: ["oferts"],
       extraOptions: { maxRetries: 0 },
     }),
+
     deleteOfert: builder.mutation({
       query: (id) => ({
         url: `/oferts/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["Oferts"],
+      invalidatesTags: ["oferts"],
       extraOptions: { maxRetries: 0 },
     }),
   }),

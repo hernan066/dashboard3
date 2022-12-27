@@ -1,61 +1,53 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./apiSlice";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
-
-const token = localStorage.getItem("token");
-
-export const productApi = createApi({
-  reducerPath: "productApi",
-  baseQuery: retry(fetchBaseQuery({ baseUrl: API, headers: { "x-token": token } }), {
-    maxRetries: 2,
-  }),
-  keepUnusedDataFor: 60, // duracion de datos en cache
-
+export const productApi = apiSlice.injectEndpoints({
+  keepUnusedDataFor: 60, // duración de datos en cache
   refetchOnMountOrArgChange: true, // revalida al montar el componente
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
-
-  tagTypes: ["Products"],
+  tagTypes: ["products"],
 
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: () => "/products",
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
-      providesTags: ["Products"],
+      providesTags: ["products"],
     }),
+
     getProduct: builder.query({
       query: (id) => `/products/${id}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 3 },
-      providesTags: ["Products"],
+      providesTags: ["products"],
     }),
+
     postProduct: builder.mutation({
-      query: (newProduct) => ({
+      query: (items) => ({
         url: "/products",
         method: "post",
-        body: newProduct,
+        body: items,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["products"],
       extraOptions: { maxRetries: 0 },
     }),
+
     putProduct: builder.mutation({
-      query: ({ id, ...editProduct }) => ({
+      query: ({ id, ...items }) => ({
         url: `/products/${id}`,
         method: "put",
-        body: editProduct,
+        body: items,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["products"],
       extraOptions: { maxRetries: 0 },
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `/products/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ["products"],
       extraOptions: { maxRetries: 0 },
     }),
   }),

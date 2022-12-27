@@ -1,68 +1,60 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./apiSlice";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
-
-const token = localStorage.getItem("token");
-
-export const categoryApi = createApi({
-  reducerPath: "categoryApi",
-  baseQuery: retry(fetchBaseQuery({ baseUrl: API, headers: { "x-token": token } }), {
-    maxRetries: 2,
-  }),
-  keepUnusedDataFor: 60, // duracion de datos en cache
-
+export const categoryApi = apiSlice.injectEndpoints({
+  keepUnusedDataFor: 60, // duración de datos en cache
   refetchOnMountOrArgChange: true, // revalida al montar el componente
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
-
-  tagTypes: ["category"],
+  tagTypes: ["categories"],
 
   endpoints: (builder) => ({
-    getcategories: builder.query({
+    getCategories: builder.query({
       query: () => "/categories",
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
-      providesTags: ["category"],
+      providesTags: ["categories"],
     }),
+
     getCategory: builder.query({
       query: (id) => `/categories/${id}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 3 },
-      providesTags: ["category"],
+      providesTags: ["categories"],
     }),
+
     postCategory: builder.mutation({
-      query: (newProduct) => ({
+      query: (items) => ({
         url: "/categories",
         method: "post",
-        body: newProduct,
+        body: items,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["categories"],
       extraOptions: { maxRetries: 0 },
     }),
+
     putCategory: builder.mutation({
-      query: (id, editProduct) => ({
+      query: ({ id, ...items }) => ({
         url: `/categories/${id}`,
         method: "put",
-        body: editProduct,
+        body: items,
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["categories"],
       extraOptions: { maxRetries: 0 },
     }),
+
     deleteCategory: builder.mutation({
       query: (id) => ({
         url: `/categories/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["category"],
+      invalidatesTags: ["categories"],
       extraOptions: { maxRetries: 0 },
     }),
   }),
 });
 
 export const {
-  useGetcategoriesQuery,
+  useGetCategoriesQuery,
   useGetCategoryQuery,
   usePostCategoryMutation,
   usePutCategoryMutation,

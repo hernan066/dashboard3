@@ -1,47 +1,62 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable import/prefer-default-export */
-import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { apiSlice } from "./apiSlice";
 
-const API = process.env.REACT_APP_API_URL || "http://localhost:3040/api";
-
-const token = localStorage.getItem("token");
-
-export const userApi = createApi({
-  reducerPath: "userApi",
-  baseQuery: retry(fetchBaseQuery({ baseUrl: API, headers: { "x-token": token } }), {
-    maxRetries: 2,
-  }),
-  keepUnusedDataFor: 60, // duracion de datos en cache
-
+export const userApi = apiSlice.injectEndpoints({
+  keepUnusedDataFor: 60, // duración de datos en cache
   refetchOnMountOrArgChange: true, // revalida al montar el componente
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
-
-  tagTypes: ["Users"],
+  tagTypes: ["users"],
 
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: () => "/user",
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
-      providesTags: ["Users"],
+      providesTags: ["users"],
     }),
+
     getUser: builder.query({
       query: (id) => `/user/${id}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 3 },
-      providesTags: ["Users"],
+      providesTags: ["users"],
     }),
+
     postUser: builder.mutation({
-      query: (newUser) => ({
+      query: (items) => ({
         url: "/user",
         method: "post",
-        body: newUser,
+        body: items,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ["users"],
+      extraOptions: { maxRetries: 0 },
+    }),
+
+    putUser: builder.mutation({
+      query: ({ id, ...items }) => ({
+        url: `/user/${id}`,
+        method: "put",
+        body: items,
+      }),
+      invalidatesTags: ["users"],
+      extraOptions: { maxRetries: 0 },
+    }),
+
+    deleteUser: builder.mutation({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "delete",
+      }),
+      invalidatesTags: ["users"],
       extraOptions: { maxRetries: 0 },
     }),
   }),
 });
 
-export const { useGetUsersQuery, useGetUserQuery, usePostUserMutation } = userApi;
+export const {
+  useGetUsersQuery,
+  useGetUserQuery,
+  usePostUserMutation,
+  usePutUserMutation,
+  useDeleteUserMutation,
+} = userApi;
