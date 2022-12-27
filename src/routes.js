@@ -51,6 +51,7 @@ import CreateNewDistributor from "pages/distributor/create-distributors";
 import EditDistributor from "pages/distributor/edit-distributors";
 import CreateDeliveryTruck from "pages/deliveryTruck/create-deliveryTruck";
 import EditDeliveryTruck from "pages/deliveryTruck/edit-deliveryTruck";
+import ListClients from "pages/clients/list-clients";
 
 const routes = [
   {
@@ -443,6 +444,20 @@ const routes = [
     component: (
       <RequireAuth>
         <ProfileUser />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Clientes",
+    key: "clients",
+    icon: (
+      <Icon fontSize="small">perm_contact_calendar_icon</Icon>
+    ) /* import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar'; */,
+    route: "/clients",
+    component: (
+      <RequireAuth>
+        <ListClients />
       </RequireAuth>
     ),
   },
