@@ -19,7 +19,7 @@ import ImageUpload from "./ImageUpload";
 function ProductCreate({ listCategories }) {
   const navigate = useNavigate();
 
-  const [createProduct, { isLoading, error }] = usePostProductMutation();
+  const [createProduct, { isLoading, isError }] = usePostProductMutation();
   const [urlImage, setUrlImage] = useState(null);
 
   const formik = useFormik({
@@ -39,7 +39,7 @@ function ProductCreate({ listCategories }) {
       };
       await createProduct(newProduct).unwrap();
       Swal.fire({
-        position: "top-end",
+        position: "center",
         icon: "success",
         title: "Producto creado con éxito",
         showConfirmButton: false,
@@ -70,8 +70,8 @@ function ProductCreate({ listCategories }) {
               id="product_name"
               label="Nombre del producto"
               name="name"
-              error={!!formik.errors.name || error?.name?.msg}
-              helperText={formik.errors.name || error?.name?.msg}
+              error={!!formik.errors.name}
+              helperText={formik.errors.name}
               onChange={formik.handleChange}
             />
             <TextField
@@ -205,7 +205,7 @@ function ProductCreate({ listCategories }) {
             >
               Cancelar
             </MDButton>
-            {error && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
+            {isError && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
           </Box>
 
           <Box>

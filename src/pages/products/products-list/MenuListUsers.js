@@ -7,6 +7,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import { useDeleteProductMutation } from "api/productApi";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 function MenuListProducts({ open, handleCloseMenu, productId }) {
   const navigate = useNavigate();
@@ -29,25 +30,27 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
       }
     });
   };
-
-  if (isSuccess)
-    Swal.fire({
-      position: "center",
-      icon: "success",
-      title: "Producto borrado con éxito",
-      showConfirmButton: false,
-      timer: 2500,
-    });
-
-  if (isError)
-    Swal.fire({
-      position: "center",
-      icon: "error",
-      title: "Error",
-      text: "Ha ocurrido un error, producto no borrado",
-      showConfirmButton: false,
-      timer: 2500,
-    });
+  useEffect(() => {
+    if (isError)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error",
+        text: "Ha ocurrido un error, producto no borrado",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isError]);
+  useEffect(() => {
+    if (isSuccess)
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Producto borrado con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isSuccess]);
 
   return (
     <Popover
