@@ -34,7 +34,7 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
     Swal.fire({
       position: "center",
       icon: "success",
-      title: "Producto borrado con exito",
+      title: "Producto borrado con éxito",
       showConfirmButton: false,
       timer: 2500,
     });

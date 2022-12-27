@@ -1,51 +1,25 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
 
 import { LoadingButton } from "@mui/lab";
-import { Box, Card, Grid, MenuItem, TextField } from "@mui/material";
-import apiRequest from "api/apiRequest";
+import { Alert, Box, Card, Grid, MenuItem, TextField } from "@mui/material";
 import MDBox from "components/MDBox";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserDispatch } from "redux/userSlice";
 import { editUserSchema } from "validations/users/editUserYup";
 import Swal from "sweetalert2";
 import colors from "assets/theme/base/colors";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import { usePutUserMutation } from "api/userApi";
+// import AvatarUpload from "./AvatarUpload";
 
-import AvatarUpload from "./AvatarUpload";
-
-function UserEdit() {
+function UserEdit({ listRoles, user: editUser }) {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { editUser } = useSelector((store) => store.user);
-  const { token } = useSelector((store) => store.auth);
-  const [isLoading, setIsLoading] = useState(false);
-  const [roles, setRoles] = useState([]);
-  const [error, setError] = useState([]);
-  const [user, setUser] = useState({});
   const { id } = useParams();
 
-  useEffect(() => {
-    const getRoles = async () => {
-      const { data } = await apiRequest.get("/roles");
-      setRoles(data.data.roles);
-    };
-    getRoles();
-  }, [setRoles]);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const { data } = await apiRequest.get(`/user/${id}`);
-      const userResponse = data.data.user;
-      setUser(userResponse);
-      dispatch(getUserDispatch(userResponse));
-    };
-    getUser();
-  }, [setUser]);
+  const [editUserMutation, { isLoading, isError }] = usePutUserMutation();
 
   const formik = useFormik({
     initialValues: {
@@ -76,42 +50,35 @@ function UserEdit() {
       city,
       zip,
     }) => {
-      setIsLoading(true);
-      try {
-        const { data } = await apiRequest.put(`/user/${user._id}`, {
-          name,
-          lastName,
-          email,
-          phone,
-          password,
-          role,
-          userAddresses: [
-            {
-              address,
-              flor,
-              department,
-              city,
-              province,
-              zip,
-            },
-          ],
-        });
+      const editUserValues = {
+        name,
+        lastName,
+        email,
+        phone,
+        password,
+        role,
+        userAddresses: [
+          {
+            address,
+            flor,
+            department,
+            city,
+            province,
+            zip,
+          },
+        ],
+      };
 
-        if (data.ok) {
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Usuario editado",
-            showConfirmButton: false,
-            timer: 2000,
-          });
-          setError([]);
-          navigate("/users");
-        }
-        setIsLoading(false);
-      } catch (err) {
-        setError(error.response.data);
-        setIsLoading(false);
+      const { data } = await editUserMutation({ id, ...editUserValues }).unwrap();
+      if (data) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Usuario editado con éxito",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        navigate("/users");
       }
     },
     validationSchema: editUserSchema,
@@ -126,9 +93,7 @@ function UserEdit() {
           gap: 5,
         }}
       >
-        <Grid sx={4}>
-          <AvatarUpload user={user} token={token} />
-        </Grid>
+        <Grid sx={4}>{/*  <AvatarUpload user={user} token={token} /> */}</Grid>
 
         <Grid sx={4}>
           <Card>
@@ -173,8 +138,8 @@ function UserEdit() {
                   name="email"
                   autoComplete="email"
                   value={formik.values.email}
-                  error={!!formik.errors.email || error.email?.msg}
-                  helperText={formik.errors.email || error.email?.msg}
+                  error={!!formik.errors.email}
+                  helperText={formik.errors.email}
                   onChange={formik.handleChange}
                 />
                 <TextField
@@ -185,8 +150,8 @@ function UserEdit() {
                   label="Telefono"
                   id="user_phone"
                   value={formik.values.phone}
-                  error={!!formik.errors.phone || error.phone?.msg}
-                  helperText={formik.errors.phone || error.phone?.msg}
+                  error={!!formik.errors.phone}
+                  helperText={formik.errors.phone}
                   onChange={formik.handleChange}
                 />
                 {}
@@ -217,7 +182,7 @@ function UserEdit() {
                   helperText={formik.errors.role}
                   onChange={formik.handleChange}
                 >
-                  {roles.map((option) => (
+                  {listRoles.map((option) => (
                     <MenuItem
                       key={option._id}
                       value={option._id}
@@ -249,13 +214,13 @@ function UserEdit() {
                   sx={{
                     mt: 3,
                     mb: 2,
-                    /*    borderColor: colors.blueAccent[400],
-                  color: colors.blueAccent[400],
-                  "&:hover": { backgroundColor: colors.blueAccent[900] }, */
                   }}
                 >
                   Cancelar
                 </MDButton>
+                {isError && (
+                  <Alert severity="error">Ha ocurrido un error, usuario no editado</Alert>
+                )}
               </MDBox>
 
               <MDBox sx={{ width: "50%" }}>

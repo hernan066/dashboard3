@@ -41,7 +41,7 @@ function ProductCreate({ listCategories }) {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: "Producto creado con exito",
+        title: "Producto creado con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -201,9 +201,6 @@ function ProductCreate({ listCategories }) {
               sx={{
                 mt: 3,
                 mb: 2,
-                /*   borderColor: colors.blueAccent[400],
-                    color: colors.blueAccent[400],
-                    "&:hover": { backgroundColor: colors.blueAccent[900] }, */
               }}
             >
               Cancelar

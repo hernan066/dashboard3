@@ -52,6 +52,7 @@ import EditDistributor from "pages/distributor/edit-distributors";
 import CreateDeliveryTruck from "pages/deliveryTruck/create-deliveryTruck";
 import EditDeliveryTruck from "pages/deliveryTruck/edit-deliveryTruck";
 import ListClients from "pages/clients/list-clients";
+import AddUserAddress from "pages/users/add-address";
 
 const routes = [
   {
@@ -432,6 +433,18 @@ const routes = [
     component: (
       <RequireAuth>
         <EditUser />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Editar usuario",
+    key: "address-user",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/users/address/:id",
+    component: (
+      <RequireAuth>
+        <AddUserAddress />
       </RequireAuth>
     ),
   },

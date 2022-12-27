@@ -1,16 +1,20 @@
+import { Alert } from "@mui/material";
 import Grid from "@mui/material/Grid";
-// import Card from "@mui/material/Card";
-
-// Material Dashboard 2 React components
+import { useGetRolesQuery } from "api/roleApi";
+import { useGetUserQuery } from "api/userApi";
+import Loading from "components/DRLoading";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
-
-// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useParams } from "react-router-dom";
 import UserEdit from "./UserEdit";
 
 function EditUser() {
+  const { id } = useParams();
+  const { data: listRoles, isLoading: l1, isError: e1 } = useGetRolesQuery();
+  const { data: user, isLoading: l2, isError: e2 } = useGetUserQuery(id);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -32,7 +36,12 @@ function EditUser() {
               </MDTypography>
             </MDBox>
             <MDBox px={3}>
-              <UserEdit />
+              {/*  <UserEdit /> */}
+              {(l1 || l2) && <Loading />}
+              {(e1 || e2) && <Alert severity="error">Ha ocurrido un error</Alert>}
+              {listRoles && user && (
+                <UserEdit listRoles={listRoles.data.roles} user={user.data.user} />
+              )}
             </MDBox>
           </Grid>
         </Grid>

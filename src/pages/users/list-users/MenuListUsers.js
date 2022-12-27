@@ -33,12 +33,16 @@ function MenuListUsers({ open, handleCloseMenu, userId }) {
       </MenuItem>
       <MenuItem onClick={() => navigate(`/users/edit/${userId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Editar
+      </MenuItem>
+      <MenuItem onClick={() => navigate(`/users/address/${userId}`)}>
+        <EditIcon sx={{ mr: 1 }} />
+        Dirección
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar
       </MenuItem>
     </Popover>
   );
