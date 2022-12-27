@@ -15,7 +15,7 @@ import MenuListUsers from "./MenuListUsers";
 function TableListUsers({ users }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const listUsers = users.data.users;
 
   const navigate = useNavigate();
@@ -106,7 +106,7 @@ function TableListUsers({ users }) {
             getRowId={(row) => row._id}
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[5, 10, 20]}
+            rowsPerPageOptions={[10, 20, 50]}
             pagination
             sx={{
               "& .MuiDataGrid-cellContent": {

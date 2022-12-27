@@ -117,10 +117,11 @@ function TableListProductsLots({ productsLots }) {
             components={{ Toolbar: GridToolbar }}
             rows={productsLots.map((productsLot) => ({
               ...productsLot,
+              cost: `$${productsLot.cost}`,
               supplier: productsLot.supplier.businessName,
               product: productsLot.product.name,
               unit: productsLot.product.unit,
-              cost_unit: productsLot.cost / productsLot.quantity,
+              cost_unit: `$${productsLot.cost / productsLot.quantity}`,
               createdAt: dateToLocalDate(productsLot.createdAt),
               updatedAt: dateToLocalDate(productsLot.updatedAt),
             }))}
