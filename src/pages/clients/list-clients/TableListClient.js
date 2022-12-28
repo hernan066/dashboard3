@@ -13,7 +13,7 @@ import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import MenuProductsLots from "./MenuDeliveryTruck";
 
-function TableListDeliveryTruck({ deliveryTrucks }) {
+function TableListClients({ clients }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -33,36 +33,24 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
 
   const columns = [
     {
-      field: "truckId",
-      headerName: "Id",
+      field: "name",
+      headerName: "Nombre",
       flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "distributor",
-      headerName: "Distribuidora",
+      field: "cuit",
+      headerName: "CUIT",
       flex: 1,
       cellClassName: "name-column--cell",
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "patent",
-      headerName: "Patente",
-      flex: 1,
-      cellClassName: "name-column--cell",
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "deliveryName",
-      headerName: "Repartidor",
-      flex: 1,
       headerClassName: "super-app-theme--header",
     },
     {
       field: "email",
-      headerName: "Usuario",
-      flex: 1,
+      headerName: "Email",
+      flex: 2,
+      cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
     {
@@ -71,58 +59,29 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-
     {
-      field: "maximumLoad",
-      headerName: "Carga Max.",
+      field: "type",
+      headerName: "Tipo",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-
     {
-      field: "zone",
-      headerName: "Zona Reparto",
+      field: "category",
+      headerName: "Categoría",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-
     {
-      field: "coldChamber",
-      headerName: "Cam. frio",
+      field: "contactMeans",
+      headerName: "Ingresa por",
       flex: 1,
       headerClassName: "super-app-theme--header",
-      renderCell: (params) =>
-        params.row.coldChamber ? (
-          <div
-            style={{
-              height: "30px",
-              width: "30px",
-              borderRadius: "50%",
-              backgroundColor: "green",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            <CheckIcon />
-          </div>
-        ) : (
-          <div
-            style={{
-              height: "30px",
-              width: "30px",
-              borderRadius: "50%",
-              backgroundColor: "red",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            <CloseIcon />
-          </div>
-        ),
+    },
+    {
+      field: "campaignName",
+      headerName: "En campaña",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
     },
 
     {
@@ -155,13 +114,13 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
             checkboxSelection
             disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
-            rows={deliveryTrucks.map((delivery) => ({
-              ...delivery,
-              deliveryName: `${delivery.user.name} ${delivery.user.lastName}`,
-              email: delivery.user.email,
-              phone: delivery.user.phone,
-              zone: delivery.defaultZone.name,
-              distributor: delivery.distributor.businessName,
+            rows={clients.map((client) => ({
+              ...client,
+              name: `${client.user.name} ${client.user.lastName}`,
+              email: client.user.email,
+              phone: client.user.phone,
+              type: client.clientType.clientType,
+              category: client.clientCategory.clientCategory,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
@@ -206,4 +165,4 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
   );
 }
 
-export default TableListDeliveryTruck;
+export default TableListClients;
