@@ -53,6 +53,8 @@ import CreateDeliveryTruck from "pages/deliveryTruck/create-deliveryTruck";
 import EditDeliveryTruck from "pages/deliveryTruck/edit-deliveryTruck";
 import ListClients from "pages/clients/list-clients";
 import AddUserAddress from "pages/users/add-address";
+import CreateNewClient from "pages/clients/create-clients";
+import EditClient from "pages/clients/edit-clients";
 
 const routes = [
   {
@@ -189,7 +191,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Lote de productos",
+    name: "Stock",
     key: "products_lots",
     icon: (
       <Icon fontSize="small">list_alt</Icon>
@@ -471,6 +473,34 @@ const routes = [
     component: (
       <RequireAuth>
         <ListClients />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Clientes",
+    key: "clients_new",
+    icon: (
+      <Icon fontSize="small">perm_contact_calendar_icon</Icon>
+    ) /* import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar'; */,
+    route: "/client/new",
+    component: (
+      <RequireAuth>
+        <CreateNewClient />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Clientes",
+    key: "clients_edit",
+    icon: (
+      <Icon fontSize="small">perm_contact_calendar_icon</Icon>
+    ) /* import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar'; */,
+    route: "/client/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditClient />
       </RequireAuth>
     ),
   },

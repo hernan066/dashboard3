@@ -6,17 +6,17 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import { useDeleteDeliveryTruckMutation } from "api/deliveryTruckApi";
+import { useDeleteClientMutation } from "api/clientsApi";
 
 function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
   const navigate = useNavigate();
 
-  const [deleteDeliveryTruck, { isError, isSuccess }] = useDeleteDeliveryTruckMutation();
+  const [deleteClient, { isError, isSuccess }] = useDeleteClientMutation();
 
   const handlerDelete = () => {
     handleCloseMenu();
     Swal.fire({
-      title: "Deseas borrar este repartidor?",
+      title: "Deseas borrar este cliente?",
       text: "Este cambio no se puede revertir",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -24,7 +24,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteDeliveryTruck(menuId).unwrap();
+        await deleteClient(menuId).unwrap();
       }
     });
   };
@@ -35,7 +35,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
         position: "center",
         icon: "error",
         title: "Error",
-        text: "Ha ocurrido un error, repartidor no borrado",
+        text: "Ha ocurrido un error, Cliente no borrado",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -45,7 +45,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Repartidor borrado con éxito",
+        title: "Cliente borrado con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -71,7 +71,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/delivery_trucks/edit/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/client/edit/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

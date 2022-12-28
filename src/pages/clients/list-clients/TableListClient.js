@@ -9,8 +9,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
 import MenuProductsLots from "./MenuDeliveryTruck";
 
 function TableListClients({ clients }) {
@@ -101,11 +99,7 @@ function TableListClients({ clients }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton
-            color="dark"
-            variant="gradient"
-            onClick={() => navigate("/delivery_trucks/new")}
-          >
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/client/new")}>
             Crear
           </MDButton>
         </Stack>
