@@ -55,6 +55,8 @@ import ListClients from "pages/clients/list-clients";
 import AddUserAddress from "pages/users/add-address";
 import CreateNewClient from "pages/clients/create-clients";
 import EditClient from "pages/clients/edit-clients";
+import ListClientAddress from "pages/clientsAddress/list-clientAddress";
+import CreateNewClientAddress from "pages/clientsAddress/create-clientAddress";
 
 const routes = [
   {
@@ -501,6 +503,34 @@ const routes = [
     component: (
       <RequireAuth>
         <EditClient />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "collapse",
+    name: "Direcciones de clientes",
+    key: "clients_address",
+    icon: (
+      <Icon fontSize="small">holiday_village_icon</Icon>
+    ) /* import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'; */,
+    route: "/client_address",
+    component: (
+      <RequireAuth>
+        <ListClientAddress />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Direcciones de clientes",
+    key: "clients_address_new",
+    icon: (
+      <Icon fontSize="small">holiday_village_icon</Icon>
+    ) /* import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'; */,
+    route: "/client_address/new",
+    component: (
+      <RequireAuth>
+        <CreateNewClientAddress />
       </RequireAuth>
     ),
   },
