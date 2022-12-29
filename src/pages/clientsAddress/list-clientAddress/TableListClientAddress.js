@@ -114,10 +114,10 @@ function TableListClientAddress({ clientAddress }) {
             components={{ Toolbar: GridToolbar }}
             rows={clientAddress.map((address) => ({
               ...address,
-              user: `${address.user.name} ${address.user.lastName}`,
-              email: address.user.email,
-              phone: address.user.phone,
-              zone: address.deliveryZone?.name,
+              user: `${address?.user?.name} ${address?.user?.lastName}`,
+              email: address?.user?.email,
+              phone: address?.user?.phone,
+              zone: address?.deliveryZone?.name,
             }))}
             columns={columns}
             getRowId={(row) => row._id}

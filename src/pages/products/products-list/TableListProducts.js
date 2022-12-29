@@ -120,7 +120,7 @@ function TableListProducts({ products }) {
               name: product.name,
               brand: product.brand,
               unit: product.unit,
-              category: product.category.name,
+              category: product?.category?.name,
               type: product.type,
               available: product.available,
               description: product.description,

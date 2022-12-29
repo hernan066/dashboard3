@@ -57,6 +57,7 @@ import CreateNewClient from "pages/clients/create-clients";
 import EditClient from "pages/clients/edit-clients";
 import ListClientAddress from "pages/clientsAddress/list-clientAddress";
 import CreateNewClientAddress from "pages/clientsAddress/create-clientAddress";
+import EditClientAddress from "pages/clientsAddress/edit-clientAddress";
 
 const routes = [
   {
@@ -531,6 +532,20 @@ const routes = [
     component: (
       <RequireAuth>
         <CreateNewClientAddress />
+      </RequireAuth>
+    ),
+  },
+  {
+    type: "none",
+    name: "Direcciones de clientes",
+    key: "clients_address_edit",
+    icon: (
+      <Icon fontSize="small">holiday_village_icon</Icon>
+    ) /* import HolidayVillageIcon from '@mui/icons-material/HolidayVillage'; */,
+    route: "/client_address/edit/:id",
+    component: (
+      <RequireAuth>
+        <EditClientAddress />
       </RequireAuth>
     ),
   },
