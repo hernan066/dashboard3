@@ -30,7 +30,7 @@ function ProductEdit({ listCategories, productById }) {
       brand: productById.brand,
       unit: productById.unit,
       type: productById.type,
-      category: productById.category._id,
+      category: productById?.category?._id,
       description: productById.description,
       img: productById.img,
       available: productById.available,

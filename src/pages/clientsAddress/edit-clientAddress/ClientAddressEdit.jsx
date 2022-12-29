@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Autocomplete, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -14,11 +14,12 @@ import colors from "assets/theme/base/colors";
 import { createClientAddressSchema } from "validations/clientAddress/createClientAddressSchemaYup";
 import Swal from "sweetalert2";
 import { useState } from "react";
-import { usePostClientAddressMutation } from "api/clientsAddressApi";
+import { usePutClientAddressMutation } from "api/clientsAddressApi";
 
 function ClientAddressEdit({ clients, zones, clientAddress }) {
   const navigate = useNavigate();
-  const [createClientAddress, { isLoading, isError }] = usePostClientAddressMutation();
+  const { id } = useParams();
+  const [createClientAddress, { isLoading, isError }] = usePutClientAddressMutation();
 
   // const filterUser = users.filter((user) => user.role.role === "CLIENT_ROLE");
 
@@ -52,17 +53,17 @@ function ClientAddressEdit({ clients, zones, clientAddress }) {
       phone: clientAddress.phone,
     },
     onSubmit: async (values) => {
-      const newClientAddress = {
+      const editClientAddress = {
         ...values,
         user: inputValue.user,
         client: inputValue.id,
       };
-      const res = await createClientAddress(newClientAddress).unwrap();
+      const res = await createClientAddress({ id, ...editClientAddress }).unwrap();
       if (res) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Cliente creado con éxito",
+          title: "Cliente editado con éxito",
           showConfirmButton: false,
           timer: 2500,
         });
@@ -157,7 +158,7 @@ function ClientAddressEdit({ clients, zones, clientAddress }) {
                 color: "white !important",
               }}
             >
-              Crear
+              Editar
             </LoadingButton>
             <MDButton
               variant="outlined"

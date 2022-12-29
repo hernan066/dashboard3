@@ -13,7 +13,7 @@ import colors from "assets/theme/base/colors";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import { usePutUserMutation } from "api/userApi";
-// import AvatarUpload from "./AvatarUpload";
+import AvatarUpload from "./AvatarUpload";
 
 function UserEdit({ listRoles, user: editUser }) {
   const navigate = useNavigate();
@@ -29,27 +29,8 @@ function UserEdit({ listRoles, user: editUser }) {
       // password: editUser?.password,
       phone: editUser?.phone,
       role: editUser?.role || "",
-      address: editUser?.userAddresses[0].address,
-      flor: editUser?.userAddresses[0].flor,
-      department: editUser?.userAddresses[0].department,
-      province: editUser?.userAddresses[0].province,
-      city: editUser?.userAddresses[0].city,
-      zip: editUser?.userAddresses[0].zip,
     },
-    onSubmit: async ({
-      name,
-      lastName,
-      email,
-      password,
-      phone,
-      role,
-      address,
-      flor,
-      department,
-      province,
-      city,
-      zip,
-    }) => {
+    onSubmit: async ({ name, lastName, email, password, phone, role }) => {
       const editUserValues = {
         name,
         lastName,
@@ -57,16 +38,6 @@ function UserEdit({ listRoles, user: editUser }) {
         phone,
         password,
         role,
-        userAddresses: [
-          {
-            address,
-            flor,
-            department,
-            city,
-            province,
-            zip,
-          },
-        ],
       };
 
       const { data } = await editUserMutation({ id, ...editUserValues }).unwrap();
@@ -93,7 +64,9 @@ function UserEdit({ listRoles, user: editUser }) {
           gap: 5,
         }}
       >
-        <Grid sx={4}>{/*  <AvatarUpload user={user} token={token} /> */}</Grid>
+        <Grid sx={4}>
+          <AvatarUpload user={editUser} />
+        </Grid>
 
         <Grid sx={4}>
           <Card>
@@ -101,9 +74,9 @@ function UserEdit({ listRoles, user: editUser }) {
               component="form"
               noValidate
               onSubmit={formik.handleSubmit}
-              sx={{ p: 5, display: "flex", gap: 3 }}
+              sx={{ p: 5, display: "flex", gap: 3, width: "100%" }}
             >
-              <MDBox sx={{ width: "50%" }}>
+              <MDBox sx={{ width: "100%" }}>
                 <MDTypography>Datos personales</MDTypography>
                 <TextField
                   margin="normal"
@@ -223,7 +196,7 @@ function UserEdit({ listRoles, user: editUser }) {
                 )}
               </MDBox>
 
-              <MDBox sx={{ width: "50%" }}>
+              {/*  <MDBox sx={{ width: "50%" }}>
                 <MDTypography>Dirección</MDTypography>
                 <TextField
                   margin="normal"
@@ -292,7 +265,7 @@ function UserEdit({ listRoles, user: editUser }) {
                   helperText={formik.errors.zip}
                   onChange={formik.handleChange}
                 />
-              </MDBox>
+              </MDBox> */}
             </Box>
           </Card>
         </Grid>

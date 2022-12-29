@@ -1,14 +1,15 @@
 /* eslint-disable no-alert */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
-import { Box, Card, LinearProgress } from "@mui/material";
+import { Alert, Box, Card, LinearProgress } from "@mui/material";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useEffect, useRef, useState } from "react";
 import { IKContext, IKUpload } from "imagekitio-react";
-import apiRequest from "api/apiRequest";
 import Swal from "sweetalert2";
 import MDTypography from "components/MDTypography";
 import colors from "assets/theme/base/colors";
+import { usePutUserMutation } from "api/userApi";
+import { useParams } from "react-router-dom";
 
 const publicKey = process.env.REACT_APP_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_IMAGEKIT_URL_ENDPOINT;
@@ -17,11 +18,14 @@ const authenticationEndpoint = `${process.env.REACT_APP_API_URL}/imageKit`;
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 function AvatarUpload({ user }) {
+  const { id } = useParams();
   const [file, setFile] = useState(null);
   const [fileDataURL, setFileDataURL] = useState(null);
   const inputRefTest = useRef(null);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const [editUserMutation, { isLoading, isError }] = usePutUserMutation();
 
   const changeHandler = (e) => {
     const filePreview = e.target.files[0];
@@ -62,10 +66,11 @@ function AvatarUpload({ user }) {
   const onSuccess = async (res) => {
     console.log("Success", res);
     try {
-      await apiRequest.put(`/user/${user._id}`, {
+      const editUserValues = {
         ...user,
         avatar: res.url,
-      });
+      };
+      await await editUserMutation({ id, ...editUserValues }).unwrap();
 
       setLoading(false);
 
@@ -87,9 +92,7 @@ function AvatarUpload({ user }) {
       sx={{
         textAlign: "center",
         padding: "30px",
-        minHeight: "320px",
-
-        maxHeight: "400px",
+        overflow: "hidden",
       }}
     >
       <MDTypography variant="h4">{user.name}</MDTypography>
@@ -183,7 +186,7 @@ function AvatarUpload({ user }) {
             )}
           </button>
         )}
-        {loading && (
+        {(loading || isLoading) && (
           <Box sx={{ width: "100%" }}>
             <LinearProgress />
           </Box>
@@ -192,7 +195,9 @@ function AvatarUpload({ user }) {
         <MDTypography variant="body2" /* color={colors.grey[500]} */>
           Allowed *.jpeg, *.jpg and *.png max size of 3.1 MB
         </MDTypography>
-        {error && <p style={{ color: "red" }}>Error: no se pudo cambiar el avatar</p>}
+        {(error || isError) && (
+          <Alert severity="error">Ha ocurrido un error, Avatar no cambiado</Alert>
+        )}
       </IKContext>
     </Card>
   );

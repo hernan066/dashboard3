@@ -26,27 +26,8 @@ function UserCreate({ roles }) {
       password: "",
       phone: "",
       role: "",
-      address: "",
-      flor: "",
-      department: "",
-      province: "",
-      city: "",
-      zip: "",
     },
-    onSubmit: async ({
-      name,
-      lastName,
-      email,
-      password,
-      phone,
-      role,
-      address,
-      flor,
-      department,
-      province,
-      city,
-      zip,
-    }) => {
+    onSubmit: async ({ name, lastName, email, password, phone, role }) => {
       setIsLoading(true);
       try {
         const { data } = await apiRequest.post("/user", {
@@ -56,16 +37,6 @@ function UserCreate({ roles }) {
           phone,
           password,
           role,
-          userAddresses: [
-            {
-              address,
-              flor,
-              department,
-              city,
-              province,
-              zip,
-            },
-          ],
         });
         if (data.ok) {
           /*  Swal.fire({
@@ -101,9 +72,9 @@ function UserCreate({ roles }) {
           autoComplete="off"
           noValidate
           onSubmit={formik.handleSubmit}
-          sx={{ mt: 1, mx: 2, display: "flex", gap: 3 }}
+          sx={{ mt: 1, mx: 2, display: "flex", gap: 3, width: "100%" }}
         >
-          <Box sx={{ width: "50%" }}>
+          <Box sx={{ width: "100%" }}>
             <TextField
               margin="normal"
               required
@@ -217,7 +188,7 @@ function UserCreate({ roles }) {
             </MDButton>
           </Box>
 
-          <Box sx={{ width: "50%" }}>
+          {/*  <Box sx={{ width: "50%" }}>
             <TextField
               margin="normal"
               fullWidth
@@ -285,7 +256,7 @@ function UserCreate({ roles }) {
               helperText={formik.errors.zip}
               onChange={formik.handleChange}
             />
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </MDBox>

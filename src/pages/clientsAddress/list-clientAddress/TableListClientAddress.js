@@ -13,6 +13,7 @@ import MenuListClientAddress from "./MenuListClientAddress";
 function TableListClientAddress({ clientAddress }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
+  console.log(clientAddress);
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
