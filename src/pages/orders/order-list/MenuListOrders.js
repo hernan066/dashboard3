@@ -72,18 +72,18 @@ function MenuListOrders({ open, handleCloseMenu, orderId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/orders/details/${orderId}`)}>
+      <MenuItem onClick={() => navigate(`/ordenes/detalle/${orderId}`)}>
         <VisibilityIcon sx={{ mr: 1 }} />
         Ver
       </MenuItem>
-      <MenuItem onClick={() => navigate(`/orders/edit/${orderId}`)}>
+      <MenuItem onClick={() => navigate(`/ordenes/editar/${orderId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Editar
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar
       </MenuItem>
     </Popover>
   );

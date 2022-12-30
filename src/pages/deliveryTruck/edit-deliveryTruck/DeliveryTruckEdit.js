@@ -42,7 +42,7 @@ function DeliveryTruckEdit({ listUsers, ListDistributors, listDeliveryZones, del
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/delivery_trucks");
+      navigate("/distribucion/repartidores/lista");
     },
     validationSchema: createDeliveryTruckSchema,
   });

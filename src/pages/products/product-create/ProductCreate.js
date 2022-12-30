@@ -45,7 +45,7 @@ function ProductCreate({ listCategories }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/products");
+      navigate("/productos/lista");
     },
     validationSchema: creteProductSchema,
   });

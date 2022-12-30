@@ -71,7 +71,7 @@ function MenuProductsLots({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/delivery_zone/edit/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/distribucion/zonas/editar/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

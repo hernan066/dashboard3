@@ -71,7 +71,7 @@ function MenuDistributors({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/distributors/edit/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/distribucion/distribuidoras/editar/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

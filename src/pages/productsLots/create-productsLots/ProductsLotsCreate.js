@@ -57,7 +57,7 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/products_lots");
+      navigate("/productos/stock/lista");
     },
     validationSchema: creteProductLotsSchema,
   });

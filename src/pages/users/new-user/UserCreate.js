@@ -47,7 +47,7 @@ function UserCreate({ roles }) {
             timer: 2000,
           }); */
           setError([]);
-          navigate("/users");
+          navigate("/usuarios/lista");
         }
         setIsLoading(false);
       } catch (err) {

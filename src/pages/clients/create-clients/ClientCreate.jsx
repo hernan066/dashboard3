@@ -54,7 +54,7 @@ function ClientCreate({ types, categories, users }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/clients");
+        navigate("/clientes/lista");
       }
     },
     validationSchema: createClientSchema,

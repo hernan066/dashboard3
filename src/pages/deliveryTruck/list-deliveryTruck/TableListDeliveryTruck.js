@@ -145,7 +145,7 @@ function TableListDeliveryTruck({ deliveryTrucks }) {
           <MDButton
             color="dark"
             variant="gradient"
-            onClick={() => navigate("/delivery_trucks/new")}
+            onClick={() => navigate("/distribucion/repartidores/nuevo")}
           >
             Crear
           </MDButton>

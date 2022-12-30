@@ -58,7 +58,7 @@ function Cart() {
         timer: 2500,
       });
       dispatch(clearCart());
-      navigate("/orders");
+      navigate("/ordenes/lista");
     }
   };
 

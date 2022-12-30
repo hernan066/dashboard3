@@ -106,7 +106,11 @@ function TableListProductsLots({ productsLots }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/products_lots/new")}>
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/productos/stock/nuevo")}
+          >
             Crear
           </MDButton>
         </Stack>

@@ -49,7 +49,7 @@ function ProductEdit({ listCategories, productById }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/products");
+      navigate("/productos/lista");
     },
     validationSchema: creteProductSchema,
   });

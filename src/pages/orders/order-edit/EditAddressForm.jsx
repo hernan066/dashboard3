@@ -58,7 +58,7 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/orders");
+      navigate("/ordenes/lista");
     },
     validationSchema: editOrderAddressSchema,
   });

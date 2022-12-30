@@ -71,7 +71,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/client/edit/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/clientes/editar/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

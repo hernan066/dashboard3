@@ -40,7 +40,7 @@ function DistributorEdit({ distributor }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/distributors");
+        navigate("/distribucion/distribuidoras/lista");
       }
     },
     validationSchema: creteDistributorsSchema,

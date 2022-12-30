@@ -49,7 +49,7 @@ function UserEdit({ listRoles, user: editUser }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/users");
+        navigate("/usuarios/lista");
       }
     },
     validationSchema: editUserSchema,

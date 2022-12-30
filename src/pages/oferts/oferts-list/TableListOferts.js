@@ -164,7 +164,11 @@ function TableListOferts({ oferts }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/oferts/new")}>
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/productos/ofertas/nueva")}
+          >
             Crear
           </MDButton>
         </Stack>

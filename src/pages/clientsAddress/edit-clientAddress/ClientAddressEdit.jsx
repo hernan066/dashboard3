@@ -67,7 +67,7 @@ function ClientAddressEdit({ clients, zones, clientAddress }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/client_address");
+        navigate("/clientes/direcciones/lista");
       }
     },
     validationSchema: createClientAddressSchema,

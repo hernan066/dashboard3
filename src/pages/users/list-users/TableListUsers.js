@@ -85,7 +85,7 @@ function TableListUsers({ users }) {
     <>
       <Box m="20px">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/users/new")}>
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/usuarios/nuevo")}>
             Crear
           </MDButton>
         </Stack>

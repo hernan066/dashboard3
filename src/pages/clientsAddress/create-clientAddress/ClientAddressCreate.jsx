@@ -60,7 +60,7 @@ function ClientAddressCreate({ clients, zones }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/client_address");
+        navigate("/clientes/direcciones/lista");
       }
     },
     validationSchema: createClientAddressSchema,

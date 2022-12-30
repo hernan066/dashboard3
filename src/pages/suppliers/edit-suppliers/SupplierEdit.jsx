@@ -41,7 +41,7 @@ function SupplierEdit({ supplier }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/suppliers");
+        navigate("/productos/proveedores/lista");
       }
     },
     validationSchema: creteSupplierSchema,

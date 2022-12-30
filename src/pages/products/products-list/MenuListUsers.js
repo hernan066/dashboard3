@@ -72,11 +72,7 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/products/details/${productId}`)}>
-        <VisibilityIcon sx={{ mr: 1 }} />
-        Ver
-      </MenuItem>
-      <MenuItem onClick={() => navigate(`/products/edit/${productId}`)}>
+      <MenuItem onClick={() => navigate(`/productos/editar/${productId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

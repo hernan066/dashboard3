@@ -93,7 +93,11 @@ function TableListDeliveryZone({ deliveryZones }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/delivery_zone/new")}>
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/distribucion/zonas/nueva")}
+          >
             Crear
           </MDButton>
         </Stack>

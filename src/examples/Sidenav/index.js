@@ -1,18 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useEffect } from "react";
 import { useLocation, NavLink, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
-import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+// import Link from "@mui/material/Link";
 import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import MDButton from "components/MDButton";
-import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
+// import SidenavCollapse from "examples/Sidenav/SidenavCollapse";
 import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
-
-// Material Dashboard 2 React context
 import {
   useMaterialUIController,
   setMiniSidenav,
@@ -22,6 +20,8 @@ import {
 import { useDispatch } from "react-redux";
 import axios from "api/axios";
 import { logOut } from "redux/authSlice";
+import { menuList } from "data/menuList";
+import SidenavCustom from "./SidenavCustom";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const dispatch1 = useDispatch();
@@ -29,7 +29,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
   const location = useLocation();
-  const collapseName = location.pathname.replace("/", "");
+  // const collapseName = location.pathname.replace("/", "");
 
   let textColor = "white";
 
@@ -75,7 +75,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   }, [dispatch, location]);
 
   // Render all the routes from the routes.js (All the visible items on the Sidenav)
-  const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
+  /* const renderRoutes = routes.map(({ type, name, icon, title, noCollapse, key, href, route }) => {
     let returnValue;
 
     if (type === "collapse") {
@@ -129,7 +129,7 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
     }
 
     return returnValue;
-  });
+  }); */
 
   return (
     <SidenavRoot
@@ -169,7 +169,11 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
           (darkMode && !transparentSidenav && whiteSidenav)
         }
       />
-      <List>{renderRoutes}</List>
+
+      {menuList.map((menu) => (
+        <SidenavCustom key={menu.key} menu={menu} />
+      ))}
+      {/*  <List>{renderRoutes}</List> */}
       <MDBox p={2} mt="auto">
         <MDButton
           component="button"

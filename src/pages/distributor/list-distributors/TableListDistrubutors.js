@@ -99,7 +99,11 @@ function TableListDistributors({ distributors }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/distributors/new")}>
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/distribucion/distribuidoras/nueva")}
+          >
             Crear
           </MDButton>
         </Stack>

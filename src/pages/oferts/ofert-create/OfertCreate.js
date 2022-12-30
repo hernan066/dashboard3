@@ -79,7 +79,7 @@ function OfertCreate({ listProducts }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/oferts");
+      navigate("/productos/ofertas/lista");
     },
     validationSchema: creteOfertSchema,
   });

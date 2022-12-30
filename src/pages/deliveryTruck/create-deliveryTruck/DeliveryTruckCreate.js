@@ -41,7 +41,7 @@ function DeliveryTruckCreate({ listUsers, ListDistributors, listDeliveryZones })
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/delivery_trucks");
+      navigate("/distribucion/repartidores/lista");
     },
     validationSchema: createDeliveryTruckSchema,
   });

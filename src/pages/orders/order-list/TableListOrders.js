@@ -167,7 +167,7 @@ function TableListOrders({ orders }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/orders/new")}>
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/ordenes/nueva")}>
             Crear
           </MDButton>
         </Stack>

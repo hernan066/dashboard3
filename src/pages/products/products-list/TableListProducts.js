@@ -103,7 +103,7 @@ function TableListProducts({ products }) {
     <>
       <Box m="20px">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/products/new")}>
+          <MDButton color="dark" variant="gradient" onClick={() => navigate("/productos/nuevo")}>
             Crear
           </MDButton>
         </Stack>

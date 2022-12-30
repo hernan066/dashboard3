@@ -3,9 +3,7 @@
 import { MenuItem, Popover } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
-import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
 import { useDeleteSuppliersMutation } from "api/supplierApi";
 
@@ -51,11 +49,7 @@ function MenuListSuppliers({ open, handleCloseMenu, suppliersId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/suppliers/details/${suppliersId}`)}>
-        <VisibilityIcon sx={{ mr: 1 }} />
-        Ver
-      </MenuItem>
-      <MenuItem onClick={() => navigate(`/suppliers/edit/${suppliersId}`)}>
+      <MenuItem onClick={() => navigate(`/productos/proveedores/editar/${suppliersId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

@@ -55,7 +55,7 @@ function DeliveryZoneEdit({ deliveryZone }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/delivery_zone");
+        navigate("/distribucion/zonas/lista");
       }
     },
     validationSchema: createDeliveryZoneSchema,

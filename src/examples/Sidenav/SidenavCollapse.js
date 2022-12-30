@@ -35,50 +35,78 @@ import {
 
 // Material Dashboard 2 React context
 import { useMaterialUIController } from "context";
+import { useState } from "react";
+import { Collapse, List } from "@mui/material";
+import { ExpandLess, ExpandMore, StarBorder } from "@mui/icons-material";
 
 function SidenavCollapse({ icon, name, active, ...rest }) {
   const [controller] = useMaterialUIController();
   const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
 
-  return (
-    <ListItem component="li">
-      <MDBox
-        {...rest}
-        sx={(theme) =>
-          collapseItem(theme, {
-            active,
-            transparentSidenav,
-            whiteSidenav,
-            darkMode,
-            sidenavColor,
-          })
-        }
-      >
-        <ListItemIcon
-          sx={(theme) =>
-            collapseIconBox(theme, { transparentSidenav, whiteSidenav, darkMode, active })
-          }
-        >
-          {typeof icon === "string" ? (
-            <Icon sx={(theme) => collapseIcon(theme, { active })}>{icon}</Icon>
-          ) : (
-            icon
-          )}
-        </ListItemIcon>
+  const [open, setOpen] = useState(true);
 
-        <ListItemText
-          primary={name}
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <>
+      <ListItem component="li" button onClick={handleClick}>
+        <MDBox
+          {...rest}
           sx={(theme) =>
-            collapseText(theme, {
-              miniSidenav,
+            collapseItem(theme, {
+              active,
               transparentSidenav,
               whiteSidenav,
-              active,
+              darkMode,
+              sidenavColor,
             })
           }
-        />
-      </MDBox>
-    </ListItem>
+        >
+          <ListItemIcon
+            sx={(theme) =>
+              collapseIconBox(theme, { transparentSidenav, whiteSidenav, darkMode, active })
+            }
+          >
+            {typeof icon === "string" ? (
+              <Icon sx={(theme) => collapseIcon(theme, { active })}>{icon}</Icon>
+            ) : (
+              icon
+            )}
+          </ListItemIcon>
+
+          <ListItemText
+            primary={name}
+            sx={(theme) =>
+              collapseText(theme, {
+                miniSidenav,
+                transparentSidenav,
+                whiteSidenav,
+                active,
+              })
+            }
+          />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </MDBox>
+      </ListItem>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem component="div" button>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItem>
+          <ListItem component="div" button>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText primary="New" />
+          </ListItem>
+        </List>
+      </Collapse>
+    </>
   );
 }
 

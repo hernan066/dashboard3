@@ -72,7 +72,7 @@ function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/client_address/edit/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/clientes/direcciones/editar/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Edit
       </MenuItem>

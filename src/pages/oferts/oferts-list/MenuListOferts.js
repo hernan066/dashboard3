@@ -3,10 +3,10 @@
 import { MenuItem, Popover } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
 import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 function MenuListOferts({ open, handleCloseMenu, ofertId }) {
   const navigate = useNavigate();
@@ -26,27 +26,30 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await deleteProduct(ofertId).unwrap();
-        /*  if (isSuccess)
-          Swal.fire({
-            position: "center",
-            icon: "success",
-            title: "Oferta borrada con éxito",
-            showConfirmButton: false,
-            timer: 2500,
-          });
-
-        if (isError)
-          Swal.fire({
-            position: "center",
-            icon: "error",
-            title: "Error",
-            text: "Ha ocurrido un error, oferta no borrada",
-            showConfirmButton: false,
-            timer: 2500,
-          }); */
       }
     });
   };
+
+  useEffect(() => {
+    if (isError)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error",
+        text: "Ha ocurrido un error, oferta no borrada",
+        timer: 2500,
+      });
+  }, [isError]);
+  useEffect(() => {
+    if (isSuccess)
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Oferta borrada con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isSuccess]);
 
   return (
     <Popover
@@ -68,18 +71,14 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/oferts/details/${ofertId}`)}>
-        <VisibilityIcon sx={{ mr: 1 }} />
-        Ver
-      </MenuItem>
-      <MenuItem onClick={() => navigate(`/oferts/edit/${ofertId}`)}>
+      <MenuItem onClick={() => navigate(`/productos/ofertas/editar/${ofertId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Editar
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar
       </MenuItem>
     </Popover>
   );

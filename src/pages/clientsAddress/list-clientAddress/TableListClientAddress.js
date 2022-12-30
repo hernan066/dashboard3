@@ -104,7 +104,11 @@ function TableListClientAddress({ clientAddress }) {
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/client_address/new")}>
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/clientes/direcciones/nuevo")}
+          >
             Crear
           </MDButton>
         </Stack>
