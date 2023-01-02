@@ -19,17 +19,17 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
 
   const formik = useFormik({
     initialValues: {
-      name: client?.name || "",
-      lastName: client?.lastName || "",
-      phone: client?.phone || "",
-      address: client?.userAddresses[0].address || "",
-      flor: client?.userAddresses[0].flor || "",
-      department: client?.userAddresses[0].department || "",
-      province: client?.userAddresses[0].province || "",
-      city: client?.userAddresses[0].city || "",
-      zip: client?.userAddresses[0].zip || undefined,
-      shippingCost: undefined,
-      deliveryZone: "",
+      name: client?.user.name || "",
+      lastName: client?.user.lastName || "",
+      phone: client?.user.phone || "",
+      address: client?.address || "",
+      flor: client?.flor || "",
+      department: client?.department || "",
+      province: client?.province || "",
+      city: client?.city || "",
+      zip: client?.zip || undefined,
+      shippingCost: client.deliveryZone?.cost || undefined,
+      deliveryZone: `${client.deliveryZone?._id}-${client.deliveryZone?.name}` || "",
       deliveryTruck: "",
     },
     onSubmit: async (values) => {
@@ -194,7 +194,7 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
           select
           name="deliveryZone"
           fullWidth
-          label="Distribuidora"
+          label="Zona de reparto"
           value={formik.values.deliveryZone}
           error={!!formik.errors.deliveryZone}
           helperText={formik.errors.deliveryZone}

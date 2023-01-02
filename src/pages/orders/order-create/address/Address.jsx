@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addClient } from "redux/cartSlice";
 import AddressForm from "./AddressForm";
 
-function Address({ users, setPage, zones, deliveryTrucks }) {
+function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
   const [filterUser, setFilterUser] = useState([]);
   const [search, setSearch] = useState("");
   const [manualForm, setManualForm] = useState(false);
@@ -23,16 +23,16 @@ function Address({ users, setPage, zones, deliveryTrucks }) {
       return setFilterUser([]);
     }
     const filtrar = (arrayToFilter) => {
-      const result = arrayToFilter.filter((user) => {
-        if (user.phone.toString().includes(e.target.value) && user.role.role === "CLIENT_ROLE") {
-          return user;
+      const result = arrayToFilter.filter((clientAddr) => {
+        if (clientAddr.user.phone.toString().includes(e.target.value)) {
+          return clientAddr;
         }
       });
 
       setFilterUser(result);
     };
 
-    filtrar(users);
+    filtrar(clientAddresses);
   };
 
   const handleClick = () => setManualForm(true);
@@ -65,9 +65,9 @@ function Address({ users, setPage, zones, deliveryTrucks }) {
         />
         {filterUser.length > 0 && <MDTypography variant="h6"> Resultados </MDTypography>}
 
-        {filterUser.map((user) => (
+        {filterUser.map((clientA) => (
           <Box
-            key={user.phone}
+            key={clientA.user.phone}
             sx={{
               display: "flex",
               border: "1px solid #ccc",
@@ -77,8 +77,8 @@ function Address({ users, setPage, zones, deliveryTrucks }) {
               marginBottom: "20px",
             }}
           >
-            <MDTypography variant="body2">{`${user.phone} // ${user.name} ${user.lastName} // ${user.userAddresses[0].address}`}</MDTypography>
-            <MDButton color="info" size="small" onClick={() => dispatch(addClient(user))}>
+            <MDTypography variant="body2">{`${clientA.user.phone} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
+            <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
               Cargar
             </MDButton>
           </Box>

@@ -24,16 +24,11 @@ function SidenavCustom({ menu }) {
   const location = useLocation();
   const collapseName = location.pathname.split("/").splice(1);
 
-  console.log(collapseName);
-  console.log(location);
-
   const [open, setOpen] = useState(false);
 
   const handleClick = () => {
     setOpen(!open);
   };
-
-  console.log(menu);
 
   return (
     <List sx={{ width: "100%", maxWidth: 360 }} component="nav">

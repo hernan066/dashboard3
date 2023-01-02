@@ -10,7 +10,7 @@ import Address from "./address/Address";
 import Cart from "./cart/Cart";
 import Oferts from "./oferts/Oferts";
 
-function CreateOrder({ oferts: ofertsList, users, zones, deliveryTrucks }) {
+function CreateOrder({ oferts: ofertsList, clientAddresses, zones, deliveryTrucks }) {
   const { oferts } = ofertsList.data;
   const [page, setPage] = useState(0);
   const { products } = useSelector((store) => store.cart);
@@ -35,7 +35,12 @@ function CreateOrder({ oferts: ofertsList, users, zones, deliveryTrucks }) {
       </Tabs>
 
       {page === 0 && (
-        <Address users={users} setPage={setPage} zones={zones} deliveryTrucks={deliveryTrucks} />
+        <Address
+          clientAddresses={clientAddresses}
+          setPage={setPage}
+          zones={zones}
+          deliveryTrucks={deliveryTrucks}
+        />
       )}
       {page === 1 && <Oferts oferts={oferts} />}
       {page === 2 && <Cart />}
