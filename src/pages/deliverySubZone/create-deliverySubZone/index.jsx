@@ -4,9 +4,13 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import DeliveryZoneCreate from "./DeliveryZoneCreate";
+import { useGetDeliveryZonesQuery } from "api/deliveryZoneApi";
+import Loading from "components/DRLoading";
+import { Alert } from "@mui/material";
+import DeliverySubZoneCreate from "./DeliverySubZoneCreate";
 
-function CreateNewDeliveryZone() {
+function CreateNewSubDeliveryZone() {
+  const { data: zones, isLoading: l1, isError: e1 } = useGetDeliveryZonesQuery();
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -25,11 +29,15 @@ function CreateNewDeliveryZone() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Crear nueva zona de reparto
+                  Crear nueva subZona de reparto
                 </MDTypography>
               </MDBox>
               <MDBox>
-                <DeliveryZoneCreate />
+                <MDBox pt={3}>
+                  {l1 && <Loading />}
+                  {e1 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                  {zones && <DeliverySubZoneCreate deliveryZones={zones.data.deliveryZones} />}
+                </MDBox>
               </MDBox>
             </Card>
           </Grid>
@@ -39,4 +47,4 @@ function CreateNewDeliveryZone() {
   );
 }
 
-export default CreateNewDeliveryZone;
+export default CreateNewSubDeliveryZone;

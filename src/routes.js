@@ -35,6 +35,7 @@ import ListClientAddress from "pages/clientsAddress/list-clientAddress";
 import CreateNewClientAddress from "pages/clientsAddress/create-clientAddress";
 import EditClientAddress from "pages/clientsAddress/edit-clientAddress";
 import ListDeliverySubZone from "pages/deliverySubZone/list-deliverySubZone";
+import CreateNewSubDeliveryZone from "pages/deliverySubZone/create-deliverySubZone";
 
 const routes = [
   {
@@ -300,7 +301,7 @@ const routes = [
     route: "/distribucion/sub-zonas/nueva",
     component: (
       <RequireAuth>
-        <CreateNewDeliveryZone />
+        <CreateNewSubDeliveryZone />
       </RequireAuth>
     ),
   },

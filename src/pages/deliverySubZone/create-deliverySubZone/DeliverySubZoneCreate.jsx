@@ -1,40 +1,64 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, TextField } from "@mui/material";
+import { Alert, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { createDeliveryZoneSchema } from "validations/deliveryZone/createDeliveryZoneYup";
-import Swal from "sweetalert2";
-import { usePostDeliveryZoneMutation } from "api/deliveryZoneApi";
 
-function DeliveryZoneCreate() {
+import Swal from "sweetalert2";
+import { usePostDeliverySubZoneMutation } from "api/deliverySubZoneApi";
+import { createDeliverySubZoneSchema } from "validations/deliverySubZone/createDeliverySubZoneYup";
+
+function DeliverySubZoneCreate({ deliveryZones }) {
   const navigate = useNavigate();
-  const [createDeliveryZone, { isLoading, isError }] = usePostDeliveryZoneMutation();
+  const [createDeliveryZone, { isLoading, isError }] = usePostDeliverySubZoneMutation();
 
   const formik = useFormik({
     initialValues: {
+      deliveryZone: "",
       name: "",
-      cost: undefined,
-      province: "",
-      city: "",
-      zip: undefined,
+      km2: undefined,
+      blocks: undefined,
+      busStop: undefined,
+      totalHouses: undefined,
+      clientHouses: undefined,
+      totalShops: undefined,
+      clientShops: undefined,
       east: "",
       west: "",
       north: "",
       south: "",
     },
-    onSubmit: async ({ name, cost, province, city, zip, north, south, east, west }) => {
+    onSubmit: async ({
+      deliveryZone,
+      name,
+      km2,
+      blocks,
+      busStop,
+      totalHouses,
+      clientHouses,
+      totalShops,
+      clientShops,
+      north,
+      south,
+      east,
+      west,
+    }) => {
       const newDeliveryZone = {
+        deliveryZone,
         name,
-        cost,
-        province,
-        city,
-        zip,
+        km2,
+        blocks,
+        busStop,
+        totalHouses,
+        clientHouses,
+        totalShops,
+        clientShops,
         limits: [
           {
             north,
@@ -49,18 +73,18 @@ function DeliveryZoneCreate() {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Zona de reparto creada con éxito",
+          title: "SubZona de reparto creada con éxito",
           showConfirmButton: false,
           timer: 2500,
         });
-        navigate("/distribucion/zonas/lista");
+        navigate("/distribucion/sub-zonas/lista");
       }
     },
-    validationSchema: createDeliveryZoneSchema,
+    validationSchema: createDeliverySubZoneSchema,
   });
 
   return (
-    <MDBox pt={6} pb={3}>
+    <MDBox pt={1} pb={3}>
       <Box
         sx={{
           display: "flex",
@@ -78,9 +102,26 @@ function DeliveryZoneCreate() {
             <TextField
               margin="normal"
               required
+              select
+              name="deliveryZone"
               fullWidth
-              autoFocus
-              label="Nombre de zona"
+              label="Zona de reparto"
+              value={formik.values.deliveryZone}
+              error={!!formik.errors.deliveryZone}
+              helperText={formik.errors.deliveryZone}
+              onChange={formik.handleChange}
+            >
+              {deliveryZones.map((zone) => (
+                <MenuItem key={zone._id} value={zone._id}>
+                  {zone.name}
+                </MenuItem>
+              ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              label="Nombre de subZona"
               name="name"
               error={!!formik.errors.name}
               helperText={formik.errors.name}
@@ -91,11 +132,10 @@ function DeliveryZoneCreate() {
               required
               type="number"
               fullWidth
-              autoFocus
-              label="Costo"
-              name="cost"
-              error={!!formik.errors.cost}
-              helperText={formik.errors.cost}
+              label="Km2"
+              name="km2"
+              error={!!formik.errors.km2}
+              helperText={formik.errors.km2}
               onChange={formik.handleChange}
             />
 
@@ -103,22 +143,22 @@ function DeliveryZoneCreate() {
               margin="normal"
               required
               fullWidth
-              autoFocus
-              label="Provincia"
-              name="province"
-              error={!!formik.errors.province}
-              helperText={formik.errors.province}
+              type="number"
+              label="Manzanas"
+              name="blocks"
+              error={!!formik.errors.blocks}
+              helperText={formik.errors.blocks}
               onChange={formik.handleChange}
             />
             <TextField
               margin="normal"
               required
               fullWidth
-              autoFocus
-              label="Ciudad"
-              name="city"
-              error={!!formik.errors.city}
-              helperText={formik.errors.city}
+              type="number"
+              label="Paradas de colectivos"
+              name="busStop"
+              error={!!formik.errors.busStop}
+              helperText={formik.errors.busStop}
               onChange={formik.handleChange}
             />
             <TextField
@@ -126,14 +166,23 @@ function DeliveryZoneCreate() {
               required
               type="number"
               fullWidth
-              autoFocus
-              label="Código postal"
-              name="zip"
-              error={!!formik.errors.zip}
-              helperText={formik.errors.zip}
+              label="Total de casas"
+              name="totalHouses"
+              error={!!formik.errors.totalHouses}
+              helperText={formik.errors.totalHouses}
               onChange={formik.handleChange}
             />
-
+            <TextField
+              margin="normal"
+              required
+              type="number"
+              fullWidth
+              label="Total de casas clientes"
+              name="clientHouses"
+              error={!!formik.errors.clientHouses}
+              helperText={formik.errors.clientHouses}
+              onChange={formik.handleChange}
+            />
             <LoadingButton
               type="submit"
               variant="contained"
@@ -163,6 +212,29 @@ function DeliveryZoneCreate() {
           </Box>
 
           <Box sx={{ width: "50%" }}>
+            <TextField
+              margin="normal"
+              required
+              type="number"
+              fullWidth
+              label="Total de negocios"
+              name="totalShops"
+              error={!!formik.errors.totalShops}
+              helperText={formik.errors.totalShops}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              required
+              type="number"
+              fullWidth
+              label="Total de negocios clientes"
+              name="clientShops"
+              error={!!formik.errors.clientShops}
+              helperText={formik.errors.clientShops}
+              onChange={formik.handleChange}
+            />
+
             <TextField
               margin="normal"
               fullWidth
@@ -211,4 +283,4 @@ function DeliveryZoneCreate() {
   );
 }
 
-export default DeliveryZoneCreate;
+export default DeliverySubZoneCreate;
