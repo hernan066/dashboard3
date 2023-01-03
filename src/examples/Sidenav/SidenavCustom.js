@@ -68,7 +68,7 @@ function SidenavCustom({ menu }) {
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           {menu.subRoutes.map((sub) => (
-            <NavLink to={sub.url}>
+            <NavLink to={sub.url} key={sub.url}>
               <ListItem>
                 <MDBox
                   ml={3}

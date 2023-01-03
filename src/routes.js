@@ -36,6 +36,7 @@ import CreateNewClientAddress from "pages/clientsAddress/create-clientAddress";
 import EditClientAddress from "pages/clientsAddress/edit-clientAddress";
 import ListDeliverySubZone from "pages/deliverySubZone/list-deliverySubZone";
 import CreateNewSubDeliveryZone from "pages/deliverySubZone/create-deliverySubZone";
+import EditDeliverySubZone from "pages/deliverySubZone/edit-deliverySubZone";
 
 const routes = [
   {
@@ -309,7 +310,7 @@ const routes = [
     route: "/distribucion/sub-zonas/editar/:id",
     component: (
       <RequireAuth>
-        <EditDeliveryZone />
+        <EditDeliverySubZone />
       </RequireAuth>
     ),
   },
