@@ -105,6 +105,11 @@ export const menuList = [
         icon: "home_work_icon",
         url: "/distribucion/zonas/lista",
       },
+      {
+        name: "SubZonas reparto",
+        icon: "home_work_icon",
+        url: "/distribucion/sub-zonas/lista",
+      },
     ],
   },
 ];

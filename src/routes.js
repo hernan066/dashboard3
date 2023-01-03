@@ -34,6 +34,7 @@ import EditClient from "pages/clients/edit-clients";
 import ListClientAddress from "pages/clientsAddress/list-clientAddress";
 import CreateNewClientAddress from "pages/clientsAddress/create-clientAddress";
 import EditClientAddress from "pages/clientsAddress/edit-clientAddress";
+import ListDeliverySubZone from "pages/deliverySubZone/list-deliverySubZone";
 
 const routes = [
   {
@@ -280,6 +281,31 @@ const routes = [
   },
   {
     route: "/distribucion/zonas/editar/:id",
+    component: (
+      <RequireAuth>
+        <EditDeliveryZone />
+      </RequireAuth>
+    ),
+  },
+  /* Sub Zonas reparto */
+  {
+    route: "/distribucion/sub-zonas/lista",
+    component: (
+      <RequireAuth>
+        <ListDeliverySubZone />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/distribucion/sub-zonas/nueva",
+    component: (
+      <RequireAuth>
+        <CreateNewDeliveryZone />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/distribucion/sub-zonas/editar/:id",
     component: (
       <RequireAuth>
         <EditDeliveryZone />
