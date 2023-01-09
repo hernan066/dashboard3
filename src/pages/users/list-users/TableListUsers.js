@@ -100,7 +100,7 @@ function TableListUsers({ users }) {
               email: user.email,
               phone: user.phone,
               avatar: user.avatar,
-              role: user.role.role,
+              role: user.role?.role,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
