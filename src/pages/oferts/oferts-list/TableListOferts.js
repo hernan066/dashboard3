@@ -149,6 +149,44 @@ function TableListOferts({ oferts }) {
           </div>
         ),
     },
+    {
+      field: "ofert",
+      headerName: "Destacado",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.ofert ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
+    },
 
     {
       field: "accessLevel",
@@ -188,6 +226,7 @@ function TableListOferts({ oferts }) {
               product: ofert?.product?.name,
               description: ofert?.description,
               visible: ofert?.visible,
+              ofert: ofert?.ofert,
               unit: ofert.product?.unit,
               price1: `$${ofert.prices[0]?.price1}` || "",
               price2: `$${ofert.prices[0]?.price2}` || "",

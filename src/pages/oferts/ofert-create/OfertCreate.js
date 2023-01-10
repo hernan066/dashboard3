@@ -58,12 +58,14 @@ function OfertCreate({ listProducts }) {
       quantity2: undefined,
       quantity3: undefined,
       visible: undefined,
+      ofert: undefined,
     },
     onSubmit: async (values) => {
       const newOfert = {
         product: inputValue.id,
         description: values.description,
         visible: values.visible,
+        ofert: values.ofert,
         prices: [{ price1: values.price1, price2: values.price2, price3: values.price3 }],
         quantities: [
           {
@@ -251,6 +253,27 @@ function OfertCreate({ listProducts }) {
               value={formik.values.visible}
               error={!!formik.errors.visible}
               helperText={formik.errors.visible}
+              onChange={formik.handleChange}
+            >
+              <MenuItem key="product_visible_true" value={true}>
+                Si
+              </MenuItem>
+              <MenuItem key="product_visible_false" value={false}>
+                No
+              </MenuItem>
+            </TextField>
+            <TextField
+              id="product_available_ofert"
+              margin="normal"
+              required
+              select
+              autoComplete="product_available_ofert"
+              name="ofert"
+              fullWidth
+              label="Oferta destacada"
+              value={formik.values.ofert}
+              error={!!formik.errors.ofert}
+              helperText={formik.errors.ofert}
               onChange={formik.handleChange}
             >
               <MenuItem key="product_visible_true" value={true}>

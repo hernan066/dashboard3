@@ -63,12 +63,14 @@ function OfertEdit({ listProducts, ofertById }) {
       quantity2: ofertById.data.ofert.quantities[0].quantity2,
       quantity3: ofertById.data.ofert.quantities[0].quantity3,
       visible: ofertById.data.ofert.visible,
+      ofert: ofertById.data.ofert.ofert,
     },
     onSubmit: async (values) => {
       const editOfertValues = {
         product: inputValue.id,
         description: values.description,
         visible: values.visible,
+        ofert: values.ofert,
         prices: [{ price1: values.price1, price2: values.price2, price3: values.price3 }],
         quantities: [
           {
@@ -264,6 +266,25 @@ function OfertEdit({ listProducts, ofertById }) {
                 Si
               </MenuItem>
               <MenuItem key="product_visible_false" value={false}>
+                No
+              </MenuItem>
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              select
+              name="ofert"
+              fullWidth
+              label="Oferta destacada"
+              value={formik.values.ofert}
+              error={!!formik.errors.ofert}
+              helperText={formik.errors.ofert}
+              onChange={formik.handleChange}
+            >
+              <MenuItem key="product_ofert_true" value={true}>
+                Si
+              </MenuItem>
+              <MenuItem key="product_ofert_false" value={false}>
                 No
               </MenuItem>
             </TextField>

@@ -25,6 +25,8 @@ function EditOfert() {
     error: errorProduct,
   } = useGetOfertQuery(id);
 
+  console.log(ofertById);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
