@@ -7,6 +7,7 @@ import { IKContext, IKUpload } from "imagekitio-react";
 import { LoadingButton } from "@mui/lab";
 import colors from "assets/theme/base/colors";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import MDTypography from "components/MDTypography";
 
 const publicKey = process.env.REACT_APP_IMAGEKIT_PUBLIC_KEY;
 const urlEndpoint = process.env.REACT_APP_IMAGEKIT_URL_ENDPOINT;
@@ -71,6 +72,9 @@ function ImageUpload({ setUrlImage }) {
         <FileUploadIcon />
         Subir imagen
       </LoadingButton>
+      <MDTypography variant="body2">
+        Imagen permitida, .jpg, .jpeg, .png, de 500px por 500px
+      </MDTypography>
     </IKContext>
   );
 }

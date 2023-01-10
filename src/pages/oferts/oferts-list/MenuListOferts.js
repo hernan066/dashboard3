@@ -8,7 +8,7 @@ import { useDeleteOfertMutation } from "api/ofertApi";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
 
-function MenuListOferts({ open, handleCloseMenu, ofertId }) {
+function MenuListOferts({ open, handleCloseMenu, ofertId, productId }) {
   const navigate = useNavigate();
 
   const [deleteProduct, { isError, isSuccess }] = useDeleteOfertMutation();
@@ -61,7 +61,7 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
       PaperProps={{
         sx: {
           p: 1,
-          width: 120,
+          width: 180,
           zIndex: 20,
           "& .MuiMenuItem-root": {
             px: 1,
@@ -71,14 +71,18 @@ function MenuListOferts({ open, handleCloseMenu, ofertId }) {
         },
       }}
     >
+      <MenuItem onClick={() => navigate(`/productos/editar/${productId}`)}>
+        <EditIcon sx={{ mr: 1 }} />
+        Editar Producto
+      </MenuItem>
       <MenuItem onClick={() => navigate(`/productos/ofertas/editar/${ofertId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Editar
+        Editar Oferta
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Borrar
+        Borrar Oferta
       </MenuItem>
     </Popover>
   );

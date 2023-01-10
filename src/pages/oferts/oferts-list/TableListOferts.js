@@ -24,15 +24,18 @@ function TableListOferts({ oferts }) {
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [ofertId, setOfertId] = useState(null);
+  const [prodId, setProdId] = useState(null);
 
-  const handleOpenMenu = (id, event) => {
+  const handleOpenMenu = (id, event, productId) => {
     setOpen(event.currentTarget);
     setOfertId(id);
+    setProdId(productId);
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
     setOfertId(null);
+    setProdId(null);
   };
 
   const columns = [
@@ -49,7 +52,7 @@ function TableListOferts({ oferts }) {
     {
       field: "product",
       headerName: "Producto",
-      flex: 2,
+      flex: 3,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
@@ -57,7 +60,7 @@ function TableListOferts({ oferts }) {
     {
       field: "description",
       headerName: "Descripción",
-      flex: 2,
+      flex: 1.5,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -152,8 +155,8 @@ function TableListOferts({ oferts }) {
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { _id } }) => (
-        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e)}>
+      renderCell: ({ row: { _id, productId } }) => (
+        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e, productId)}>
           <MoreVertIcon />
         </IconButton>
       ),
@@ -172,7 +175,7 @@ function TableListOferts({ oferts }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="1500px">
+        <Box m="40px 0 0 0" height="75vh" width="1900px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -193,6 +196,7 @@ function TableListOferts({ oferts }) {
               quantity2: ofert.quantities[0]?.quantity2 || "",
               quantity3: ofert.quantities[0]?.quantity3 || "",
               createdAt: dateToLocalDate(ofert.createdAt),
+              productId: ofert.product?._id,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
@@ -232,7 +236,12 @@ function TableListOferts({ oferts }) {
         </Box>
       </Box>
 
-      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} ofertId={ofertId} />
+      <MenuListUsers
+        open={open}
+        handleCloseMenu={handleCloseMenu}
+        ofertId={ofertId}
+        productId={prodId}
+      />
     </>
   );
 }
