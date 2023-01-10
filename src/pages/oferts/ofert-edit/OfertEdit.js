@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
@@ -295,7 +296,7 @@ function OfertEdit({ listProducts, ofertById }) {
             {isError && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
           </Box>
 
-          <Box>
+          {/* <Box>
             <Card
               sx={{
                 maxWidth: "550px",
@@ -315,7 +316,27 @@ function OfertEdit({ listProducts, ofertById }) {
                 <MDTypography variant="h4">${formik.values.price1}</MDTypography>
               </CardContent>
             </Card>
-          </Box>
+          </Box> */}
+
+          <div className="box-wrapper">
+            <img
+              src={
+                inputValue.img ||
+                "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+              }
+              alt="pollo"
+            />
+            <div className="box-content">
+              <div className="buy">
+                <span>
+                  <i className="fa fa-cart-plus" />
+                </span>
+              </div>
+              <div className="title">{inputValue.product}</div>
+              <div className="desc">{formik.values.description}</div>
+              <span className="price">${formik.values.price1}</span>
+            </div>
+          </div>
         </Box>
       </Box>
     </MDBox>

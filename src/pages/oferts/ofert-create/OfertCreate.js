@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/prop-types */
@@ -25,6 +26,7 @@ import MDTypography from "components/MDTypography";
 import Swal from "sweetalert2";
 import { creteOfertSchema } from "validations/oferts/creteOfertYup";
 import { usePostOfertMutation } from "api/ofertApi";
+import "./productCard.css";
 
 function OfertCreate({ listProducts }) {
   const navigate = useNavigate();
@@ -287,8 +289,26 @@ function OfertCreate({ listProducts }) {
             {isError && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
           </Box>
 
-          <Box>
-            <Card
+          <div className="box-wrapper">
+            <img
+              src={
+                inputValue.img ||
+                "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+              }
+              alt="pollo"
+            />
+            <div className="box-content">
+              <div className="buy">
+                <span>
+                  <i className="fa fa-cart-plus" />
+                </span>
+              </div>
+              <div className="title">{inputValue.product}</div>
+              <div className="desc">{formik.values.description}</div>
+              <span className="price">${formik.values.price1}</span>
+            </div>
+          </div>
+          {/*  <Card
               sx={{
                 maxWidth: "550px",
               }}
@@ -306,8 +326,7 @@ function OfertCreate({ listProducts }) {
                 <MDTypography variant="h5">{`${formik.values.description} - Unidad: (${inputValue.unit})`}</MDTypography>
                 <MDTypography variant="h4">${formik.values.price1}</MDTypography>
               </CardContent>
-            </Card>
-          </Box>
+            </Card> */}
         </Box>
       </Box>
     </MDBox>
