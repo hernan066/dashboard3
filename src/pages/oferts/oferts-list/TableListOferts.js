@@ -59,13 +59,19 @@ function TableListOferts({ oferts }) {
 
     {
       field: "description",
-      headerName: "Descripción",
+      headerName: "Presentación",
       flex: 1.5,
       headerClassName: "super-app-theme--header",
     },
     {
-      field: "unit",
-      headerName: "Unidad",
+      field: "basePrice",
+      headerName: "P. Base",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "retailPrice",
+      headerName: "P. Minorista",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
@@ -102,6 +108,18 @@ function TableListOferts({ oferts }) {
     {
       field: "quantity3",
       headerName: "Cant. 3 ",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "price4",
+      headerName: "Precio 4",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "quantity4",
+      headerName: "Cant. 4 ",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
@@ -213,7 +231,7 @@ function TableListOferts({ oferts }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="1900px">
+        <Box m="40px 0 0 0" height="75vh" width="2100px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -227,13 +245,17 @@ function TableListOferts({ oferts }) {
               description: ofert?.description,
               visible: ofert?.visible,
               ofert: ofert?.ofert,
-              unit: ofert.product?.unit,
+              basePrice: `$${ofert.basePrice}` || "",
+              retailPrice: `$${ofert.retailPrice}` || "",
+
               price1: `$${ofert.prices[0]?.price1}` || "",
               price2: `$${ofert.prices[0]?.price2}` || "",
               price3: `$${ofert.prices[0]?.price3}` || "",
+              price4: `$${ofert.prices[0]?.price4}` || "",
               quantity1: ofert.quantities[0]?.quantity1 || "",
               quantity2: ofert.quantities[0]?.quantity2 || "",
               quantity3: ofert.quantities[0]?.quantity3 || "",
+              quantity4: ofert.quantities[0]?.quantity4 || "",
               createdAt: dateToLocalDate(ofert.createdAt),
               productId: ofert.product?._id,
             }))}

@@ -7,11 +7,7 @@ const { lettersNumbersAndSpaces } = regex;
 export const creteOfertSchema = yup.object().shape({
   // product: yup.string().required("Requerido"),
   description: yup.string().required("Requerido").matches(lettersNumbersAndSpaces, "Solo letras"),
-  price1: yup.number().required("Requerido"),
-  price2: yup.number().required("Requerido"),
-  price3: yup.number().required("Requerido"),
-  quantity1: yup.number().required("Requerido"),
-  quantity2: yup.number().required("Requerido"),
-  quantity3: yup.number().required("Requerido"),
+  basePrice: yup.number().required("Requerido"),
   visible: yup.string().required("Requerido"),
+  ofert: yup.string().required("Requerido"),
 });

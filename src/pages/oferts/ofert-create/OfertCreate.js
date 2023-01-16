@@ -41,6 +41,7 @@ function OfertCreate({ listProducts }) {
         unit: product.unit,
         product: product.name,
         img: product.img,
+
         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
       };
     })
@@ -51,6 +52,8 @@ function OfertCreate({ listProducts }) {
     initialValues: {
       product: "",
       description: "",
+      basePrice: undefined,
+      retailPrice: undefined,
       price1: undefined,
       price2: undefined,
       price3: undefined,
@@ -66,12 +69,22 @@ function OfertCreate({ listProducts }) {
         description: values.description,
         visible: values.visible,
         ofert: values.ofert,
-        prices: [{ price1: values.price1, price2: values.price2, price3: values.price3 }],
+        basePrice: values.basePrice,
+        retailPrice: values.retailPrice || 0,
+        prices: [
+          {
+            price1: values.price1 || 0,
+            price2: values.price2 || 0,
+            price3: values.price3 || 0,
+            price4: values.price4 || 0,
+          },
+        ],
         quantities: [
           {
-            quantity1: values.quantity1,
-            quantity2: values.quantity2,
-            quantity3: values.quantity3,
+            quantity1: values.quantity1 || 0,
+            quantity2: values.quantity2 || 0,
+            quantity3: values.quantity3 || 0,
+            quantity4: values.quantity4 || 0,
           },
         ],
       };
@@ -130,12 +143,42 @@ function OfertCreate({ listProducts }) {
               required
               autoComplete="product_description"
               name="description"
-              label="Descripción"
+              label="Presentación"
               id="product_description"
               error={!!formik.errors.description}
               helperText={formik.errors.description}
               onChange={formik.handleChange}
             />
+            <MDTypography variant="h6" mt={2}>
+              Precio Consumidor Final
+            </MDTypography>
+            <TextField
+              type="number"
+              margin="small"
+              fullWidth
+              required
+              name="basePrice"
+              label="Precio"
+              error={!!formik.errors.basePrice}
+              helperText={formik.errors.basePrice}
+              onChange={formik.handleChange}
+            />
+            <MDTypography variant="h6" mt={2}>
+              Precio Minorista
+            </MDTypography>
+            <TextField
+              type="number"
+              margin="small"
+              fullWidth
+              name="retailPrice"
+              label="Precio"
+              error={!!formik.errors.retailPrice}
+              helperText={formik.errors.retailPrice}
+              onChange={formik.handleChange}
+            />
+            <MDTypography variant="h6" mt={2}>
+              Precio Mayorista
+            </MDTypography>
             <Box
               sx={{
                 display: "flex",
@@ -143,8 +186,7 @@ function OfertCreate({ listProducts }) {
               }}
             >
               <TextField
-                margin="normal"
-                required
+                margin="small"
                 autoComplete="price1_ofert"
                 fullWidth
                 id="price1_ofert"
@@ -157,8 +199,7 @@ function OfertCreate({ listProducts }) {
                 onChange={formik.handleChange}
               />
               <TextField
-                margin="normal"
-                required
+                margin="small"
                 autoComplete="quantity1_ofert"
                 fullWidth
                 id="quantity1_ofert"
@@ -179,7 +220,6 @@ function OfertCreate({ listProducts }) {
             >
               <TextField
                 margin="normal"
-                required
                 autoComplete="price2_ofert"
                 fullWidth
                 id="price2_ofert"
@@ -193,7 +233,6 @@ function OfertCreate({ listProducts }) {
               />
               <TextField
                 margin="normal"
-                required
                 autoComplete="quantity2_ofert"
                 fullWidth
                 id="quantity2_ofert"
@@ -214,7 +253,6 @@ function OfertCreate({ listProducts }) {
             >
               <TextField
                 margin="normal"
-                required
                 autoComplete="price3_ofert"
                 fullWidth
                 id="price3_ofert"
@@ -228,7 +266,6 @@ function OfertCreate({ listProducts }) {
               />
               <TextField
                 margin="normal"
-                required
                 autoComplete="quantity3_ofert"
                 fullWidth
                 id="quantity3_ofert"
@@ -241,12 +278,39 @@ function OfertCreate({ listProducts }) {
                 onChange={formik.handleChange}
               />
             </Box>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "20px",
+              }}
+            >
+              <TextField
+                margin="normal"
+                fullWidth
+                label="Precio 4"
+                name="price4"
+                type="number"
+                value={formik.values.price4}
+                error={!!formik.errors.price4}
+                helperText={formik.errors.price4}
+                onChange={formik.handleChange}
+              />
+              <TextField
+                margin="normal"
+                fullWidth
+                label="Cantidad 4"
+                name="quantity4"
+                type="number"
+                value={formik.values.quantity4}
+                error={!!formik.errors.quantity4}
+                helperText={formik.errors.quantity4}
+                onChange={formik.handleChange}
+              />
+            </Box>
             <TextField
-              id="product_available_ofert"
               margin="normal"
               required
               select
-              autoComplete="product_available_ofert"
               name="visible"
               fullWidth
               label="Visible en web"
@@ -313,22 +377,24 @@ function OfertCreate({ listProducts }) {
           </Box>
 
           <div className="box-wrapper">
-            <img
-              src={
-                inputValue.img ||
-                "https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
-              }
-              alt="pollo"
-            />
+            {inputValue?.img ? (
+              <img src={inputValue.img} alt="pollo" />
+            ) : (
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg"
+                alt="pollo"
+              />
+            )}
+
             <div className="box-content">
               <div className="buy">
                 <span>
                   <i className="fa fa-cart-plus" />
                 </span>
               </div>
-              <div className="title">{inputValue.product}</div>
+              <div className="title">{inputValue?.product}</div>
               <div className="desc">{formik.values.description}</div>
-              <span className="price">${formik.values.price1}</span>
+              <span className="price">${formik.values.basePrice}</span>
             </div>
           </div>
           {/*  <Card
