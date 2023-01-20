@@ -29,8 +29,9 @@ function UserEdit({ listRoles, user: editUser }) {
       // password: editUser?.password,
       phone: editUser?.phone,
       role: editUser?.role || "",
+      verified: editUser?.verified || "",
     },
-    onSubmit: async ({ name, lastName, email, password, phone, role }) => {
+    onSubmit: async ({ name, lastName, email, password, phone, role, verified }) => {
       const editUserValues = {
         name,
         lastName,
@@ -38,6 +39,7 @@ function UserEdit({ listRoles, user: editUser }) {
         phone,
         password,
         role,
+        verified,
       };
 
       const { data } = await editUserMutation({ id, ...editUserValues }).unwrap();
@@ -128,20 +130,7 @@ function UserEdit({ listRoles, user: editUser }) {
                   onChange={formik.handleChange}
                 />
                 {}
-                <TextField
-                  margin="normal"
-                  required
-                  fullWidth
-                  disabled={true}
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="user_password"
-                  autoComplete="current-password"
-                  error={!!formik.errors.password}
-                  helperText={formik.errors.password}
-                  onChange={formik.handleChange}
-                />
+
                 <TextField
                   id="user_role"
                   margin="normal"
@@ -164,6 +153,25 @@ function UserEdit({ listRoles, user: editUser }) {
                       {option.role}
                     </MenuItem>
                   ))}
+                </TextField>
+                <TextField
+                  margin="normal"
+                  select
+                  required
+                  name="verified"
+                  fullWidth
+                  label="Verificado"
+                  value={formik.values.verified}
+                  error={!!formik.errors.verified}
+                  helperText={formik.errors.verified}
+                  onChange={formik.handleChange}
+                >
+                  <MenuItem value={true} selected={formik.values.verified === true}>
+                    Si
+                  </MenuItem>
+                  <MenuItem value={false} selected={formik.values.verified === false}>
+                    No
+                  </MenuItem>
                 </TextField>
                 <LoadingButton
                   type="submit"

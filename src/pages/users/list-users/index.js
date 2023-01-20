@@ -13,6 +13,8 @@ import TableListUsers from "./TableListUsers";
 function ListUsers() {
   const { data: listUsers, isLoading, error } = useGetUsersQuery();
 
+  console.log(listUsers)
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -31,7 +33,7 @@ function ListUsers() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de usarios
+                  Lista de usuarios
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>

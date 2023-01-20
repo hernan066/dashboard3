@@ -9,13 +9,14 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuListUsers from "./MenuListUsers";
 
 function TableListUsers({ users }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const listUsers = users.data.users;
 
   const navigate = useNavigate();
@@ -59,8 +60,85 @@ function TableListUsers({ users }) {
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 2,
       headerClassName: "super-app-theme--header",
+    },
+
+    {
+      field: "verified",
+      headerName: "Verificado",
+      flex: 0.6,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.verified ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
+    },
+    {
+      field: "google",
+      headerName: "Google",
+      flex: 0.6,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.google ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
     },
     {
       field: "role",
@@ -101,12 +179,14 @@ function TableListUsers({ users }) {
               phone: user.phone,
               avatar: user.avatar,
               role: user.role?.role,
+              google: user?.google,
+              verified: user?.verified || false,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
             pageSize={pageSize}
             onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-            rowsPerPageOptions={[10, 20, 50]}
+            rowsPerPageOptions={[50, 100, 200]}
             pagination
             sx={{
               "& .MuiDataGrid-cellContent": {

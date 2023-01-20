@@ -37,6 +37,7 @@ import EditClientAddress from "pages/clientsAddress/edit-clientAddress";
 import ListDeliverySubZone from "pages/deliverySubZone/list-deliverySubZone";
 import CreateNewSubDeliveryZone from "pages/deliverySubZone/create-deliverySubZone";
 import EditDeliverySubZone from "pages/deliverySubZone/edit-deliverySubZone";
+import EditPasswordUser from "pages/users/change-password";
 
 const routes = [
   {
@@ -70,6 +71,14 @@ const routes = [
     component: (
       <RequireAuth>
         <EditUser />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/usuarios/editar/password/:id",
+    component: (
+      <RequireAuth>
+        <EditPasswordUser />
       </RequireAuth>
     ),
   },

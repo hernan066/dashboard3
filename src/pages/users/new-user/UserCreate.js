@@ -37,6 +37,7 @@ function UserCreate({ roles }) {
           phone,
           password,
           role,
+          verified: true,
         });
         if (data.ok) {
           /*  Swal.fire({
