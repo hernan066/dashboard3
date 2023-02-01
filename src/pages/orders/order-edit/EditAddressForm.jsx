@@ -31,9 +31,10 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
       city: order.shippingAddress.city,
       zip: order.shippingAddress.zip,
       tax: order.tax,
-      deliveryZone: order.deliveryZone._id,
-      deliveryTruck: order.deliveryTruck._id,
+      deliveryZone: order.deliveryZone?._id,
+      deliveryTruck: order.deliveryTruck?._id,
       status: order.status,
+      active: order.active,
     },
     onSubmit: async (values) => {
       const editOrderValues = {
@@ -252,6 +253,21 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           <MenuItem value="Pendiente">Pendiente</MenuItem>
           <MenuItem value="Entregada">Entregada</MenuItem>
           <MenuItem value="Rechazada">Rechazada</MenuItem>
+        </TextField>
+        <TextField
+          margin="normal"
+          required
+          select
+          name="active"
+          fullWidth
+          label="Activa (se envía al repartidor)"
+          value={formik.values.active}
+          error={!!formik.errors.active}
+          helperText={formik.errors.active}
+          onChange={formik.handleChange}
+        >
+          <MenuItem value={true}>Si</MenuItem>
+          <MenuItem value={false}>No</MenuItem>
         </TextField>
 
         <LoadingButton

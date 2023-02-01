@@ -16,8 +16,8 @@ function ProductCard({ product }) {
     dispatch(
       addProduct({
         ...product,
-        finalPrice: product.prices[0].price1,
-        finalQuantity: product.quantities[0].quantity1,
+        finalPrice: product.basePrice,
+        finalQuantity: 1,
       })
     );
   };
@@ -59,10 +59,10 @@ function ProductCard({ product }) {
           {product.description}
         </MDTypography>
         <MDTypography variant="subtitle2" sx={{ width: "33%" }}>
-          {product.quantities[0].quantity1} {product.product.unit}
+          1 unidad
         </MDTypography>
         <MDTypography variant="subtitle2" sx={{ width: "33%" }}>
-          ${product.prices[0].price1}
+          ${product.basePrice}
         </MDTypography>
         <MDButton color="dark" variant="gradient" onClick={handlerClick} disabled={itemCart}>
           {!itemCart ? "Agregar" : "Agregado"}

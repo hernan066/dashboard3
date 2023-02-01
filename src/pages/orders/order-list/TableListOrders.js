@@ -11,6 +11,8 @@ import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import { dateToLocalDate } from "utils/dateFormat";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuListOrders from "./MenuListOrders";
 
 function TableListOrders({ orders }) {
@@ -105,7 +107,7 @@ function TableListOrders({ orders }) {
     {
       field: "client",
       headerName: "Cliente",
-      flex: 1,
+      flex: 1.5,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -125,6 +127,44 @@ function TableListOrders({ orders }) {
       headerName: "Repartidor",
       flex: 1,
       headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "active",
+      headerName: "Activa",
+      flex: 0.6,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.active ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
     },
     {
       field: "numberOfItems",
@@ -171,7 +211,7 @@ function TableListOrders({ orders }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="1500px">
+        <Box m="40px 0 0 0" height="75vh" width="1700px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick

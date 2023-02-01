@@ -32,6 +32,9 @@ function Cart() {
       img: item.product.img,
       quantity: item.finalQuantity,
       price: item.finalPrice,
+      totalQuantity: item.finalQuantity,
+      totalPrice: item.finalPrice,
+      unitPrice: item.basePrice,
     }));
 
     const newOrder = {
@@ -42,9 +45,9 @@ function Cart() {
       employeeId: null,
       deliveryZone: deliveryZoneSplit[0],
       numberOfItems: products.length,
-      tax: shippingCost,
+      tax: +shippingCost,
       subTotal,
-      total: shippingCost + subTotal,
+      total: +shippingCost + subTotal,
       status: "Pendiente",
     };
 
@@ -97,12 +100,12 @@ function Cart() {
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Envío</MDTypography>
-          <MDTypography variant="h6">${shippingCost}</MDTypography>
+          <MDTypography variant="h6">${+shippingCost}</MDTypography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between" mb={3}>
           <MDTypography variant="body2">Total</MDTypography>
-          <MDTypography variant="h6">${subTotal + shippingCost}</MDTypography>
+          <MDTypography variant="h6">${subTotal + +shippingCost}</MDTypography>
         </Box>
         <MDTypography variant="h6">Datos de envío</MDTypography>
         <Divider />

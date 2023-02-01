@@ -46,7 +46,7 @@ function OrderCreate() {
               {oferts && clientAddresses && zones && deliveryTrucks && (
                 <CreateOrder
                   oferts={oferts}
-                  clientAddresses={clientAddresses.data.orderClientAddress}
+                  clientAddresses={clientAddresses.data.clientAddress}
                   zones={zones.data.deliveryZones}
                   deliveryTrucks={deliveryTrucks.data.deliveryTrucks}
                 />

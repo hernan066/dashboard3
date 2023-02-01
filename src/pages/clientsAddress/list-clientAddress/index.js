@@ -39,7 +39,7 @@ function ListClientAddress() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-                {data && <TableListClientAddress clientAddress={data.data.orderClientAddress} />}
+                {data && <TableListClientAddress clientAddress={data.data.clientAddress} />}
               </MDBox>
             </Card>
           </Grid>
