@@ -47,7 +47,7 @@ function TableListOrders({ orders }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       renderCell: (params) => {
-        if (params.row.status === "Entregada") {
+        if (params.row.status === "Entregado") {
           return (
             <div
               style={{
@@ -66,7 +66,7 @@ function TableListOrders({ orders }) {
             </div>
           );
         }
-        if (params.row.status === "Rechazada") {
+        if (params.row.status === "Rechazado") {
           return (
             <div
               style={{

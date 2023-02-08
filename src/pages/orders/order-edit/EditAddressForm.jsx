@@ -251,8 +251,8 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           onChange={formik.handleChange}
         >
           <MenuItem value="Pendiente">Pendiente</MenuItem>
-          <MenuItem value="Entregada">Entregada</MenuItem>
-          <MenuItem value="Rechazada">Rechazada</MenuItem>
+          <MenuItem value="Entregada">Entregado</MenuItem>
+          <MenuItem value="Rechazada">Rechazado</MenuItem>
         </TextField>
         <TextField
           margin="normal"
