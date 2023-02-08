@@ -24,7 +24,11 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
     }
     const filtrar = (arrayToFilter) => {
       const result = arrayToFilter.filter((clientAddr) => {
-        if (clientAddr.user.phone.toString().includes(e.target.value)) {
+        if (
+          clientAddr.user.phone.toString().includes(e.target.value) ||
+          clientAddr.user.name.toString().includes(e.target.value) ||
+          clientAddr.user.lastName.toString().includes(e.target.value)
+        ) {
           return clientAddr;
         }
       });
@@ -58,7 +62,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
 
         <TextField
           value={search}
-          label="Buscar por numero de telefono"
+          label="Buscar por número de teléfono o nombre"
           onChange={handlerFilterChanges}
           fullWidth
           margin="normal"
