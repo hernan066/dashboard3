@@ -33,7 +33,7 @@ function Details({ order }) {
                 }}
               >
                 <img
-                  src="https://ik.imagekit.io/mrprwema7/product_lHRQybEfFM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669154831378"
+                  src={product.img}
                   alt=""
                   style={{
                     width: "100%",
@@ -95,9 +95,9 @@ function Details({ order }) {
         </Box>
         {orderDetail.commentary && (
           <>
-            <MDTypography variant="h6">Pago</MDTypography>
-            <Divider />
+            <MDTypography variant="h6">Comentarios</MDTypography>
             <MDTypography variant="body2">{orderDetail.commentary}</MDTypography>
+            <Divider />
           </>
         )}
 
