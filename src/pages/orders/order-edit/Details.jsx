@@ -49,9 +49,9 @@ function Details({ order, deliveryZones, deliveryTrucks }) {
                 }}
               >
                 <MDTypography variant="subtitle2">{product.description}</MDTypography>
-                <MDTypography variant="subtitle2"> Cant. {product.quantity}</MDTypography>
+                <MDTypography variant="subtitle2"> Cant. {product.totalQuantity}</MDTypography>
                 <MDTypography variant="subtitle2"> Unit. {product.unit}</MDTypography>
-                <MDTypography variant="subtitle2"> ${product.price}</MDTypography>
+                <MDTypography variant="subtitle2"> ${product.totalPrice}</MDTypography>
               </Box>
             </Box>
           </>

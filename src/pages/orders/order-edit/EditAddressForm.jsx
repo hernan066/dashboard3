@@ -35,6 +35,10 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
       deliveryTruck: order.deliveryTruck?._id,
       status: order.status,
       active: order.active,
+      cash: order?.payment?.cash || 0,
+      transfer: order?.payment?.transfer || 0,
+      debt: order?.payment?.debt || 0,
+      paid: order?.paid || false,
     },
     onSubmit: async (values) => {
       const editOrderValues = {
@@ -251,8 +255,8 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           onChange={formik.handleChange}
         >
           <MenuItem value="Pendiente">Pendiente</MenuItem>
-          <MenuItem value="Entregada">Entregado</MenuItem>
-          <MenuItem value="Rechazada">Rechazado</MenuItem>
+          <MenuItem value="Entregado">Entregado</MenuItem>
+          <MenuItem value="Rechazado">Rechazado</MenuItem>
         </TextField>
         <TextField
           margin="normal"
@@ -264,6 +268,60 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           value={formik.values.active}
           error={!!formik.errors.active}
           helperText={formik.errors.active}
+          onChange={formik.handleChange}
+        >
+          <MenuItem value={true}>Si</MenuItem>
+          <MenuItem value={false}>No</MenuItem>
+        </TextField>
+
+        <Divider />
+        <MDTypography variant="h6">Pago</MDTypography>
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="tax"
+          label="Efectivo"
+          type="number"
+          value={formik.values.cash}
+          error={!!formik.errors.cash}
+          helperText={formik.errors.cash}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="tax"
+          label="Transferencia"
+          type="number"
+          value={formik.values.transfer}
+          error={!!formik.errors.transfer}
+          helperText={formik.errors.transfer}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="tax"
+          label="Debe"
+          type="number"
+          value={formik.values.debt}
+          error={!!formik.errors.debt}
+          helperText={formik.errors.debt}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          required
+          select
+          name="paid"
+          fullWidth
+          label="Pagada"
+          value={formik.values.paid}
+          error={!!formik.errors.paid}
+          helperText={formik.errors.paid}
           onChange={formik.handleChange}
         >
           <MenuItem value={true}>Si</MenuItem>
