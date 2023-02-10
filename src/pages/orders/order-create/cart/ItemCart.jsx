@@ -39,7 +39,7 @@ function ItemCart({ product }) {
       sx={{
         padding: "5px 20px",
         display: "flex",
-        height: "75px",
+        minHeight: "75px",
         flexDirection: "row",
         alignItems: "center",
         mb: 2,
@@ -66,22 +66,38 @@ function ItemCart({ product }) {
           flexDirection: "row",
           alignItems: "center",
           width: "100%",
+          gap: "10px",
         }}
       >
-        <MDTypography variant="subtitle2" sx={{ width: "33%" }}>
+        <MDTypography variant="subtitle2" sx={{ width: "30%" }}>
           {product.description}
         </MDTypography>
 
-        <TextField type="number" value={quantity} label="Cantidad" onChange={handlerQuantity} />
-        <MDTypography variant="subtitle2" sx={{ width: "33%" }}>
+        {/*  <MDTypography variant="subtitle2" sx={{ width: "23%" }}>
           {product.product.unit}
-        </MDTypography>
+        </MDTypography> */}
+        <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
+          <TextField type="number" value={quantity} label="Cantidad" onChange={handlerQuantity} />
+        </Box>
 
-        <Box sx={{ width: "33%", display: "flex", alignItems: "center" }}>
+        <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
           <span>
             <MDTypography variant="subtitle2">$</MDTypography>
           </span>
-          <TextField type="number" value={value} label="Valor" onChange={handlerValue} />
+          <TextField type="number" value={value} label="Valor total" onChange={handlerValue} />
+        </Box>
+
+        <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
+          <span>
+            <MDTypography variant="subtitle2">$</MDTypography>
+          </span>
+          <TextField
+            type="number"
+            value={value / quantity}
+            label="Unidad"
+            disabled="true"
+            /*  onChange={handlerValue} */
+          />
         </Box>
 
         <MDButton onClick={() => dispatch(deleteProduct(product._id))}>

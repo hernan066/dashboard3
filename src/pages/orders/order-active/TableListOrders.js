@@ -18,7 +18,7 @@ import MenuListOrders from "./MenuListOrders";
 function TableListOrders({ orders }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const listOrders = orders.data.orders;
+  const listOrders = orders.data.orders.filter((order) => order.active === true);
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);

@@ -49,9 +49,9 @@ function Details({ order }) {
                 }}
               >
                 <MDTypography variant="subtitle2">{product.description}</MDTypography>
-                <MDTypography variant="subtitle2"> Cant. {product.quantity}</MDTypography>
+                <MDTypography variant="subtitle2"> Cant. {product.totalQuantity}</MDTypography>
                 <MDTypography variant="subtitle2"> Unit. {product.unit}</MDTypography>
-                <MDTypography variant="subtitle2"> ${product.price}</MDTypography>
+                <MDTypography variant="subtitle2"> ${product.unitPrice}</MDTypography>
               </Box>
             </Box>
           </>
@@ -78,6 +78,28 @@ function Details({ order }) {
           <MDTypography variant="body2">Total</MDTypography>
           <MDTypography variant="h6">${orderDetail.total}</MDTypography>
         </Box>
+        <MDTypography variant="h6">Pago</MDTypography>
+        <Divider />
+        <Box display="flex" justifyContent="space-between">
+          <MDTypography variant="body2">Efectivo</MDTypography>
+          <MDTypography variant="h6">${orderDetail?.payment?.cash || 0}</MDTypography>
+        </Box>
+        <Box display="flex" justifyContent="space-between">
+          <MDTypography variant="body2">Transferencia</MDTypography>
+          <MDTypography variant="h6">${orderDetail?.payment?.transfer || 0}</MDTypography>
+        </Box>
+
+        <Box display="flex" justifyContent="space-between" mb={3}>
+          <MDTypography variant="body2">Debe</MDTypography>
+          <MDTypography variant="h6">${orderDetail?.payment?.debt || 0}</MDTypography>
+        </Box>
+        {orderDetail.commentary && (
+          <>
+            <MDTypography variant="h6">Pago</MDTypography>
+            <Divider />
+            <MDTypography variant="body2">{orderDetail.commentary}</MDTypography>
+          </>
+        )}
 
         <MDTypography variant="h6">Datos del cliente</MDTypography>
         <Divider />

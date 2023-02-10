@@ -83,6 +83,11 @@ export const menuList = [
         icon: "format_list_bulleted_icon",
         url: "/ordenes/lista",
       },
+      {
+        name: "Ordenes activas",
+        icon: "format_list_bulleted_icon",
+        url: "/ordenes/lista/activas",
+      },
     ],
   },
   {
