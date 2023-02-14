@@ -18,7 +18,9 @@ import MenuListOrders from "./MenuListOrders";
 function TableListOrders({ orders }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const listOrders = orders.data.orders;
+  const listOrders = orders.data.orders.filter(
+    (order) => order.status === "Entregado" && order.paid === false
+  );
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);

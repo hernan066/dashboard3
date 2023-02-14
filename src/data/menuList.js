@@ -88,6 +88,11 @@ export const menuList = [
         icon: "format_list_bulleted_icon",
         url: "/ordenes/lista/activas",
       },
+      {
+        name: "Ordenes impagas",
+        icon: "format_list_bulleted_icon",
+        url: "/ordenes/lista/impagas",
+      },
     ],
   },
   {

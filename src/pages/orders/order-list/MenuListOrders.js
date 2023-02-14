@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useDeleteOrderMutation, usePutOrderMutation } from "api/orderApi";
 
-function MenuListOrders({ open, handleCloseMenu, orderId, orderActive }) {
+function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid }) {
   const navigate = useNavigate();
 
   const [deleteOrder, { isSuccess, isError }] = useDeleteOrderMutation();
@@ -37,6 +37,15 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive }) {
     handleCloseMenu();
     const editOrderValues = {
       active: !orderActive,
+    };
+    await editOrder({ id, ...editOrderValues }).unwrap();
+  };
+
+  const handlerPaid = async () => {
+    const id = orderId;
+    handleCloseMenu();
+    const editOrderValues = {
+      paid: !orderPaid,
     };
     await editOrder({ id, ...editOrderValues }).unwrap();
   };
@@ -110,6 +119,10 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive }) {
       <MenuItem onClick={handlerActivate}>
         <EditIcon sx={{ mr: 1 }} />
         Activar/Desactivar
+      </MenuItem>
+      <MenuItem onClick={handlerPaid}>
+        <EditIcon sx={{ mr: 1 }} />
+        Orden pagada
       </MenuItem>
       <MenuItem onClick={() => navigate(`/ordenes/editar/${orderId}`)}>
         <EditIcon sx={{ mr: 1 }} />

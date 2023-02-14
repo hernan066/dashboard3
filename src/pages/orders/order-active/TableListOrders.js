@@ -1,7 +1,5 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 import { Box, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -24,17 +22,20 @@ function TableListOrders({ orders }) {
   const [open, setOpen] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [orderActive, setOrderActive] = useState(null);
+  const [orderPaid, setOrderPaid] = useState(null);
 
-  const handleOpenMenu = (id, event, active) => {
+  const handleOpenMenu = (id, event, active, paid) => {
     setOpen(event.currentTarget);
     setOrderId(id);
     setOrderActive(active);
+    setOrderPaid(paid);
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
     setOrderId(null);
     setOrderActive(null);
+    setOrderPaid(null);
   };
 
   const columns = [
@@ -255,8 +256,12 @@ function TableListOrders({ orders }) {
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { _id, active } }) => (
-        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e, active)}>
+      renderCell: ({ row: { _id, active, paid } }) => (
+        <IconButton
+          size="large"
+          color="inherit"
+          onClick={(e) => handleOpenMenu(_id, e, active, paid)}
+        >
           <MoreVertIcon />
         </IconButton>
       ),
@@ -331,6 +336,7 @@ function TableListOrders({ orders }) {
         handleCloseMenu={handleCloseMenu}
         orderId={orderId}
         orderActive={orderActive}
+        orderPaid={orderPaid}
       />
     </>
   );

@@ -39,6 +39,7 @@ import CreateNewSubDeliveryZone from "pages/deliverySubZone/create-deliverySubZo
 import EditDeliverySubZone from "pages/deliverySubZone/edit-deliverySubZone";
 import EditPasswordUser from "pages/users/change-password";
 import ListOrdersActive from "pages/orders/order-active";
+import ListOrdersUnpaid from "pages/orders/order-unpaid";
 
 const routes = [
   {
@@ -255,6 +256,14 @@ const routes = [
     component: (
       <RequireAuth>
         <ListOrdersActive />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/ordenes/lista/impagas",
+    component: (
+      <RequireAuth>
+        <ListOrdersUnpaid />
       </RequireAuth>
     ),
   },
