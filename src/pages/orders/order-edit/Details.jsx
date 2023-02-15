@@ -4,9 +4,20 @@
 
 import { Box, Card, Divider } from "@mui/material";
 import MDTypography from "components/MDTypography";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addOrder } from "redux/ordersSlice";
 import EditAddressForm from "./EditAddressForm";
+import ItemCard from "./ItemCard";
 
 function Details({ order, deliveryZones, deliveryTrucks }) {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addOrder(order));
+  }, []);
+
+  const orderStore = useSelector((store) => store.order.order);
+
   return (
     <Box
       sx={{
@@ -23,38 +34,8 @@ function Details({ order, deliveryZones, deliveryTrucks }) {
         }}
       >
         <MDTypography variant="h6">Productos</MDTypography>
-        {order.orderItems.map((product) => (
-          <>
-            <Divider />
-            <Box sx={{ display: "flex", gap: "20px" }}>
-              <Box
-                sx={{
-                  width: 100,
-                }}
-              >
-                <img
-                  src="https://ik.imagekit.io/mrprwema7/product_lHRQybEfFM.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669154831378"
-                  alt=""
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              </Box>
-              <Box
-                sx={{
-                  display: "flex",
-                  gap: "20px",
-                  justifyContent: "space-between",
-                  width: "100%",
-                }}
-              >
-                <MDTypography variant="subtitle2">{product.description}</MDTypography>
-                <MDTypography variant="subtitle2"> Cant. {product.totalQuantity}</MDTypography>
-                <MDTypography variant="subtitle2"> Unit. {product.unit}</MDTypography>
-                <MDTypography variant="subtitle2"> ${product.totalPrice}</MDTypography>
-              </Box>
-            </Box>
-          </>
+        {orderStore?.orderItems.map((product) => (
+          <ItemCard product={product} key={product._id} />
         ))}
       </Card>
       <Card
@@ -67,16 +48,16 @@ function Details({ order, deliveryZones, deliveryTrucks }) {
         <Divider />
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Subtotal</MDTypography>
-          <MDTypography variant="h6">${order.subTotal}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.subTotal}</MDTypography>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Envío</MDTypography>
-          <MDTypography variant="h6">${order.tax}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.tax}</MDTypography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between" mb={3}>
           <MDTypography variant="body2">Total</MDTypography>
-          <MDTypography variant="h6">${order.total}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.total}</MDTypography>
         </Box>
 
         <MDTypography variant="h6">Datos del cliente</MDTypography>

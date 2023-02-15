@@ -13,10 +13,12 @@ import { editOrderAddressSchema } from "validations/orders/editOrderAddressYup";
 import MDTypography from "components/MDTypography";
 import { usePutOrderMutation } from "api/orderApi";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
 
 function EditAddressForm({ zones, deliveryTrucks, order }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { orderItems, subTotal, total } = useSelector((store) => store.order.order);
   const [editOrder, { isLoading, isError }] = usePutOrderMutation();
 
   const formik = useFormik({
@@ -43,6 +45,10 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
     onSubmit: async (values) => {
       const editOrderValues = {
         ...values,
+        orderItems,
+        tax: values.tax,
+        subTotal,
+        total,
         shippingAddress: {
           name: values.name,
           lastName: values.lastName,

@@ -12,12 +12,11 @@ import Details from "./Details";
 
 function OrderEdit() {
   const { id } = useParams();
+
   const { data: order, isLoading: l1, isError: e1 } = useGetOrderQuery(id);
   const { data: deliveryZones, isLoading: l2, isError: e2 } = useGetDeliveryZonesQuery();
   const { data: deliveryTrucks, isLoading: l3, isError: e3 } = useGetDeliveryTrucksQuery();
-  console.log(order);
-  console.log(deliveryZones);
-  console.log(deliveryTrucks);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
