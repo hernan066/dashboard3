@@ -18,7 +18,7 @@ import { useSelector } from "react-redux";
 function EditAddressForm({ zones, deliveryTrucks, order }) {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { orderItems, subTotal, total } = useSelector((store) => store.order.order);
+  const orderStore = useSelector((store) => store.order.order);
   const [editOrder, { isLoading, isError }] = usePutOrderMutation();
 
   const formik = useFormik({
@@ -45,10 +45,10 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
     onSubmit: async (values) => {
       const editOrderValues = {
         ...values,
-        orderItems,
+        orderItems: orderStore?.orderItems,
         tax: values.tax,
-        subTotal,
-        total,
+        subTotal: orderStore?.subTotal,
+        total: orderStore?.total,
         shippingAddress: {
           name: values.name,
           lastName: values.lastName,

@@ -1,13 +1,12 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import { Card, Box, TextField } from "@mui/material";
-// import MDButton from "components/MDButton";
-// import DeleteIcon from "@mui/icons-material/Delete";
+import MDButton from "components/MDButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import MDTypography from "components/MDTypography";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-// import { deleteProduct } from "redux/cartSlice";
-import { updateOrder } from "redux/ordersSlice";
+import { updateOrder, deleteProductOrder } from "redux/ordersSlice";
 
 function ItemCard({ product }) {
   console.log(product);
@@ -101,9 +100,9 @@ function ItemCard({ product }) {
           />
         </Box>
 
-        {/*  <MDButton onClick={() => dispatch(deleteProduct(product._id))}>
+        <MDButton onClick={() => dispatch(deleteProductOrder(product._id))}>
           <DeleteIcon />
-        </MDButton> */}
+        </MDButton>
       </Box>
     </Card>
   );
