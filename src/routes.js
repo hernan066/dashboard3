@@ -40,6 +40,7 @@ import EditDeliverySubZone from "pages/deliverySubZone/edit-deliverySubZone";
 import EditPasswordUser from "pages/users/change-password";
 import ListOrdersActive from "pages/orders/order-active";
 import ListOrdersUnpaid from "pages/orders/order-unpaid";
+import DetailsClients from "pages/clients/details-clients";
 
 const routes = [
   {
@@ -212,6 +213,14 @@ const routes = [
     component: (
       <RequireAuth>
         <EditClient />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/clientes/detalle/:id",
+    component: (
+      <RequireAuth>
+        <DetailsClients />
       </RequireAuth>
     ),
   },

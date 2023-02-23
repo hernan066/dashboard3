@@ -13,8 +13,11 @@ import { clearCart } from "redux/cartSlice";
 import ItemCart from "./ItemCart";
 
 function Cart() {
-  const { products, shippingAddress, shippingCost, subTotal } = useSelector((store) => store.cart);
+  const { products, shippingAddress, shippingCost, subTotal, client } = useSelector(
+    (store) => store.cart
+  );
   const { user } = useSelector((store) => store.auth);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -38,7 +41,8 @@ function Cart() {
     }));
 
     const newOrder = {
-      userId: user,
+      userId: client.user._id,
+      client: client.client._id,
       orderItems: productsOrder,
       shippingAddress,
       deliveryTruck: deliveryTruckSlit[0],
