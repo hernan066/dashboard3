@@ -13,26 +13,26 @@ import { useMaterialUIController } from "context";
 import { dateToLocalDate } from "utils/dateFormat";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import MenuListOrders from "./MenuListOrders";
+import { formatPrice } from "utils/formaPrice";
+import MenuTable from "./MenuTable";
 
-function TableListOrders({ orders }) {
+function TableList({ orders: listOrders }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const listOrders = orders.data.orders.filter(
-    (order) => order.status === "Entregado" && order.paid === false
-  );
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [orderActive, setOrderActive] = useState(null);
   const [orderPaid, setOrderPaid] = useState(null);
+  const [clientId, setClientId] = useState(null);
 
-  const handleOpenMenu = (id, event, active, paid) => {
+  const handleOpenMenu = (id, event, active, paid, cliId) => {
     setOpen(event.currentTarget);
     setOrderId(id);
     setOrderActive(active);
     setOrderPaid(paid);
+    setClientId(cliId);
   };
 
   const handleCloseMenu = () => {
@@ -40,6 +40,7 @@ function TableListOrders({ orders }) {
     setOrderId(null);
     setOrderActive(null);
     setOrderPaid(null);
+    setClientId(null);
   };
 
   const columns = [
@@ -223,36 +224,56 @@ function TableListOrders({ orders }) {
       headerName: "SubTotal",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ color: "#c97820", fontWeight: "bold" }}>
+          {formatPrice(params.row.subTotal)}
+        </div>
+      ),
     },
     {
       field: "tax",
       headerName: "Envío",
       // flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ fontWeight: "bold", color: "#12adc4" }}>{formatPrice(params.row.tax)}</div>
+      ),
     },
     {
       field: "total",
       headerName: "Total",
       // flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ fontWeight: "bold", color: "#503bb8" }}>{formatPrice(params.row.total)}</div>
+      ),
     },
     {
       field: "cash",
       headerName: "P. Efectivo",
       // flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ fontWeight: "bold", color: "green" }}>{formatPrice(params.row.cash)}</div>
+      ),
     },
     {
       field: "transfer",
       headerName: "P. Transferencia",
       // flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ fontWeight: "bold", color: "green" }}>{formatPrice(params.row.transfer)}</div>
+      ),
     },
     {
       field: "debt",
       headerName: "Debe",
       // flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div style={{ fontWeight: "bold", color: "red" }}>{formatPrice(params.row.debt)}</div>
+      ),
     },
 
     {
@@ -260,11 +281,11 @@ function TableListOrders({ orders }) {
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { _id, active, paid } }) => (
+      renderCell: ({ row: { _id, active, paid, clientIdrow } }) => (
         <IconButton
           size="large"
           color="inherit"
-          onClick={(e) => handleOpenMenu(_id, e, active, paid)}
+          onClick={(e) => handleOpenMenu(_id, e, active, paid, clientIdrow)}
         >
           <MoreVertIcon />
         </IconButton>
@@ -296,6 +317,7 @@ function TableListOrders({ orders }) {
               transfer: order?.payment?.transfer || 0,
               debt: order?.payment?.debt || 0,
               paid: order.paid,
+              clientIdrow: order?.client,
             }))}
             columns={columns}
             getRowId={(row) => row._id}
@@ -335,15 +357,16 @@ function TableListOrders({ orders }) {
         </Box>
       </Box>
 
-      <MenuListOrders
+      <MenuTable
         open={open}
         handleCloseMenu={handleCloseMenu}
         orderId={orderId}
         orderActive={orderActive}
         orderPaid={orderPaid}
+        clientId={clientId}
       />
     </>
   );
 }
 
-export default TableListOrders;
+export default TableList;

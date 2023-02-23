@@ -8,9 +8,8 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetOfertsQuery } from "api/ofertApi";
 import { useGetOrdersQuery } from "api/orderApi";
-import TableListOrders from "./TableListOrders";
+import TableList from "../componets/TableList";
 
 
 
@@ -43,7 +42,7 @@ function ListOrders() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-               {listOrders && <TableListOrders orders={listOrders} />}
+               {listOrders && <TableList orders={listOrders.data.orders} />}
               </MDBox>
             </Card>
           </Grid>

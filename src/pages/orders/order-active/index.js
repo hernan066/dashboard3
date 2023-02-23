@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
@@ -9,14 +10,20 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
 import { useGetOrdersQuery } from "api/orderApi";
-import TableListOrders from "./TableListOrders";
-
-
+import TableList from "../componets/TableList";
 
 function ListOrdersActive() {
   const { data: listOrders, isLoading, error } = useGetOrdersQuery();
+  const [orders, setOrders] = useState(null);
 
-  console.log(listOrders);
+  useEffect(() => {
+    if (listOrders?.ok) {
+      const filterOrders = listOrders?.data?.orders.filter((order) => order.active === true);
+      setOrders(filterOrders);
+    }
+  }, [listOrders]);
+  console.log(listOrders)
+  console.log(orders);
 
   return (
     <DashboardLayout>
@@ -42,8 +49,8 @@ function ListOrdersActive() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-               {listOrders && <TableListOrders orders={listOrders} />}
-              </MDBox>
+                {orders && <TableList orders={orders} />}
+              </MDBox> 
             </Card>
           </Grid>
         </Grid>

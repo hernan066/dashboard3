@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { MenuItem, Popover } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -9,7 +8,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useDeleteOrderMutation, usePutOrderMutation } from "api/orderApi";
 
-function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid }) {
+function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, clientId }) {
   const navigate = useNavigate();
 
   const [deleteOrder, { isSuccess, isError }] = useDeleteOrderMutation();
@@ -116,6 +115,10 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
         <VisibilityIcon sx={{ mr: 1 }} />
         Ver Orden
       </MenuItem>
+      <MenuItem onClick={() => navigate(`/clientes/detalle/${clientId}`)}>
+        <VisibilityIcon sx={{ mr: 1 }} />
+        Ver Cliente
+      </MenuItem>
       <MenuItem onClick={handlerActivate}>
         <EditIcon sx={{ mr: 1 }} />
         Activar/Desactivar
@@ -137,4 +140,4 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
   );
 }
 
-export default MenuListOrders;
+export default MenuTable;

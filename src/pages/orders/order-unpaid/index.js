@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable prettier/prettier */
+import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import MDBox from "components/MDBox";
@@ -8,16 +9,22 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetOfertsQuery } from "api/ofertApi";
 import { useGetOrdersQuery } from "api/orderApi";
-import TableListOrders from "./TableListOrders";
-
-
+import TableList from "../componets/TableList";
 
 function ListOrdersUnpaid() {
   const { data: listOrders, isLoading, error } = useGetOrdersQuery();
 
-  console.log(listOrders);
+  const [orders, setOrders] = useState(null);
+
+  useEffect(() => {
+    if (listOrders?.ok) {
+      const filterOrders = listOrders?.data?.orders.filter(
+        (order) => order.status === "Entregado" && order.paid === false
+      );
+      setOrders(filterOrders);
+    }
+  }, [listOrders]);
 
   return (
     <DashboardLayout>
@@ -43,7 +50,7 @@ function ListOrdersUnpaid() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-               {listOrders && <TableListOrders orders={listOrders} />}
+                {orders && <TableList orders={orders} />}
               </MDBox>
             </Card>
           </Grid>
