@@ -18,7 +18,7 @@ function OrderCreate() {
   const { data: deliveryTrucks, isLoading: l4, isError: e4 } = useGetDeliveryTrucksQuery();
 
   // console.log(zones);
-  console.log(clientAddresses);
+  // console.log(clientAddresses);
 
   return (
     <DashboardLayout>

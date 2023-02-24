@@ -32,7 +32,7 @@ function ClientAddressEdit({ clients, zones, clientAddress }) {
   }));
 
   const [inputValue, setInputValue] = useState({
-    id: clientAddress._id,
+    id: clientAddress.client._id,
     user: clientAddress.user._id,
     phone: clientAddress.user.phone,
     name: clientAddress.user.name,
@@ -58,6 +58,7 @@ function ClientAddressEdit({ clients, zones, clientAddress }) {
         user: inputValue.user,
         client: inputValue.id,
       };
+
       const res = await createClientAddress({ id, ...editClientAddress }).unwrap();
       if (res) {
         Swal.fire({

@@ -18,7 +18,7 @@ import MDBox from "components/MDBox";
 import MenuListOrders from "./MenuListOrders";
 import ResumeDataClient from "./ResumeDataClient";
 
-function TableListOrders({ orders, client }) {
+function TableListOrders({ orders, client, listTopProducts }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
   const listOrders = orders.data.orders;
@@ -274,9 +274,9 @@ function TableListOrders({ orders, client }) {
   ];
 
   return (
-    <>
+    <Box m="20px">
+      <ResumeDataClient client={client} listOrders={listOrders} listTopProducts={listTopProducts} />
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <ResumeDataClient client={client} listOrders={listOrders} />
         <Box m="40px 0 0 0" height="75vh" width="2200px">
           <DataGrid
             checkboxSelection
@@ -339,7 +339,7 @@ function TableListOrders({ orders, client }) {
         orderActive={orderActive}
         orderPaid={orderPaid}
       />
-    </>
+    </Box>
   );
 }
 
