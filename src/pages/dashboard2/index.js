@@ -20,7 +20,7 @@ function Dashboard2() {
   const { data: dataOrdersByDays, isLoading: l4, isError: e4 } = useGetOrdersByDaysQuery(7);
 
   console.log(dataOrdersByDays);
-  console.log(dateToLocalDateMin(dataOrdersByDays.from));
+  // console.log(dateToLocalDateMin(dataOrdersByDays.from));
 
   console.log(dataOrdersToday);
 
