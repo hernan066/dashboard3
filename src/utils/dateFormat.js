@@ -9,7 +9,7 @@ export const dateToLocalDate = (date) => {
   return localDate.format(dateFormat);
 };
 export const dateToLocalDateMin = (date) => {
-  const dateFormat = "DD-MM-YYYY";
+  const dateFormat = "DD-MM";
   const testDateUtc = moment.utc(date);
   const localDate = testDateUtc.local();
 

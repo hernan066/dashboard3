@@ -12,6 +12,7 @@ import React from "react";
 import { formatPrice } from "utils/formaPrice";
 import OrdersOverview from "./OrdersOverview";
 import CardTodayProducts from "./CardTodayProducts";
+import CharBar1 from "./CharBar1";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -57,7 +58,7 @@ const repeatSum = (arr) => {
   return arrProductsNonDupli;
 };
 
-function DashboardToday({ orders, clients, activeOrders }) {
+function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
   const { sales, tasks } = reportsLineChartData;
   console.log(activeOrders);
   console.log(orders);
@@ -202,13 +203,7 @@ function DashboardToday({ orders, clients, activeOrders }) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={3}>
-              <ReportsBarChart
-                color="info"
-                title="website views"
-                description="Last Campaign Performance"
-                date="campaign sent 2 days ago"
-                chart={reportsBarChartData}
-              />
+              <CharBar1 ordersByDays={ordersByDays} />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -7,7 +8,15 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
+import Card from "@mui/material/Card";
+import Divider from "@mui/material/Divider";
+import Icon from "@mui/material/Icon";
+import MDBox from "components/MDBox";
+import MDTypography from "components/MDTypography";
+import { dateToLocalDate } from "utils/dateFormat";
+import { getChartData } from "utils/getChartData";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -72,26 +81,65 @@ export const options = {
   },
 };
 
-const labels = ["23/02", "24/02", "25/02", "26/02", "27/02", "28/02", "01/03"];
+function CharBar1({ ordersByDays }) {
+  const info = getChartData(ordersByDays);
+  const labels = info.dates;
 
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: "Pagos",
-      data: [200000, 250000, 100000, 220000, 280000, 100000, 150000],
-      backgroundColor: "rgba(85, 230, 18, 0.7)",
-    },
-    {
-      label: "Deudas",
-      data: [100000, 50000, 80000, 120000, 90000, 30000, 40000],
-      backgroundColor: "rgba(230, 18, 18, 0.7)",
-    },
-  ],
-};
-
-function CharBar1() {
-  return <Bar options={options} data={data} />;
+  const data = {
+    labels,
+    datasets: [
+      {
+        label: "Pagos",
+        data: info.totalPayment,
+        backgroundColor: "rgba(85, 230, 18, 0.7)",
+      },
+      {
+        label: "Deudas",
+        data: info.totalDebt,
+        backgroundColor: "rgba(230, 18, 18, 0.7)",
+      },
+    ],
+  };
+  return (
+    <Card sx={{ height: "100%" }}>
+      <MDBox padding="1rem">
+        {useMemo(
+          () => (
+            <MDBox
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+              py={2}
+              pr={0.5}
+              mt={-5}
+              height="16rem"
+            >
+              <Bar options={options} data={data} />
+            </MDBox>
+          ),
+          []
+        )}
+        <MDBox pt={3} pb={1} px={1}>
+          <MDTypography variant="h6" textTransform="capitalize">
+            Pagos y deudas
+          </MDTypography>
+          <MDTypography component="div" variant="button" color="text" fontWeight="light">
+            Total de los últimos 7 días.
+          </MDTypography>
+          <Divider />
+          <MDBox display="flex" alignItems="center">
+            <MDTypography variant="button" color="text" lineHeight={1} sx={{ mt: 0.15, mr: 0.5 }}>
+              <Icon>schedule</Icon>
+            </MDTypography>
+            <MDTypography variant="button" color="text" fontWeight="light">
+              Last update {dateToLocalDate(new Date())}
+            </MDTypography>
+          </MDBox>
+        </MDBox>
+      </MDBox>
+    </Card>
+  );
 }
 
 export default CharBar1;
