@@ -1,4 +1,3 @@
-import Dashboard from "layouts/dashboard";
 import CreateNewUser from "pages/users/new-user";
 import EditUser from "pages/users/edit-user";
 import ListUsers from "pages/users/list-users";
@@ -41,13 +40,23 @@ import EditPasswordUser from "pages/users/change-password";
 import ListOrdersActive from "pages/orders/order-active";
 import ListOrdersUnpaid from "pages/orders/order-unpaid";
 import DetailsClients from "pages/clients/details-clients";
+import Dashboard1 from "pages/dashboard";
+import Dashboard2 from "pages/dashboard2";
 
 const routes = [
   {
-    route: "/dashboard",
+    route: "/dashboard/totales",
     component: (
       <RequireAuth>
-        <Dashboard />
+        <Dashboard1 />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/dashboard/hoy",
+    component: (
+      <RequireAuth>
+        <Dashboard2 />
       </RequireAuth>
     ),
   },

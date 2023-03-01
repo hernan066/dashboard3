@@ -8,3 +8,10 @@ export const dateToLocalDate = (date) => {
 
   return localDate.format(dateFormat);
 };
+export const dateToLocalDateMin = (date) => {
+  const dateFormat = "DD-MM-YYYY";
+  const testDateUtc = moment.utc(date);
+  const localDate = testDateUtc.local();
+
+  return localDate.format(dateFormat);
+};

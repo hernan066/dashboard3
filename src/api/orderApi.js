@@ -15,6 +15,25 @@ export const orderApi = apiSlice.injectEndpoints({
       providesTags: ["orders"],
     }),
 
+    getOrdersToday: builder.query({
+      query: () => "/orders/today",
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["orders"],
+    }),
+    getOrdersActive: builder.query({
+      query: () => "/orders/active",
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["orders"],
+    }),
+
+    getOrdersByDays: builder.query({
+      query: (days) => `/orders/days/${days}`,
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 3 },
+      providesTags: ["orders"],
+    }),
     getOrder: builder.query({
       query: (id) => `/orders/${id}`,
       // keepUnusedDataFor: 3,
@@ -61,6 +80,9 @@ export const orderApi = apiSlice.injectEndpoints({
 
 export const {
   useGetOrdersQuery,
+  useGetOrdersTodayQuery,
+  useGetOrdersActiveQuery,
+  useGetOrdersByDaysQuery,
   useGetOrderQuery,
   useGetClientOrderQuery,
   usePostOrderMutation,

@@ -183,7 +183,7 @@ export default function App() {
         <Route path="/authentication/sign-in" element={<SignIn />} />
         <Route element={<PersistLogin />}>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+          <Route path="*" element={<Navigate to="/dashboard/totales" />} />
         </Route>
       </Routes>
     </ThemeProvider>

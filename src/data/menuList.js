@@ -6,14 +6,14 @@ export const menuList = [
     key: "dashboard",
     subRoutes: [
       {
-        name: "Menu 1",
-        icon: "shoppingCartIcon",
-        url: "/home",
+        name: "Totales",
+        icon: "signal_cellular_alt_icon",
+        url: "/dashboard/totales",
       },
       {
-        name: "Menu 2",
-        icon: "factory",
-        url: "/home",
+        name: "Hoy",
+        icon: "signal_cellular_alt_icon",
+        url: "/dashboard/hoy",
       },
     ],
   },
