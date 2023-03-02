@@ -113,7 +113,7 @@ function CharBar1({ ordersByDays }) {
               py={2}
               pr={0.5}
               mt={-5}
-              height="16rem"
+              /* height="16rem" */
             >
               <Bar options={options} data={data} />
             </MDBox>

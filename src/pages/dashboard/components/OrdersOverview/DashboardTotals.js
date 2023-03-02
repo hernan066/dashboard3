@@ -2,16 +2,15 @@
 import { Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
+import CharBar1 from "pages/dashboard2/components/CharBar1";
 import React from "react";
 import { formatPrice } from "utils/formaPrice";
 import OrdersOverview from ".";
 import Projects from "../Projects";
 
-function DashboardTotals({ orders, clients }) {
+function DashboardTotals({ orders, clients, ordersByDays }) {
   const { sales, tasks } = reportsLineChartData;
 
   const totalClients = clients.length;
@@ -87,13 +86,7 @@ function DashboardTotals({ orders, clients }) {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={3}>
-              <ReportsBarChart
-                color="info"
-                title="website views"
-                description="Last Campaign Performance"
-                date="campaign sent 2 days ago"
-                chart={reportsBarChartData}
-              />
+              <CharBar1 ordersByDays={ordersByDays} />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
