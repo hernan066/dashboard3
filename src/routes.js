@@ -42,6 +42,7 @@ import ListOrdersUnpaid from "pages/orders/order-unpaid";
 import DetailsClients from "pages/clients/details-clients";
 import Dashboard1 from "pages/dashboard";
 import Dashboard2 from "pages/dashboard2";
+import CreateSimpleClient from "pages/clients/create-simple-client";
 
 const routes = [
   {
@@ -214,6 +215,14 @@ const routes = [
     component: (
       <RequireAuth>
         <CreateNewClient />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/clientes/nuevo-simple",
+    component: (
+      <RequireAuth>
+        <CreateSimpleClient />
       </RequireAuth>
     ),
   },

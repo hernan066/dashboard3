@@ -98,9 +98,21 @@ function TableListClients({ clients }) {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/clientes/nuevo")}>
-            Crear
+        <Stack direction="row" alignItems="center" mb={5}>
+          <MDButton
+            sx={{ marginRight: "10px" }}
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/clientes/nuevo")}
+          >
+            Nuevo cliente
+          </MDButton>
+          <MDButton
+            color="info"
+            variant="gradient"
+            onClick={() => navigate("/clientes/nuevo-simple")}
+          >
+            Nuevo cliente simple
           </MDButton>
         </Stack>
         <Box m="40px 0 0 0" height="75vh" width="1500px">
