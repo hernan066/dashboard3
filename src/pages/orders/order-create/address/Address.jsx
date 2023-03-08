@@ -16,6 +16,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
   const [manualForm, setManualForm] = useState(false);
   const { client } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
+  console.log(clientAddresses);
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
@@ -25,7 +26,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
     const filtrar = (arrayToFilter) => {
       const result = arrayToFilter.filter((clientAddr) => {
         if (
-          clientAddr.user.phone.toString().includes(e.target.value) ||
+          clientAddr.client?.cuit.toString().includes(e.target.value) ||
           clientAddr.user.name.toString().includes(e.target.value) ||
           clientAddr.user.lastName.toString().includes(e.target.value)
         ) {
@@ -62,7 +63,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
 
         <TextField
           value={search}
-          label="Buscar por número de teléfono o nombre"
+          label="Buscar por número de dni/cuit o nombre"
           onChange={handlerFilterChanges}
           fullWidth
           margin="normal"
@@ -81,7 +82,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
               marginBottom: "20px",
             }}
           >
-            <MDTypography variant="body2">{`${clientA.user.phone} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
+            <MDTypography variant="body2">{`DNI/CUIT ${clientA.client.cuit} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
             <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
               Cargar
             </MDButton>

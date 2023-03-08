@@ -43,6 +43,7 @@ import DetailsClients from "pages/clients/details-clients";
 import Dashboard1 from "pages/dashboard";
 import Dashboard2 from "pages/dashboard2";
 import CreateSimpleClient from "pages/clients/create-simple-client";
+import OrderLocalCreate from "pages/orders/order-local-create";
 
 const routes = [
   {
@@ -307,6 +308,14 @@ const routes = [
     component: (
       <RequireAuth>
         <OrderCreate />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/ordenes/nueva-local",
+    component: (
+      <RequireAuth>
+        <OrderLocalCreate />
       </RequireAuth>
     ),
   },

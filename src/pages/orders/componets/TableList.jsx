@@ -296,9 +296,21 @@ function TableList({ orders: listOrders }) {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/ordenes/nueva")}>
-            Crear
+        <Stack direction="row" alignItems="center" mb={5}>
+          <MDButton
+            sx={{ marginRight: "10px" }}
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/ordenes/nueva")}
+          >
+            Orden de reparto
+          </MDButton>
+          <MDButton
+            color="info"
+            variant="gradient"
+            onClick={() => navigate("/ordenes/nueva-local")}
+          >
+            Orden entrega local
           </MDButton>
         </Stack>
         <Box m="40px 0 0 0" height="75vh" width="2200px">

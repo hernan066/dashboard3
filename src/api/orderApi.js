@@ -56,6 +56,15 @@ export const orderApi = apiSlice.injectEndpoints({
       invalidatesTags: ["orders"],
       extraOptions: { maxRetries: 0 },
     }),
+    postOrderLocal: builder.mutation({
+      query: (newOrders) => ({
+        url: "/orders/local",
+        method: "post",
+        body: newOrders,
+      }),
+      invalidatesTags: ["orders"],
+      extraOptions: { maxRetries: 0 },
+    }),
 
     putOrder: builder.mutation({
       query: ({ id, ...editOrders }) => ({
@@ -86,6 +95,7 @@ export const {
   useGetOrderQuery,
   useGetClientOrderQuery,
   usePostOrderMutation,
+  usePostOrderLocalMutation,
   usePutOrderMutation,
   useDeleteOrderMutation,
 } = orderApi;

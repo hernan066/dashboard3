@@ -33,14 +33,14 @@ function TableListClients({ clients }) {
     {
       field: "name",
       headerName: "Nombre",
-      flex: 1,
+      flex: 1.5,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
     {
       field: "cuit",
-      headerName: "CUIT",
-      flex: 1,
+      headerName: "CUIT/DNI",
+      flex: 1.2,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },

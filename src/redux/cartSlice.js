@@ -12,6 +12,7 @@ const cartSlice = createSlice({
     shippingAddress: null,
     shippingCost: 0,
     subTotal: 0,
+    receiptId: null,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -25,6 +26,7 @@ const cartSlice = createSlice({
     },
     addClient: (state, action) => {
       state.client = action.payload;
+      state.receiptId = Date.now();
     },
     clearClient: (state) => {
       state.client = null;
@@ -62,6 +64,7 @@ const cartSlice = createSlice({
       state.client = null;
       state.shippingCost = 0;
       state.subTotal = 0;
+      state.receiptId = null;
     },
   },
 });
