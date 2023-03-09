@@ -26,7 +26,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
     const filtrar = (arrayToFilter) => {
       const result = arrayToFilter.filter((clientAddr) => {
         if (
-          clientAddr.client?.cuit.toString().includes(e.target.value) ||
+          clientAddr.user.phone.toString().includes(e.target.value) ||
           clientAddr.user.name.toString().includes(e.target.value) ||
           clientAddr.user.lastName.toString().includes(e.target.value)
         ) {
@@ -82,7 +82,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
               marginBottom: "20px",
             }}
           >
-            <MDTypography variant="body2">{`DNI/CUIT ${clientA.client.cuit} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
+            <MDTypography variant="body2">{`Telefono ${clientA.user.phone} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
             <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
               Cargar
             </MDButton>
