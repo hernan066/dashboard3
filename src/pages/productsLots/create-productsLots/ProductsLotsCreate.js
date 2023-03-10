@@ -14,13 +14,13 @@ import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 import { useState } from "react";
 import Swal from "sweetalert2";
-import { usePostProductsLotMutation } from "api/productsLotsApi";
 import { creteProductLotsSchema } from "validations/productsLots/creteProductsLotsYup";
+import { usePutProductMutation } from "api/productApi";
 
 function ProductsLotsCreate({ listProducts, ListSuppliers }) {
   const navigate = useNavigate();
 
-  const [createProductsLots, { isLoading, isError }] = usePostProductsLotMutation();
+  const [editProduct, { isLoading, isError }] = usePutProductMutation();
 
   const autoCompleteProducts = listProducts.products
     .map((product) => {
@@ -30,6 +30,7 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
         unit: product.unit,
         product: product.name,
         img: product.img,
+        stock: product.stock,
         firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
       };
     })
@@ -42,14 +43,30 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
       supplier: "",
       quantity: undefined,
       cost: undefined,
+      location: "",
     },
     onSubmit: async (values) => {
-      const newProductLot = {
-        ...values,
-        product: inputValue.id,
-        stock: values.quantity,
-      };
-      await createProductsLots(newProductLot).unwrap();
+      const stock = [
+        ...inputValue.stock,
+        {
+          productId: inputValue.id,
+          name: inputValue.product,
+          img: inputValue.img,
+          supplier: values.supplier,
+          quantity: values.quantity,
+          cost: +values.cost,
+          unityCost: values.cost / values.quantity,
+          stock: values.quantity,
+          location: values.location,
+          moveDate: null,
+          createdStock: new Date(),
+          updateStock: new Date(),
+        },
+      ];
+
+      const { id } = inputValue;
+      const res = await editProduct({ id, stock }).unwrap();
+      console.log(res);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -110,10 +127,25 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
               onChange={formik.handleChange}
             >
               {ListSuppliers.data.suppliers.map((supplier) => (
-                <MenuItem key={supplier._id} value={supplier._id}>
+                <MenuItem key={supplier._id} value={supplier.businessName}>
                   {supplier.businessName}
                 </MenuItem>
               ))}
+            </TextField>
+            <TextField
+              margin="normal"
+              required
+              select
+              name="location"
+              fullWidth
+              label="Ubicación de stock"
+              value={formik.values.location}
+              error={!!formik.errors.location}
+              helperText={formik.errors.location}
+              onChange={formik.handleChange}
+            >
+              <MenuItem value="proveedor">En cámara del proveedor</MenuItem>
+              <MenuItem value="local">En cámara del local</MenuItem>
             </TextField>
 
             <TextField

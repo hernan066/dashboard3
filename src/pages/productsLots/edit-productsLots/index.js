@@ -5,19 +5,22 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useGetProductsQuery } from "api/productApi";
+import { useGetProductsQuery, useGetProductQuery } from "api/productApi";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
 import { useGetSuppliersQuery } from "api/supplierApi";
-import { useGetProductsLotQuery } from "api/productsLotsApi";
-import { useParams } from "react-router-dom";
+
+import { useParams, useSearchParams } from "react-router-dom";
 import ProductsLotsEdit from "./ProductsLotsEdit";
 
 function EditProductsLots() {
   const { id } = useParams();
-  const { data: listProducts, isLoading: l1, isError: e1 } = useGetProductsQuery();
+  const [searchParams] = useSearchParams();
+
+  const lotId = searchParams.get("lotId");
+
   const { data: ListSuppliers, isLoading: l2, isError: e2 } = useGetSuppliersQuery();
-  const { data: productLot, isLoading: l3, isError: e3 } = useGetProductsLotQuery(id);
+  const { data: productLot, isLoading: l3, isError: e3 } = useGetProductQuery(id);
 
   return (
     <DashboardLayout>
@@ -37,17 +40,17 @@ function EditProductsLots() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Editar Lote de Productos
+                  Editar Stock de Productos
                 </MDTypography>
               </MDBox>
               <MDBox>
-                {(l1 || l2 || l3) && <Loading />}
-                {(e1 || e2 || e3) && <Alert severity="error">Ha ocurrido un error</Alert>}
-                {listProducts && ListSuppliers && productLot && (
+                {(l2 || l3) && <Loading />}
+                {(e2 || e3) && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {ListSuppliers && productLot && (
                   <ProductsLotsEdit
-                    listProducts={listProducts}
                     ListSuppliers={ListSuppliers}
                     productLot={productLot}
+                    lotId={lotId}
                   />
                 )}
               </MDBox>

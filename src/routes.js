@@ -44,6 +44,8 @@ import Dashboard1 from "pages/dashboard";
 import Dashboard2 from "pages/dashboard2";
 import CreateSimpleClient from "pages/clients/create-simple-client";
 import OrderLocalCreate from "pages/orders/order-local-create";
+import MoveProductsLots from "pages/productsLots/move-productsLots";
+import ListDistribution from "pages/distributionList";
 
 const routes = [
   {
@@ -189,6 +191,14 @@ const routes = [
     component: (
       <RequireAuth>
         <CreateProductsLots />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/productos/stock/mover/:id",
+    component: (
+      <RequireAuth>
+        <MoveProductsLots />
       </RequireAuth>
     ),
   },
@@ -426,6 +436,15 @@ const routes = [
     component: (
       <RequireAuth>
         <EditDeliveryTruck />
+      </RequireAuth>
+    ),
+  },
+  /* Lista distribucion */
+  {
+    route: "/distribucion/repartidores/lista-reparto",
+    component: (
+      <RequireAuth>
+        <ListDistribution />
       </RequireAuth>
     ),
   },

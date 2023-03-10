@@ -1,7 +1,9 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import { Box, IconButton, Stack } from "@mui/material";
+import { Avatar, Box, IconButton, Stack } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -10,9 +12,12 @@ import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import { dateToLocalDate } from "utils/dateFormat";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
+import { formatPrice } from "utils/formaPrice";
 import MenuProductsLots from "./MenuProductsLots";
 
-function TableListProductsLots({ productsLots }) {
+function TableListProductsLots({ products }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -20,9 +25,9 @@ function TableListProductsLots({ productsLots }) {
   const [open, setOpen] = useState(null);
   const [productsLotsId, setProductsLotsId] = useState(null);
 
-  const handleOpenMenu = (id, event) => {
+  const handleOpenMenu = (productId, id, event) => {
     setOpen(event.currentTarget);
-    setProductsLotsId(id);
+    setProductsLotsId({ productId, id });
   };
 
   const handleCloseMenu = () => {
@@ -30,20 +35,90 @@ function TableListProductsLots({ productsLots }) {
     setProductsLotsId(null);
   };
 
+  console.log(products);
+  const stocks = products.reduce((acc, curr) => curr.stock.concat(acc), []);
+  console.log(stocks);
+
   const columns = [
+    {
+      field: "img",
+      headerName: "Imagen",
+      width: 100,
+      renderCell: (params) => <Avatar src={params.row.img} />,
+      sortable: false,
+      filterable: false,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "createdAt",
+      headerName: "Fecha Compra",
+      flex: 1.2,
+      headerClassName: "super-app-theme--header",
+    },
     {
       field: "product",
       headerName: "Producto",
-      flex: 1,
+      flex: 2.5,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
     {
       field: "supplier",
       headerName: "Proveedor",
+      flex: 1.2,
+      cellClassName: "name-column--cell",
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "location",
+      headerName: "Deposito",
       flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "moveDate",
+      headerName: "Fecha Movimiento",
+      flex: 1.2,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "thereIsStock",
+      headerName: "Stock",
+      flex: 0.6,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.stock ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
     },
 
     {
@@ -70,22 +145,11 @@ function TableListProductsLots({ productsLots }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-    {
-      field: "unit",
-      headerName: "Unidad",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "createdAt",
-      headerName: "Fecha Compra",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
+
     {
       field: "updatedAt",
       headerName: "Fecha Actualización",
-      flex: 1,
+      flex: 1.2,
       headerClassName: "super-app-theme--header",
     },
 
@@ -94,8 +158,8 @@ function TableListProductsLots({ productsLots }) {
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { _id } }) => (
-        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e)}>
+      renderCell: ({ row: { productId, _id } }) => (
+        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(productId, _id, e)}>
           <MoreVertIcon />
         </IconButton>
       ),
@@ -105,29 +169,34 @@ function TableListProductsLots({ productsLots }) {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Stack direction="row" alignItems="center" mb={5}>
           <MDButton
             color="dark"
             variant="gradient"
             onClick={() => navigate("/productos/stock/nuevo")}
+            sx={{
+              marginRight: "10px",
+            }}
           >
-            Crear
+            Registrar nuevo stock
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="1500px">
+        <Box m="40px 0 0 0" height="75vh" width="2000px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
-            rows={productsLots.map((productsLot) => ({
+            rows={stocks.map((productsLot) => ({
               ...productsLot,
-              cost: `$${productsLot.cost}`,
-              supplier: productsLot.supplier.businessName,
-              product: productsLot.product.name,
-              unit: productsLot.product.unit,
-              cost_unit: `$${productsLot.cost / productsLot.quantity}`,
-              createdAt: dateToLocalDate(productsLot.createdAt),
-              updatedAt: dateToLocalDate(productsLot.updatedAt),
+              _id: productsLot._id,
+              cost: `${formatPrice(productsLot.cost)}`,
+              supplier: productsLot.supplier,
+              product: productsLot.name,
+              cost_unit: `${formatPrice(productsLot.cost / productsLot.quantity)}`,
+              createdAt: dateToLocalDate(productsLot.createdStock),
+              updatedAt: productsLot.updateStock ? dateToLocalDate(productsLot.updateStock) : "",
+              thereIsStock: productsLot.stock > 0,
+              moveDate: productsLot.moveDate ? dateToLocalDate(productsLot.moveDate) : "",
             }))}
             columns={columns}
             getRowId={(row) => row._id}

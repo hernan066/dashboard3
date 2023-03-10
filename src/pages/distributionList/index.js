@@ -8,12 +8,19 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetProductsQuery } from "api/productApi";
-import TableListProductsLots from "./TableListProductsLots";
+import { useGetOrdersActiveQuery } from "api/orderApi";
+import { useGetProductsLotsQuery } from "api/productsLotsApi";
+import DistributionList from "./DistributionList";
 
-function ListProductsLots() {
-  const { data, isLoading, error } = useGetProductsQuery();
-  console.log(data);
+
+
+
+function ListDistribution() {
+  const { data: listOrders, isLoading: l1, error: e1 } = useGetOrdersActiveQuery();
+  const { data: listStock, isLoading: l2, error: e2 } = useGetProductsLotsQuery()
+
+  // console.log(listOrders);
+  // console.log(listStock);
 
   return (
     <DashboardLayout>
@@ -33,13 +40,13 @@ function ListProductsLots() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Stock de productos
+                  Lista de reparto
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {isLoading && <Loading />}
-                {error && <Alert severity="error">{error.error}</Alert>}
-               {data && <TableListProductsLots products={data.products} />}
+                {(l1 || l2) && <Loading />}
+                {(e1 || e2) && <Alert severity="error">Ha ocurrido un error</Alert>}
+               {listOrders && listStock &&  <DistributionList orders={listOrders.data.orders} stock={listStock.data.productLots} />}
               </MDBox>
             </Card>
           </Grid>
@@ -49,4 +56,4 @@ function ListProductsLots() {
   );
 }
 
-export default ListProductsLots;
+export default ListDistribution;

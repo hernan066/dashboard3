@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable no-param-reassign */
@@ -7,63 +8,54 @@
 // import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Autocomplete, Box, MenuItem, TextField } from "@mui/material";
+import { Alert, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { useState } from "react";
-import Swal from "sweetalert2";
-import { usePutProductsLotMutation } from "api/productsLotsApi";
 import { creteProductLotsSchema } from "validations/productsLots/creteProductsLotsYup";
+import { usePutProductMutation } from "api/productApi";
+import Swal from "sweetalert2";
 
-function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotById }) {
+function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const [editProductsLots, { isLoading, isError }] = usePutProductsLotMutation();
+  const [editProductsLots, { isLoading, isError }] = usePutProductMutation();
 
-  const autoCompleteProducts = listProducts.products
-    .map((product) => {
-      const firstLetter = product.name[0].toUpperCase();
-      return {
-        id: product._id,
-        unit: product.unit,
-        product: product.name,
-        img: product.img,
-        firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-      };
-    })
-    .sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter));
-
-  const firstLetter = productLotById.data.productLot.product.name[0].toUpperCase();
-
-  const [inputValue, setInputValue] = useState({
-    id: productLotById.data.productLot.product._id,
-    unit: productLotById.data.productLot.product.unit,
-    product: productLotById.data.productLot.product.name,
-    img: productLotById.data.productLot.product.img || "",
-    firstLetter: /[0-9]/.test(firstLetter) ? "0-9" : firstLetter,
-  });
+  const [lotToEdit] = product.stock.filter((stock) => stock._id === lotId);
+  const restOfLots = product.stock.filter((stock) => stock._id !== lotId);
 
   const formik = useFormik({
     initialValues: {
-      product: productLotById.data.productLot.product.name,
-      supplier: productLotById.data.productLot.supplier,
-      quantity: productLotById.data.productLot.quantity,
-      cost: productLotById.data.productLot.cost,
-      stock: productLotById.data.productLot.stock,
+      product: lotToEdit.name,
+      supplier: lotToEdit.supplier,
+      quantity: lotToEdit.quantity,
+      cost: lotToEdit.cost,
+      stock: lotToEdit.stock,
+      location: lotToEdit.location,
     },
     onSubmit: async (values) => {
-      const newProductLot = {
-        ...values,
-        product: inputValue.id,
-      };
-      await editProductsLots({ id, ...newProductLot }).unwrap();
+      const stock = [
+        ...restOfLots,
+        {
+          ...lotToEdit,
+          supplier: values.supplier,
+          quantity: values.quantity,
+          cost: values.cost,
+          stock: values.stock,
+          location: values.location,
+          updateStock: new Date(),
+          unityCost: values.cost / values.quantity,
+        },
+      ];
+
+      const res = await editProductsLots({ id, stock }).unwrap();
+      console.log(res);
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Lote de productos editado con éxito",
+        title: "Stock de productos editado con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
@@ -71,6 +63,36 @@ function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotB
     },
     validationSchema: creteProductLotsSchema,
   });
+
+  const handleDelete = async () => {
+    const stock = [...restOfLots];
+
+    console.log(stock);
+
+    Swal.fire({
+      title: "Deseas borrar el stock de este producto?",
+      text: "Este cambio no se puede revertir",
+
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Borrar",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const res = await editProductsLots({ id, stock }).unwrap();
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Stock de productos borrado con éxito",
+          showConfirmButton: false,
+          timer: 2500,
+        });
+
+        navigate("/productos/stock/lista");
+      }
+    });
+  };
 
   return (
     <MDBox pt={6} pb={3}>
@@ -89,21 +111,19 @@ function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotB
             onSubmit={formik.handleSubmit}
             sx={{ width: "100%" }}
           >
-            <Autocomplete
-              options={autoCompleteProducts}
-              getOptionLabel={(options) => options.product}
-              groupBy={(option) => option.firstLetter}
-              multiple={false}
-              value={inputValue}
-              isOptionEqualToValue={(option, value) => option.id === value.id}
-              onChange={(event, newValue) => {
-                setInputValue(newValue);
-              }}
+            <TextField
+              margin="normal"
               fullWidth
-              renderInput={(params) => (
-                <TextField {...params} label="Productos" variant="outlined" />
-              )}
+              disabled="true"
+              required
+              name="product"
+              label="Producto a editar"
+              value={formik.values.product}
+              error={!!formik.errors.product}
+              helperText={formik.errors.product}
+              onChange={formik.handleChange}
             />
+
             <TextField
               margin="normal"
               required
@@ -117,10 +137,26 @@ function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotB
               onChange={formik.handleChange}
             >
               {ListSuppliers.data.suppliers.map((supplier) => (
-                <MenuItem key={supplier._id} value={supplier._id}>
+                <MenuItem key={supplier._id} value={supplier.businessName}>
                   {supplier.businessName}
                 </MenuItem>
               ))}
+            </TextField>
+
+            <TextField
+              margin="normal"
+              required
+              select
+              name="location"
+              fullWidth
+              label="Ubicación de stock"
+              value={formik.values.location}
+              error={!!formik.errors.location}
+              helperText={formik.errors.location}
+              onChange={formik.handleChange}
+            >
+              <MenuItem value="proveedor">En cámara del proveedor</MenuItem>
+              <MenuItem value="local">En cámara del local</MenuItem>
             </TextField>
 
             <TextField
@@ -174,10 +210,23 @@ function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotB
             >
               Editar
             </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              loading={isLoading}
+              onClick={handleDelete}
+              sx={{
+                mt: 3,
+                mb: 2,
+                mr: 2,
+                backgroundColor: `${colors.error.main}`,
+                color: "white !important",
+              }}
+            >
+              Borrar
+            </LoadingButton>
             <MDButton
               variant="outlined"
               color="info"
-              onClick={() => navigate(-1)}
               sx={{
                 mt: 3,
                 mb: 2,
@@ -194,3 +243,4 @@ function ProductsLotsEdit({ listProducts, ListSuppliers, productLot: productLotB
 }
 
 export default ProductsLotsEdit;
+/* TODO ver editar */
