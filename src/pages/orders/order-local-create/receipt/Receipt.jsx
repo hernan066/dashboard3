@@ -35,7 +35,7 @@ function Receipt() {
       />
 
       {/* component to be printed */}
-      <div /* style={{ display: "none" }} */>
+      <div style={{ display: "none" }}>
         <Ticket
           ref={(el) => (componentRef = el)}
           products={cart?.products}
@@ -86,8 +86,8 @@ class Ticket extends React.Component {
             </div>
             <div className="hr-lg" />
             <div className="products__item">
-              <p className="bold">Total</p>
-              <p className="bold">{formatPrice(this.props.subTotal)}</p>
+              <p className="ticket__total">Total</p>
+              <p className="ticket__total">{formatPrice(this.props.subTotal)}</p>
             </div>
             <div className="hr-lg" />
           </div>
