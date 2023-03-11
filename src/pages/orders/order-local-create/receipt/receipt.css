@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap');
+
 .serif {
   font-family: serif;
 }
@@ -53,8 +55,10 @@
   padding: 3mm;
   width: 80mm;
   border: 1px solid black;
-  font-size: 12px;
-  font-family: "courier";
+  font-size: 14px;
+  font-family: "Roboto";
+  font-weight: 800;
+ 
 }
 .container-ticket .ticket .head-ticket {
   text-align: center;

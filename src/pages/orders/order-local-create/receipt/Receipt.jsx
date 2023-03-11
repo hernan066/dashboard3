@@ -35,7 +35,7 @@ function Receipt() {
       />
 
       {/* component to be printed */}
-      <div style={{ display: "none" }}>
+      <div /* style={{ display: "none" }} */>
         <Ticket
           ref={(el) => (componentRef = el)}
           products={cart?.products}
@@ -56,9 +56,9 @@ class Ticket extends React.Component {
       <div className="container-ticket">
         <div className="ticket">
           <div className="head-ticket">
-            <p className="x-bold">Local Alberto</p>
-            <p className="bold">San Miguel, Calle 1234</p>
-            <p className="bold">Teléfono 5411235689</p>
+            <p className="x-bold">Avícola Martina</p>
+            <p className="bold">San Miguel</p>
+            <p className="bold">Av.Balbin 4872</p>
 
             <br />
             <p className="bold">Ticket interno</p>
