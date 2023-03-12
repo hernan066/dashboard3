@@ -34,7 +34,7 @@ function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
         }
       >
         <EditIcon sx={{ mr: 1 }} />
-        Mover Stock
+        Editar Stock
       </MenuItem>
       <MenuItem
         onClick={() =>
@@ -42,7 +42,7 @@ function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
         }
       >
         <EditIcon sx={{ mr: 1 }} />
-        Editar Stock
+        Mover Stock
       </MenuItem>
     </Popover>
   );
