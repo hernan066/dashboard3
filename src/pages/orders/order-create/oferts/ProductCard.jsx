@@ -5,6 +5,7 @@
 import { Box, Card, MenuItem, TextField } from "@mui/material";
 import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "redux/cartSlice";
 import { formatPrice } from "utils/formaPrice";
@@ -13,11 +14,17 @@ function ProductCard({ product }) {
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store.cart);
   const itemCart = products.find((item) => item._id === product._id);
+  const [stock, setStock] = useState([]);
+  const productWithStock = product.product.stock.filter((item) => item.stock > 0);
 
   const handlerClick = () => {
+    console.log(product);
+    const [filterStock] = product.product.stock.filter((item) => item._id === stock);
+
     dispatch(
       addProduct({
         ...product,
+        stock: filterStock,
         finalPrice: product.basePrice,
         finalQuantity: 1,
       })
@@ -86,12 +93,12 @@ function ProductCard({ product }) {
         >
           {formatPrice(product.basePrice)}
         </MDTypography>
-        {/* {product.product.stock?.length > 0 && (
+        {productWithStock.length === 1 && (
           <MDTypography variant="h6" color="info" sx={{ width: "20%" }}>
             {totalStock} unid.
           </MDTypography>
-        )} */}
-        {product.product.stock?.length === 0 && (
+        )}
+        {productWithStock.length === 0 && (
           <MDTypography
             variant="h6"
             color="error"
@@ -100,7 +107,7 @@ function ProductCard({ product }) {
             Sin stock
           </MDTypography>
         )}
-        {product.product.stock?.length > 1 && (
+        {productWithStock.length > 1 && (
           <Box
             pr={3}
             sx={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -112,23 +119,27 @@ function ProductCard({ product }) {
               name="selectionStock"
               fullWidth
               label="Ubicación Stock"
-              /*  value={formik.values.supplier}
-              error={!!formik.errors.supplier}
-              helperText={formik.errors.supplier}
-              onChange={formik.handleChange} */
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
             >
-              {product.product.stock.map((stock) => (
-                <MenuItem key={stock._id} value={stock._id}>
-                  {stock.stock} unid. || {stock.location}
+              {productWithStock.map((st) => (
+                <MenuItem key={st._id} value={st._id}>
+                  {st.stock} unid. || {st.location}
                 </MenuItem>
               ))}
             </TextField>
           </Box>
         )}
-
-        <MDButton color="dark" variant="gradient" onClick={handlerClick} disabled={itemCart}>
-          {!itemCart ? "Agregar" : "Agregado"}
-        </MDButton>
+        {product.product.stock.length === 0 && (
+          <MDButton color="error" variant="gradient" disabled="true">
+            Sin Stock
+          </MDButton>
+        )}
+        {product.product.stock.length > 0 && (
+          <MDButton color="dark" variant="gradient" onClick={handlerClick} disabled={itemCart}>
+            {!itemCart ? "Agregar" : "Agregado"}
+          </MDButton>
+        )}
       </Box>
     </Card>
   );

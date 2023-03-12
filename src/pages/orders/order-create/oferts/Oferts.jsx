@@ -1,17 +1,37 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-shadow */
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import { Box, TextField } from "@mui/material";
+import MDButton from "components/MDButton";
 import MDTypography from "components/MDTypography";
 import React, { useState } from "react";
 import ProductCard from "./ProductCard";
 
 function Oferts({ oferts }) {
-  const [filterOfert, setfilterOfert] = useState(oferts);
   const [search, setSearch] = useState("");
+  const [stock, setStock] = useState(true);
 
-  console.log(oferts);
+  const productsWithStockField = oferts.map((ofert) => {
+    const stock = ofert.product.stock.reduce((acc, curr) => curr.stock + acc, 0);
+    if (stock > 0) {
+      return {
+        ...ofert,
+        existStock: true,
+      };
+    }
+    return {
+      ...ofert,
+      existStock: false,
+    };
+  });
+
+  const productWithStock = productsWithStockField.filter((product) => product.existStock);
+  const allProducts = oferts;
+  const [filterArr, setFilterArr] = useState(productWithStock);
 
   const filtrar = (arrayToFilter) => {
     const result = arrayToFilter.filter((ofert) => {
@@ -19,12 +39,17 @@ function Oferts({ oferts }) {
         return ofert;
       }
     });
-    setfilterOfert(result);
+    return result;
+  };
+
+  const handleClick = () => {
+    setStock(!stock);
+    stock ? setFilterArr(filtrar(productWithStock)) : setFilterArr(filtrar(allProducts));
   };
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
-    filtrar(oferts);
+    stock ? setFilterArr(filtrar(allProducts)) : setFilterArr(filtrar(productWithStock));
   };
 
   return (
@@ -36,6 +61,19 @@ function Oferts({ oferts }) {
         flexDirection: "column",
       }}
     >
+      <Box>
+        {!stock && (
+          <MDButton variant="gradient" color="info" onClick={handleClick}>
+            Ofertas con stocks
+          </MDButton>
+        )}
+        {stock && (
+          <MDButton variant="outlined" color="info" onClick={handleClick}>
+            Todas las ofertas
+          </MDButton>
+        )}
+      </Box>
+
       <TextField
         type="text"
         fullWidth
@@ -65,7 +103,7 @@ function Oferts({ oferts }) {
           Stock
         </MDTypography>
       </Box>
-      {filterOfert.map((product) => (
+      {filterArr.map((product) => (
         <ProductCard product={product} key={product._id} />
       ))}
     </Box>

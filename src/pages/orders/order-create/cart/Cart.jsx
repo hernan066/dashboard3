@@ -38,6 +38,8 @@ function Cart() {
       totalQuantity: item.finalQuantity,
       totalPrice: item.finalPrice,
       unitPrice: item.basePrice,
+      unitCost: item.stock.cost / item.stock.quantity,
+      stockId: item._id,
     }));
 
     const newOrder = {
@@ -54,6 +56,8 @@ function Cart() {
       total: +shippingCost + subTotal,
       status: "Pendiente",
     };
+
+    console.log(newOrder);
 
     const { data } = await createOrder(newOrder).unwrap();
     if (data) {

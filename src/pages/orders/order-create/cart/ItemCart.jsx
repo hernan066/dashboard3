@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import { Card, Box, TextField } from "@mui/material";
@@ -11,16 +12,21 @@ import { deleteProduct, updateProduct } from "redux/cartSlice";
 function ItemCart({ product }) {
   const [quantity, setQuantity] = useState(product.finalQuantity);
   const [value, setValue] = useState(product.finalPrice);
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
 
   const handlerQuantity = (e) => {
+    if (e.target.value > product.stock.stock) {
+      return setError("Valor mayor al stock");
+    }
     setQuantity(e.target.value);
-
+    setError("");
     dispatch(
       updateProduct({
         id: product._id,
         finalQuantity: e.target.value,
-        finalPrice: value,
+        finalPrice: value * e.target.value,
       })
     );
   };
@@ -30,7 +36,7 @@ function ItemCart({ product }) {
       updateProduct({
         id: product._id,
         finalQuantity: quantity,
-        finalPrice: e.target.value,
+        finalPrice: e.target.value * quantity,
       })
     );
   };
@@ -73,18 +79,21 @@ function ItemCart({ product }) {
           {product.description}
         </MDTypography>
 
-        {/*  <MDTypography variant="subtitle2" sx={{ width: "23%" }}>
-          {product.product.unit}
-        </MDTypography> */}
-        <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
-          <TextField type="number" value={quantity} label="Cantidad" onChange={handlerQuantity} />
+        <Box sx={{ width: "23%", display: "flex", alignItems: "center", flexDirection: "column" }}>
+          <TextField
+            type="number"
+            value={quantity}
+            label="Cantidad"
+            onChange={handlerQuantity}
+            helperText={error}
+          />
         </Box>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
           <span>
             <MDTypography variant="subtitle2">$</MDTypography>
           </span>
-          <TextField type="number" value={value} label="Valor total" onChange={handlerValue} />
+          <TextField type="number" value={value} label="Valor unidad" onChange={handlerValue} />
         </Box>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
@@ -93,10 +102,10 @@ function ItemCart({ product }) {
           </span>
           <TextField
             type="number"
-            value={value / quantity}
-            label="Unidad"
+            value={value * quantity}
+            label="Valor total"
             disabled="true"
-            /*  onChange={handlerValue} */
+            onChange={handlerValue}
           />
         </Box>
 
