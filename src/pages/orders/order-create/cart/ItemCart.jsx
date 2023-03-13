@@ -17,9 +17,10 @@ function ItemCart({ product }) {
   const dispatch = useDispatch();
 
   const handlerQuantity = (e) => {
-    if (e.target.value > product.stock.stock) {
+    console.log(product);
+    /*  if (e.target.value > product.stock.stock) {
       return setError("Valor mayor al stock");
-    }
+    } */
     setQuantity(e.target.value);
     setError("");
     dispatch(
