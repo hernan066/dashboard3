@@ -20,19 +20,20 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
   const navigate = useNavigate();
   const orderStore = useSelector((store) => store.order.order);
   const [editOrder, { isLoading, isError }] = usePutOrderMutation();
+  console.log(order);
 
   const formik = useFormik({
     initialValues: {
-      name: order.shippingAddress.name,
-      lastName: order.shippingAddress.lastName,
-      phone: order.shippingAddress.phone,
-      address: order.shippingAddress.address,
-      flor: order.shippingAddress.flor,
-      department: order.shippingAddress.department,
-      province: order.shippingAddress.province,
-      city: order.shippingAddress.city,
-      zip: order.shippingAddress.zip,
-      tax: order.tax,
+      name: order.shippingAddress.name || "",
+      lastName: order.shippingAddress.lastName || "",
+      phone: order.shippingAddress.phone || "",
+      address: order.shippingAddress.address || "",
+      flor: order.shippingAddress.flor || "",
+      department: order.shippingAddress.department || "",
+      province: order.shippingAddress.province || "",
+      city: order.shippingAddress.city || "",
+      zip: order.shippingAddress.zip || null,
+      tax: order.tax || null,
       deliveryZone: order.deliveryZone?._id,
       deliveryTruck: order.deliveryTruck?._id,
       status: order.status,
@@ -286,7 +287,7 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           margin="normal"
           fullWidth
           required
-          name="tax"
+          name="cash"
           label="Efectivo"
           type="number"
           value={formik.values.cash}
@@ -298,7 +299,7 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           margin="normal"
           fullWidth
           required
-          name="tax"
+          name="transfer"
           label="Transferencia"
           type="number"
           value={formik.values.transfer}
@@ -310,7 +311,7 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           margin="normal"
           fullWidth
           required
-          name="tax"
+          name="debt"
           label="Debe"
           type="number"
           value={formik.values.debt}

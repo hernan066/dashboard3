@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable import/prefer-default-export */
 import { regex } from "validations/regex";
 import * as yup from "yup";
@@ -8,7 +9,7 @@ export const editOrderAddressSchema = yup.object().shape({
   name: yup.string().required("Requerido").matches(lettersAndSpaces, "Solo letras"),
   lastName: yup.string().required("Requerido").matches(lettersAndSpaces, "Solo letras"),
   phone: yup.string().required("Requerido"),
-  address: yup
+  /* address: yup
     .string()
     .required("Requerido")
     .matches(lettersNumbersAndSpaces, "Solo letras y números"),
@@ -25,7 +26,7 @@ export const editOrderAddressSchema = yup.object().shape({
   zip: yup.number().required("Requerido"),
   tax: yup.number().required("Requerido"),
   deliveryZone: yup.string().required("Requerido"),
-  deliveryTruck: yup.string().required("Requerido"),
+  deliveryTruck: yup.string().required("Requerido"), */
   status: yup.string().required("Requerido"),
   active: yup.string().required("Requerido"),
 });
