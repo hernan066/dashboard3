@@ -61,6 +61,11 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           city: values.city,
           zip: values.zip,
         },
+        payment: {
+          cash: values.cash,
+          transfer: values.transfer,
+          debt: values.debt,
+        },
       };
       await editOrder({ id, ...editOrderValues }).unwrap();
       Swal.fire({
