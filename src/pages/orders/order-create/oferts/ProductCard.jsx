@@ -19,12 +19,12 @@ function ProductCard({ product }) {
 
   const handlerClick = () => {
     console.log(product);
-    const [filterStock] = product.product.stock.filter((item) => item._id === stock);
+    const [filterStock] = productWithStock.filter((item) => item._id === stock);
 
     dispatch(
       addProduct({
         ...product,
-        stock: filterStock,
+        stock: filterStock || productWithStock[0],
         finalPrice: product.basePrice,
         finalQuantity: 1,
       })
