@@ -7,5 +7,5 @@ export const creteProductLotsSchema = yup.object().shape({
   supplier: yup.string().required("Requerido"),
   location: yup.string().required("Requerido"),
   quantity: yup.number().required("Requerido"),
-  cost: yup.number().required("Requerido"),
+  unityCost: yup.number().required("Requerido"),
 });
