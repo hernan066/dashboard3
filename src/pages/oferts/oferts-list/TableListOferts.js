@@ -71,6 +71,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -94,6 +95,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -117,6 +119,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -162,6 +165,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -207,6 +211,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -252,6 +257,7 @@ function TableListOferts({ oferts }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
       editable: true,
+      type: "number",
       renderCell: (params) => (
         <div
           style={{
@@ -420,13 +426,13 @@ function TableListOferts({ oferts }) {
               description: ofert?.description,
               visible: ofert?.visible,
               ofert: ofert?.ofert,
-              basePrice: `$${ofert.basePrice}` || "",
-              retailPrice: `$${ofert.retailPrice}` || "",
+              basePrice: ofert.basePrice || 0,
+              retailPrice: ofert.retailPrice || 0,
 
-              price1: `$${ofert.prices[0]?.price1}` || "",
-              price2: `$${ofert.prices[0]?.price2}` || "",
-              price3: `$${ofert.prices[0]?.price3}` || "",
-              price4: `$${ofert.prices[0]?.price4}` || "",
+              price1: ofert.prices[0]?.price1 || 0,
+              price2: ofert.prices[0]?.price2 || 0,
+              price3: ofert.prices[0]?.price3 || 0,
+              price4: ofert.prices[0]?.price4 || 0,
               quantity1: ofert.quantities[0]?.quantity1 || "",
               quantity2: ofert.quantities[0]?.quantity2 || "",
               quantity3: ofert.quantities[0]?.quantity3 || "",
