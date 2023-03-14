@@ -44,6 +44,7 @@ const cartSlice = createSlice({
             ...product,
             finalPrice: +action.payload.finalPrice,
             finalQuantity: +action.payload.finalQuantity,
+            basePrice: +action.payload.basePrice,
           };
         } else {
           return product;

@@ -15,6 +15,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { dateToLocalDate } from "utils/dateFormat";
 
 import MenuListUsers from "./MenuListOferts";
+import UsersActions from "./UsersActions";
 
 function TableListOferts({ oferts }) {
   const [controller] = useMaterialUIController();
@@ -25,6 +26,7 @@ function TableListOferts({ oferts }) {
   const [open, setOpen] = useState(null);
   const [ofertId, setOfertId] = useState(null);
   const [prodId, setProdId] = useState(null);
+  const [rowId, setRowId] = useState(null);
 
   const handleOpenMenu = (id, event, productId) => {
     setOpen(event.currentTarget);
@@ -60,7 +62,7 @@ function TableListOferts({ oferts }) {
     {
       field: "description",
       headerName: "Presentación",
-      flex: 1.5,
+      flex: 4,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -68,60 +70,226 @@ function TableListOferts({ oferts }) {
       headerName: "P. Base",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "red",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.basePrice}
+        </div>
+      ),
     },
     {
       field: "retailPrice",
       headerName: "P. Minorista",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#c76d00",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.retailPrice}
+        </div>
+      ),
     },
     {
       field: "price1",
       headerName: "Precio 1",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#a903fc",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.price1}
+        </div>
+      ),
     },
     {
       field: "quantity1",
       headerName: "Cant. 1 ",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#b2b1b3",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "black",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.quantity1}
+        </div>
+      ),
     },
     {
       field: "price2",
       headerName: "Precio 2",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#9200c7",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.price2}
+        </div>
+      ),
     },
     {
       field: "quantity2",
       headerName: "Cant. 2 ",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#9c9c9c",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "black",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.quantity2}
+        </div>
+      ),
     },
     {
       field: "price3",
       headerName: "Precio 3",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#710299",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.price3}
+        </div>
+      ),
     },
     {
       field: "quantity3",
       headerName: "Cant. 3 ",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#878787",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "black",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.quantity3}
+        </div>
+      ),
     },
     {
       field: "price4",
       headerName: "Precio 4",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      editable: true,
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#550273",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.price4}
+        </div>
+      ),
     },
     {
       field: "quantity4",
       headerName: "Cant. 4 ",
       flex: 1,
       headerClassName: "super-app-theme--header",
+      renderCell: (params) => (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            backgroundColor: "#6e6e6e",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "black",
+            fontWeight: 800,
+          }}
+        >
+          {params.row.quantity4}
+        </div>
+      ),
     },
     {
       field: "createdAt",
@@ -210,12 +378,18 @@ function TableListOferts({ oferts }) {
       field: "accessLevel",
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
-
+      flex: 0.3,
       renderCell: ({ row: { _id, productId } }) => (
         <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e, productId)}>
           <MoreVertIcon />
         </IconButton>
       ),
+    },
+    {
+      field: "actions",
+      headerName: "Guardar",
+      type: "actions",
+      renderCell: (params) => <UsersActions {...{ params, rowId, setRowId }} />,
     },
   ];
 
@@ -231,10 +405,11 @@ function TableListOferts({ oferts }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="2100px">
+        <Box m="40px 0 0 0" height="75vh" width="2200px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
+            onCellEditCommit={(params) => setRowId(params.id)}
             components={{ Toolbar: GridToolbar }}
             rows={listOferts.map((ofert) => ({
               _id: ofert._id,

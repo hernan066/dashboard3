@@ -39,7 +39,7 @@ function Cart() {
       totalPrice: item.finalPrice,
       unitPrice: item.basePrice,
       unitCost: item.stock.cost / item.stock.quantity,
-      stockId: item._id,
+      stockId: item.stock._id,
     }));
 
     const newOrder = {

@@ -16,6 +16,8 @@ import { useState } from "react";
 import Swal from "sweetalert2";
 import { creteProductLotsSchema } from "validations/productsLots/creteProductsLotsYup";
 import { usePutProductMutation } from "api/productApi";
+import MDTypography from "components/MDTypography";
+import { formatPrice } from "utils/formaPrice";
 
 function ProductsLotsCreate({ listProducts, ListSuppliers }) {
   const navigate = useNavigate();
@@ -42,7 +44,7 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
       product: "",
       supplier: "",
       quantity: undefined,
-      cost: undefined,
+      unityCost: undefined,
       location: "",
     },
     onSubmit: async (values) => {
@@ -54,8 +56,8 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
           img: inputValue.img,
           supplier: values.supplier,
           quantity: values.quantity,
-          cost: +values.cost,
-          unityCost: values.cost / values.quantity,
+          cost: values.unityCost * values.quantity,
+          unityCost: values.unityCost,
           stock: values.quantity,
           location: values.location,
           moveDate: null,
@@ -149,35 +151,32 @@ function ProductsLotsCreate({ listProducts, ListSuppliers }) {
             </TextField>
 
             <TextField
-              multiline
-              maxRows={4}
               margin="normal"
               fullWidth
               required
               type="number"
-              autoComplete="product_description"
               name="quantity"
               label="Cantidad"
-              id="product_description"
               error={!!formik.errors.quantity}
               helperText={formik.errors.quantity}
               onChange={formik.handleChange}
             />
             <TextField
-              multiline
-              maxRows={4}
               margin="normal"
               fullWidth
               required
               type="number"
-              autoComplete="product_description"
-              name="cost"
-              label="Costo"
-              id="product_description"
-              error={!!formik.errors.cost}
-              helperText={formik.errors.cost}
+              name="unityCost"
+              label="Costo Unidad"
+              error={!!formik.errors.unityCost}
+              helperText={formik.errors.unityCost}
               onChange={formik.handleChange}
             />
+            {formik.values.unityCost && formik.values.quantity && (
+              <MDTypography variant="h6">
+                Costo total: {formatPrice(+formik.values.unityCost * +formik.values.quantity)}
+              </MDTypography>
+            )}
 
             <LoadingButton
               type="submit"

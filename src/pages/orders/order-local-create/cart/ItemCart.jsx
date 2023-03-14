@@ -21,6 +21,7 @@ function ItemCart({ product }) {
         id: product._id,
         finalQuantity: e.target.value,
         finalPrice: value * e.target.value,
+        basePrice: +value,
       })
     );
   };
@@ -31,6 +32,7 @@ function ItemCart({ product }) {
         id: product._id,
         finalQuantity: quantity,
         finalPrice: e.target.value * quantity,
+        basePrice: +e.target.value,
       })
     );
   };
