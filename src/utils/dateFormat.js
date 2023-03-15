@@ -15,3 +15,10 @@ export const dateToLocalDateMin = (date) => {
 
   return localDate.format(dateFormat);
 };
+export const formatDateMonth = (date) => {
+  const dateFormat = "D-M-YYYY";
+  const testDateUtc = moment.utc(date);
+  const localDate = testDateUtc.local();
+
+  return localDate.format(dateFormat);
+};

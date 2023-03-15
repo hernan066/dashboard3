@@ -18,9 +18,9 @@ function ItemCart({ product }) {
 
   const handlerQuantity = (e) => {
     console.log(product);
-    /*  if (e.target.value > product.stock.stock) {
+    if (e.target.value > product.stock.stock) {
       return setError("Valor mayor al stock");
-    } */
+    }
     setQuantity(e.target.value);
     setError("");
     dispatch(
@@ -87,7 +87,7 @@ function ItemCart({ product }) {
             type="number"
             value={quantity}
             label="Cantidad"
-            onChange={handlerQuantity}
+            onChange={(e) => handlerQuantity(e)}
             helperText={error}
           />
         </Box>

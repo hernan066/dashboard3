@@ -46,6 +46,7 @@ import CreateSimpleClient from "pages/clients/create-simple-client";
 import OrderLocalCreate from "pages/orders/order-local-create";
 import MoveProductsLots from "pages/productsLots/move-productsLots";
 import ListDistribution from "pages/distributionList";
+import ProductsSellByDay from "pages/reports/producstsSell";
 
 const routes = [
   {
@@ -445,6 +446,15 @@ const routes = [
     component: (
       <RequireAuth>
         <ListDistribution />
+      </RequireAuth>
+    ),
+  },
+  /* Reportes */
+  {
+    route: "/reportes/productos-vendidos-por-dia",
+    component: (
+      <RequireAuth>
+        <ProductsSellByDay />
       </RequireAuth>
     ),
   },

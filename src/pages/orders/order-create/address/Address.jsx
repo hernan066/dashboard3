@@ -16,28 +16,25 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
   const [manualForm, setManualForm] = useState(false);
   const { client } = useSelector((store) => store.cart);
   const dispatch = useDispatch();
-  console.log(clientAddresses);
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
-    if (e.target.value === "") {
-      return setFilterUser([]);
-    }
-    const filtrar = (arrayToFilter) => {
-      const result = arrayToFilter.filter((clientAddr) => {
-        if (
-          clientAddr.user.phone.toString().includes(e.target.value) ||
-          clientAddr.user.name.toString().includes(e.target.value) ||
-          clientAddr.user.lastName.toString().includes(e.target.value)
-        ) {
-          return clientAddr;
-        }
-      });
+  };
 
-      setFilterUser(result);
-    };
+  // console.log(clientAddresses);
 
-    filtrar(clientAddresses);
+  const handlerSearch = () => {
+    const result = clientAddresses.filter((clientAddr) => {
+      if (
+        clientAddr.user.name.toString().toLowerCase().includes(search.toLowerCase()) ||
+        clientAddr.user.lastName.toString().toLowerCase().includes(search.toLowerCase())
+      ) {
+        return clientAddr;
+      }
+    });
+    console.log(search);
+    console.log(result);
+    setFilterUser(result);
   };
 
   const handleClick = () => setManualForm(true);
@@ -49,7 +46,7 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
         gap: "30px",
       }}
     >
-      <Card
+      {/*   <Card
         sx={{
           display: "flex",
 
@@ -83,6 +80,58 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
             }}
           >
             <MDTypography variant="body2">{`Telefono ${clientA.user.phone} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
+            <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
+              Cargar
+            </MDButton>
+          </Box>
+        ))}
+      </Card> */}
+      <Card
+        sx={{
+          display: "flex",
+
+          flexDirection: "column",
+          width: "50%",
+          padding: "25px",
+          alignSelf: "flex-start",
+        }}
+      >
+        <MDTypography mb={2} variant="h6">
+          Buscar cliente
+        </MDTypography>
+
+        <TextField
+          value={search}
+          label="Buscar por número de dni/cuit o nombre"
+          onChange={handlerFilterChanges}
+          fullWidth
+        />
+        <MDButton
+          variant="outlined"
+          color="info"
+          onClick={handlerSearch}
+          sx={{
+            mt: 3,
+            mb: 2,
+          }}
+        >
+          Buscar
+        </MDButton>
+        {filterUser.length > 0 && <MDTypography variant="h6"> Resultados </MDTypography>}
+
+        {filterUser.map((clientA) => (
+          <Box
+            key={clientA.address + clientA.user.name}
+            sx={{
+              display: "flex",
+              border: "1px solid #ccc",
+              padding: "5px",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "20px",
+            }}
+          >
+            <MDTypography variant="body2">{`${clientA.user.name} ${clientA.user.lastName} || ${clientA.address}`}</MDTypography>
             <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
               Cargar
             </MDButton>

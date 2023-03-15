@@ -127,4 +127,16 @@ export const menuList = [
       },
     ],
   },
+  {
+    name: "Reportes",
+    icon: "assessment_icon",
+    key: "reportes",
+    subRoutes: [
+      {
+        name: "Productos vendidos",
+        icon: "format_list_bulleted_icon",
+        url: "/reportes/productos-vendidos-por-dia",
+      },
+    ],
+  },
 ];

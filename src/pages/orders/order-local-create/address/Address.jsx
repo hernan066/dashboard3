@@ -14,7 +14,6 @@ function Address({ clients, setPage }) {
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
-  console.log(clients);
 
   const handlerFilterChanges = (e) => {
     setSearch(e.target.value);
@@ -24,8 +23,8 @@ function Address({ clients, setPage }) {
     const result = clients.filter((clientAddr) => {
       if (
         clientAddr.cuit.toString().includes(search) ||
-        clientAddr.user.name.toString().toLowerCase().includes(search) ||
-        clientAddr.user.lastName.toString().toLowerCase().includes(search)
+        clientAddr.user.name.toString().toLowerCase().includes(search.toLowerCase()) ||
+        clientAddr.user.lastName.toString().toLowerCase().includes(search.toLowerCase())
       ) {
         return clientAddr;
       }
