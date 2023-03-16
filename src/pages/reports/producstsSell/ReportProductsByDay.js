@@ -12,15 +12,9 @@ import MDTypography from "components/MDTypography";
 import TableReportProductsByDay from "./Table";
 
 function ReportProductsByDay({ report }) {
-  const [reportsData, setReportsData] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
 
-  useEffect(() => {
-    setReportsData(report);
-  }, []);
-
-  console.log(formatDateMonth(startDate));
-  const filterReports = reportsData.filter((item) => item.date === formatDateMonth(startDate));
+  const filterReport = report.filter((item) => item.date === formatDateMonth(startDate));
 
   return (
     <Box px={3} pb={3}>
@@ -28,7 +22,7 @@ function ReportProductsByDay({ report }) {
         <MDTypography variant="h6">Selecciona un dia</MDTypography>
         <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
       </Box>
-      <TableReportProductsByDay reports={filterReports} />
+      <TableReportProductsByDay reports={filterReport} />
     </Box>
   );
 }
