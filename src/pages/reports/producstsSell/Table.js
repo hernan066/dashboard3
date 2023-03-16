@@ -6,6 +6,7 @@ import { useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import { formatPrice } from "utils/formaPrice";
 
 function TableReportProductsByDay({ reports }) {
   const [controller] = useMaterialUIController();
@@ -43,6 +44,12 @@ function TableReportProductsByDay({ reports }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "total",
+      headerName: "Cantidad facturada",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
   ];
 
   return (
@@ -54,6 +61,7 @@ function TableReportProductsByDay({ reports }) {
           components={{ Toolbar: GridToolbar }}
           rows={reports.map((report) => ({
             ...report,
+            total: formatPrice(report.total),
           }))}
           columns={columns}
           getRowId={(row) => row.name}
