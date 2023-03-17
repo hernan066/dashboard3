@@ -47,7 +47,7 @@ function TableList({ orders: listOrders }) {
     {
       field: "createdAt",
       headerName: "Creada",
-      flex: 1,
+      flex: 1.2,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -111,6 +111,13 @@ function TableList({ orders: listOrders }) {
           </div>
         );
       },
+    },
+
+    {
+      field: "deliveryDate",
+      headerName: "Entregada",
+      flex: 1.2,
+      headerClassName: "super-app-theme--header",
     },
 
     {
@@ -313,7 +320,7 @@ function TableList({ orders: listOrders }) {
             Orden entrega local
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="2200px">
+        <Box m="40px 0 0 0" height="75vh" width="2300px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -321,6 +328,9 @@ function TableList({ orders: listOrders }) {
             rows={listOrders.map((order) => ({
               ...order,
               createdAt: dateToLocalDate(order.createdAt),
+              deliveryDate: order.deliveryDate
+                ? dateToLocalDate(order.deliveryDate)
+                : "No entregada",
               client: `${order.shippingAddress.name} ${order.shippingAddress.lastName}`,
               address: order.shippingAddress.address,
               zone: order?.deliveryZone?.name,
