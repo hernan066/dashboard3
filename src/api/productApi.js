@@ -41,6 +41,15 @@ export const productApi = apiSlice.injectEndpoints({
       invalidatesTags: ["products"],
       extraOptions: { maxRetries: 0 },
     }),
+    putProductStock: builder.mutation({
+      query: ({ id, ...items }) => ({
+        url: `/products/updateStock/${id}`,
+        method: "put",
+        body: items,
+      }),
+      invalidatesTags: ["products"],
+      extraOptions: { maxRetries: 0 },
+    }),
 
     deleteProduct: builder.mutation({
       query: (id) => ({
@@ -58,5 +67,6 @@ export const {
   useGetProductQuery,
   usePostProductMutation,
   usePutProductMutation,
+  usePutProductStockMutation,
   useDeleteProductMutation,
 } = productApi;

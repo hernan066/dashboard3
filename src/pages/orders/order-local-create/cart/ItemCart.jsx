@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import { Card, Box, TextField } from "@mui/material";
@@ -11,10 +12,17 @@ import { deleteProduct, updateProduct } from "redux/cartSlice";
 function ItemCart({ product }) {
   const [quantity, setQuantity] = useState(product.finalQuantity);
   const [value, setValue] = useState(product.finalPrice);
+  const [error, setError] = useState("");
+  console.log(product);
   const dispatch = useDispatch();
 
   const handlerQuantity = (e) => {
+    console.log(product);
+    if (e.target.value > product.stock.stock) {
+      return setError("Valor mayor al stock");
+    }
     setQuantity(e.target.value);
+    setError("");
 
     dispatch(
       updateProduct({
@@ -72,14 +80,17 @@ function ItemCart({ product }) {
         }}
       >
         <MDTypography variant="subtitle2" sx={{ width: "30%" }}>
-          {product.description}
+          {product.description} || {product.stock.stock} unid.
         </MDTypography>
 
-        {/*  <MDTypography variant="subtitle2" sx={{ width: "23%" }}>
-          {product.product.unit}
-        </MDTypography> */}
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
-          <TextField type="number" value={quantity} label="Cantidad" onChange={handlerQuantity} />
+          <TextField
+            type="number"
+            value={quantity}
+            label="Cantidad"
+            onChange={handlerQuantity}
+            helperText={error}
+          />
         </Box>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
@@ -99,7 +110,6 @@ function ItemCart({ product }) {
             label="Valor total"
             disabled="true"
             onChange={handlerValue}
-            /*  onChange={handlerValue} */
           />
         </Box>
 

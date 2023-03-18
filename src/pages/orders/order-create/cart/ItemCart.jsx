@@ -79,7 +79,7 @@ function ItemCart({ product }) {
         }}
       >
         <MDTypography variant="subtitle2" sx={{ width: "30%" }}>
-          {product.description}
+          {product.description} || {product.stock.stock} unid.
         </MDTypography>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center", flexDirection: "column" }}>

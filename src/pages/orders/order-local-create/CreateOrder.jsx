@@ -36,7 +36,7 @@ function CreateOrder({ oferts: ofertsList, clients }) {
 
       {page === 0 && <Address clients={clients} setPage={setPage} />}
       {page === 1 && <Oferts oferts={oferts} />}
-      {page === 2 && <Cart />}
+      {page === 2 && <Cart setPage={setPage} />}
     </Box>
   );
 }

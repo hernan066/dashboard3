@@ -16,6 +16,8 @@ import colors from "assets/theme/base/colors";
 import { creteProductLotsSchema } from "validations/productsLots/creteProductsLotsYup";
 import { usePutProductMutation } from "api/productApi";
 import Swal from "sweetalert2";
+import MDTypography from "components/MDTypography";
+import { formatPrice } from "utils/formaPrice";
 
 function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
       product: lotToEdit.name,
       supplier: lotToEdit.supplier,
       quantity: lotToEdit.quantity,
-      cost: lotToEdit.cost,
+      unityCost: lotToEdit.unityCost,
       stock: lotToEdit.stock,
       location: lotToEdit.location,
     },
@@ -42,11 +44,11 @@ function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
           ...lotToEdit,
           supplier: values.supplier,
           quantity: values.quantity,
-          cost: values.cost,
+          cost: values.unityCost * values.quantity,
           stock: values.stock,
           location: values.location,
           updateStock: new Date(),
-          unityCost: values.cost / values.quantity,
+          unityCost: values.unityCost,
         },
       ];
 
@@ -176,11 +178,11 @@ function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
               fullWidth
               required
               type="number"
-              name="cost"
-              label="Costo"
-              value={formik.values.cost}
-              error={!!formik.errors.cost}
-              helperText={formik.errors.cost}
+              name="unityCost"
+              label="Costo unidad"
+              value={formik.values.unityCost}
+              error={!!formik.errors.unityCost}
+              helperText={formik.errors.unityCost}
               onChange={formik.handleChange}
             />
             <TextField
@@ -195,6 +197,12 @@ function ProductsLotsEdit({ ListSuppliers, productLot: product, lotId }) {
               helperText={formik.errors.stock}
               onChange={formik.handleChange}
             />
+
+            {formik.values.unityCost && formik.values.quantity && (
+              <MDTypography variant="h6">
+                Costo total: {formatPrice(+formik.values.unityCost * +formik.values.quantity)}
+              </MDTypography>
+            )}
 
             <LoadingButton
               type="submit"

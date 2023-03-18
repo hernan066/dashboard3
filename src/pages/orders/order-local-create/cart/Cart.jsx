@@ -1,11 +1,7 @@
-/* eslint-disable no-unneeded-ternary */
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-undef */
 /* eslint-disable no-underscore-dangle */
-/* eslint-disable no-unused-vars */
-
+/* eslint-disable react/prop-types */
 import { useState } from "react";
-import { Alert, Box, Button, Card, Divider, TextField } from "@mui/material";
+import { Alert, Box, Card, Divider, TextField } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import { useDispatch, useSelector } from "react-redux";
 import colors from "assets/theme/base/colors";
@@ -16,6 +12,7 @@ import { clearCart } from "redux/cartSlice";
 import { formatPrice } from "utils/formaPrice";
 import MDButton from "components/MDButton";
 import { usePostOrderLocalMutation } from "api/orderApi";
+import { usePutProductStockMutation } from "api/productApi";
 import ItemCart from "./ItemCart";
 import Receipt from "../receipt/Receipt";
 
@@ -28,9 +25,16 @@ function Cart() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [createOrder, { isLoading, isError }] = usePostOrderLocalMutation();
+  const [createOrder, { isLoading: l1, isError: e1 }] = usePostOrderLocalMutation();
+  const [editProductStock, { isLoading: l2, isError: e2 }] = usePutProductStockMutation();
 
   const handlerCreate = async () => {
+    const productsToEdit = products.map((product) => ({
+      productId: product.stock.productId,
+      stockId: product.stock._id,
+      totalQuantity: product.finalQuantity,
+    }));
+
     const productsOrder = products.map((item) => ({
       productId: item.product._id,
       name: item.product.name,
@@ -42,6 +46,8 @@ function Cart() {
       totalQuantity: item.finalQuantity,
       totalPrice: item.finalPrice,
       unitPrice: item.basePrice,
+      unitCost: item.stock.unityCost,
+      stockId: item.stock._id,
     }));
 
     const newOrder = {
@@ -69,7 +75,7 @@ function Cart() {
       status: "Entregado",
       receiptId,
       deliveryDate: new Date(),
-      paid: cash + transfer === subTotal ? true : false,
+      paid: cash + transfer === subTotal,
       payment: {
         cash,
         transfer,
@@ -78,8 +84,18 @@ function Cart() {
     };
     console.log(newOrder);
 
-    const { data } = await createOrder(newOrder).unwrap();
-    if (data) {
+    await createOrder(newOrder).unwrap();
+
+    productsToEdit.map(async (product) => {
+      const updateData = {
+        stockId: product.stockId,
+        totalQuantity: product.totalQuantity,
+      };
+      const id = product.productId;
+      await editProductStock({ id, ...updateData }).unwrap();
+    });
+
+    if (!e1 || !e2) {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -88,6 +104,7 @@ function Cart() {
         timer: 2500,
       });
       dispatch(clearCart());
+
       navigate("/ordenes/lista");
     }
   };
@@ -225,7 +242,7 @@ function Cart() {
           type="submit"
           color="info"
           variant="contained"
-          loading={isLoading}
+          loading={l1 || l2}
           onClick={handlerCreate}
           sx={{
             mt: 3,
@@ -236,7 +253,7 @@ function Cart() {
         >
           Confirmar orden
         </LoadingButton>
-        {isError && <Alert severity="error">Error: orden no creada!</Alert>}
+        {(e1 || e2) && <Alert severity="error">Error: orden no creada!</Alert>}
       </Card>
     </Box>
   );
