@@ -15,13 +15,14 @@ function ProductCard({ product }) {
   const dispatch = useDispatch();
   const { products } = useSelector((store) => store.cart);
   const itemCart = products.find((item) => item._id === product._id);
-  const [stockId, setStockId] = useState(product.product.stock[0]?._id);
-
   const productWithStock = product.product.stock.filter((item) => item.stock > 0);
+  const [stockId, setStockId] = useState(productWithStock[0]?._id);
+
+  console.log(productWithStock);
 
   const [filterStock] = productWithStock.filter((item) => item._id === stockId);
   const totalStock = product.product.stock.reduce((acc, curr) => curr.stock + acc, 0);
-  console.log(filterStock);
+  // console.log(filterStock);
 
   const handlerClick = () => {
     dispatch(

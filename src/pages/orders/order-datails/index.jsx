@@ -12,7 +12,7 @@ function OrderDetails() {
   const { id } = useParams();
   const { data: order, isLoading, error } = useGetOrderQuery(id);
 
-  console.log(order);
+  console.log(order?.data.order.orderItems);
   return (
     <DashboardLayout>
       <DashboardNavbar />

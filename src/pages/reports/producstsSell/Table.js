@@ -50,6 +50,19 @@ function TableReportProductsByDay({ reports }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "totalCost",
+      headerName: "Costo total",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+
+    {
+      field: "totalProfits",
+      headerName: "Ganancia",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
   ];
 
   return (
@@ -62,6 +75,8 @@ function TableReportProductsByDay({ reports }) {
           rows={reports.map((report) => ({
             ...report,
             total: formatPrice(report.total),
+            totalProfits: formatPrice(report.totalProfits),
+            totalCost: formatPrice(report.totalCost),
           }))}
           columns={columns}
           getRowId={(row) => row.name}
