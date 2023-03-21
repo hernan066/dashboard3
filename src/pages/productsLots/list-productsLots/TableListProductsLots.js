@@ -15,6 +15,7 @@ import { dateToLocalDate } from "utils/dateFormat";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { formatPrice } from "utils/formaPrice";
+import { formatQuantity } from "utils/quantityFormat";
 import MenuProductsLots from "./MenuProductsLots";
 
 function TableListProductsLots({ products }) {
@@ -35,7 +36,6 @@ function TableListProductsLots({ products }) {
     setProductsLotsId(null);
   };
 
-  console.log(products);
   const stocks = products.reduce((acc, curr) => curr.stock.concat(acc), []);
   console.log(stocks);
 
@@ -120,6 +120,81 @@ function TableListProductsLots({ products }) {
           </div>
         ),
     },
+    {
+      field: "quantity",
+      headerName: "Cant. Comprada",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: ({ row: { quantity } }) => (
+        <div
+          style={{
+            color: "blue",
+            fontWeight: 700,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          {quantity}
+        </div>
+      ),
+    },
+    {
+      field: "stock",
+      headerName: "Cant. Actual",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: ({ row: { stock } }) => (
+        <div
+          style={{
+            color: "black",
+            fontWeight: 700,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          {stock}
+        </div>
+      ),
+    },
+
+    {
+      field: "stock1",
+      headerName: "Cant. Actual %",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+      renderCell: ({ row: { stock, quantity } }) => (
+        <div
+          style={{
+            height: "20px",
+            width: "100%",
+            position: "relative",
+            color: "black",
+            fontWeight: 700,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            border: "1px solid #49a3f1",
+            backgroundColor: "#eee",
+          }}
+        >
+          <p style={{ zIndex: "2" }}>{Math.trunc((stock * 100) / quantity)}%</p>
+          <span
+            style={{
+              position: "absolute",
+              background: "#49a3f1",
+              height: "19px",
+              width: `${Math.trunc((stock * 100) / quantity)}%`,
+              top: 0,
+              left: 0,
+            }}
+          />
+        </div>
+      ),
+    },
 
     {
       field: "cost",
@@ -130,18 +205,6 @@ function TableListProductsLots({ products }) {
     {
       field: "cost_unit",
       headerName: "Costo Unidad",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "quantity",
-      headerName: "Cant. Comprada",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "stock",
-      headerName: "Cant. Actual",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
@@ -190,13 +253,17 @@ function TableListProductsLots({ products }) {
               ...productsLot,
               _id: productsLot._id,
               cost: `${formatPrice(productsLot.cost)}`,
+              stock: `${formatQuantity(productsLot.stock)}`,
+              quantity: `${formatQuantity(productsLot.quantity)}`,
               supplier: productsLot.supplier,
               product: productsLot.name,
               cost_unit: `${formatPrice(productsLot.cost / productsLot.quantity)}`,
               createdAt: dateToLocalDate(productsLot.createdStock),
               updatedAt: productsLot.updateStock ? dateToLocalDate(productsLot.updateStock) : "",
               thereIsStock: productsLot.stock > 0,
-              moveDate: productsLot.moveDate ? dateToLocalDate(productsLot.moveDate) : "",
+              moveDate: productsLot.moveDate
+                ? dateToLocalDate(productsLot.moveDate)
+                : "Sin movimiento",
             }))}
             columns={columns}
             getRowId={(row) => row._id}

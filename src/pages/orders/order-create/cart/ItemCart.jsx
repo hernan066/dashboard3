@@ -8,6 +8,7 @@ import MDTypography from "components/MDTypography";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteProduct, updateProduct } from "redux/cartSlice";
+import { formatQuantity } from "utils/quantityFormat";
 
 function ItemCart({ product }) {
   const [quantity, setQuantity] = useState(product.finalQuantity);
@@ -18,8 +19,11 @@ function ItemCart({ product }) {
 
   const handlerQuantity = (e) => {
     console.log(product);
-    if (e.target.value > product.stock.stock) {
+    if (e.target.value > formatQuantity(product.stock.stock)) {
       return setError("Valor mayor al stock");
+    }
+    if (e.target.value < 0) {
+      return setError("Valor negativo");
     }
     setQuantity(e.target.value);
     setError("");
@@ -79,7 +83,7 @@ function ItemCart({ product }) {
         }}
       >
         <MDTypography variant="subtitle2" sx={{ width: "30%" }}>
-          {product.description} || {product.stock.stock} unid.
+          {product.description} || {formatQuantity(product.stock.stock)} unid.
         </MDTypography>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center", flexDirection: "column" }}>

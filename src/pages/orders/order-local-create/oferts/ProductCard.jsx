@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addProduct } from "redux/cartSlice";
 import { dateToLocalDateMin } from "utils/dateFormat";
 import { formatPrice } from "utils/formaPrice";
+import { formatQuantity } from "utils/quantityFormat";
 
 function ProductCard({ product }) {
   const dispatch = useDispatch();
@@ -103,7 +104,7 @@ function ProductCard({ product }) {
             color="info"
             sx={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center" }}
           >
-            {totalStock} unid.
+            {formatQuantity(totalStock)} unid.
           </MDTypography>
         )}
         {productWithStock.length === 0 && (
@@ -132,7 +133,8 @@ function ProductCard({ product }) {
             >
               {productWithStock.map((st) => (
                 <MenuItem key={st._id} value={st._id}>
-                  {st.stock} unid. || {st.location} || {dateToLocalDateMin(st.createdStock)}
+                  {formatQuantity(st.stock)} unid. || {st.location} ||{" "}
+                  {dateToLocalDateMin(st.createdStock)}
                 </MenuItem>
               ))}
             </TextField>

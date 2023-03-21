@@ -7,6 +7,7 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import { formatPrice } from "utils/formaPrice";
+import { formatQuantity } from "utils/quantityFormat";
 
 function TableReportProductsByDay({ reports }) {
   const [controller] = useMaterialUIController();
@@ -59,7 +60,13 @@ function TableReportProductsByDay({ reports }) {
 
     {
       field: "totalProfits",
-      headerName: "Ganancia",
+      headerName: "Ganancia $",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "profitPercentage",
+      headerName: "Ganancia %",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
@@ -77,6 +84,8 @@ function TableReportProductsByDay({ reports }) {
             total: formatPrice(report.total),
             totalProfits: formatPrice(report.totalProfits),
             totalCost: formatPrice(report.totalCost),
+            count: `${formatQuantity(report.count)} unid.`,
+            profitPercentage: `${formatQuantity((report.totalProfits * 100) / report.totalCost)}%`,
           }))}
           columns={columns}
           getRowId={(row) => row.name}
