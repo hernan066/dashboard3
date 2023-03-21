@@ -1,3 +1,4 @@
+/* eslint-disable no-unneeded-ternary */
 /* eslint-disable array-callback-return */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable react/prop-types */
@@ -88,7 +89,7 @@ function TableListProductsLots({ products }) {
       flex: 0.6,
       headerClassName: "super-app-theme--header",
       renderCell: (params) =>
-        params.row.stock ? (
+        params.row.thereIsStock ? (
           <div
             style={{
               height: "30px",
@@ -260,7 +261,7 @@ function TableListProductsLots({ products }) {
               cost_unit: `${formatPrice(productsLot.cost / productsLot.quantity)}`,
               createdAt: dateToLocalDate(productsLot.createdStock),
               updatedAt: productsLot.updateStock ? dateToLocalDate(productsLot.updateStock) : "",
-              thereIsStock: productsLot.stock > 0,
+              thereIsStock: productsLot.stock > 0 ? true : false,
               moveDate: productsLot.moveDate
                 ? dateToLocalDate(productsLot.moveDate)
                 : "Sin movimiento",
