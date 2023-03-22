@@ -9,16 +9,21 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { clearCart } from "redux/cartSlice";
 import CreateOrder from "./CreateOrder";
 
 function OrderCreate() {
+  const dispatch = useDispatch();
   const { data: oferts, isLoading: l1, isError: e1 } = useGetOfertsQuery();
   const { data: clientAddresses, isLoading: l2, isError: e2 } = useGetClientAddressesQuery();
   const { data: zones, isLoading: l3, isError: e3 } = useGetDeliveryZonesQuery();
   const { data: deliveryTrucks, isLoading: l4, isError: e4 } = useGetDeliveryTrucksQuery();
 
-  // console.log(zones);
-  // console.log(clientAddresses);
+  useEffect(() => {
+    dispatch(clearCart());
+  }, []);
 
   return (
     <DashboardLayout>
@@ -37,7 +42,7 @@ function OrderCreate() {
               coloredShadow="info"
             >
               <MDTypography variant="h6" color="white">
-                Detalle de orden
+                Orden de reparto
               </MDTypography>
             </MDBox>
             <MDBox pt={3} px={2}>

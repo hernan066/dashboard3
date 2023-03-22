@@ -79,6 +79,16 @@ export const menuList = [
     key: "ordenes",
     subRoutes: [
       {
+        name: "Crear orden local",
+        icon: "add_circle_outline_icon",
+        url: "/ordenes/nueva-local",
+      },
+      {
+        name: "Crear orden reparto",
+        icon: "add_circle_outline_icon",
+        url: "/ordenes/nueva",
+      },
+      {
         name: "Lista ordenes",
         icon: "format_list_bulleted_icon",
         url: "/ordenes/lista",

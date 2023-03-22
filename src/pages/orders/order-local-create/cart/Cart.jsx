@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
@@ -82,7 +83,6 @@ function Cart() {
         debt,
       },
     };
-    console.log(newOrder);
 
     await createOrder(newOrder).unwrap();
 
