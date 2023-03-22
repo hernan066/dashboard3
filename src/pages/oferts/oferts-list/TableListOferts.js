@@ -54,7 +54,7 @@ function TableListOferts({ oferts }) {
     {
       field: "product",
       headerName: "Producto",
-      flex: 3,
+      flex: 4,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
@@ -411,7 +411,7 @@ function TableListOferts({ oferts }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="2200px">
+        <Box m="40px 0 0 0" height="75vh" width="2400px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick

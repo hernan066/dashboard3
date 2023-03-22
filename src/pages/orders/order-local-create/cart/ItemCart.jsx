@@ -18,13 +18,13 @@ function ItemCart({ product }) {
   const dispatch = useDispatch();
 
   const handlerQuantity = (e) => {
-    console.log(product);
+    /*  console.log(product);
     if (e.target.value > formatQuantity(product.stock.stock)) {
       return setError("Valor mayor al stock");
     }
     if (e.target.value < 0) {
       return setError("Valor negativo");
-    }
+    } */
     setQuantity(e.target.value);
     setError("");
 
