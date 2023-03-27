@@ -10,7 +10,6 @@ import { useFormik } from "formik";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-
 import { creteProductSchema } from "validations/products/createProductYup";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -45,11 +44,11 @@ function ProductEdit({ listCategories, productById }) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Producto editado con exito",
+        title: "Producto editado con éxito",
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/productos/lista");
+      /*  navigate("/productos/lista"); */
     },
     validationSchema: creteProductSchema,
   });
@@ -63,8 +62,16 @@ function ProductEdit({ listCategories, productById }) {
           justifyContent: "center",
         }}
       >
-        <Box sx={{ mt: 1, mx: 2, display: "flex", gap: 3 }}>
-          <Box component="form" autoComplete="off" noValidate onSubmit={formik.handleSubmit}>
+        <Box sx={{ mt: 1, mx: 2, display: "flex", gap: 3, width: "100%" }}>
+          <Box
+            sx={{
+              flex: 1,
+            }}
+            component="form"
+            autoComplete="off"
+            noValidate
+            onSubmit={formik.handleSubmit}
+          >
             <TextField
               margin="normal"
               required
@@ -118,21 +125,7 @@ function ProductEdit({ listCategories, productById }) {
               helperText={formik.errors.type}
               onChange={formik.handleChange}
             />
-            <TextField
-              multiline
-              maxRows={4}
-              margin="normal"
-              fullWidth
-              required
-              autoComplete="product_description"
-              name="description"
-              label="Descripción"
-              id="product_description"
-              value={formik.values.description}
-              error={!!formik.errors.description}
-              helperText={formik.errors.description}
-              onChange={formik.handleChange}
-            />
+
             <TextField
               id="product_category"
               margin="normal"
@@ -222,12 +215,27 @@ function ProductEdit({ listCategories, productById }) {
               sx={{
                 mt: 3,
                 mb: 2,
+                mr: 2,
                 /*   borderColor: colors.blueAccent[400],
                     color: colors.blueAccent[400],
                     "&:hover": { backgroundColor: colors.blueAccent[900] }, */
               }}
             >
               Cancelar
+            </MDButton>
+            <MDButton
+              variant="outlined"
+              color="info"
+              onClick={() => navigate("productos/lista")}
+              sx={{
+                mt: 3,
+                mb: 2,
+                /*   borderColor: colors.blueAccent[400],
+                    color: colors.blueAccent[400],
+                    "&:hover": { backgroundColor: colors.blueAccent[900] }, */
+              }}
+            >
+              Ir a lista de productos
             </MDButton>
             {error && (
               <Alert severity="error">Ha ocurrido un error, producto no ha sido editado</Alert>
@@ -237,7 +245,7 @@ function ProductEdit({ listCategories, productById }) {
           <Box>
             <Card
               sx={{
-                maxWidth: "550px",
+                maxWidth: "320px",
               }}
             >
               <CardMedia

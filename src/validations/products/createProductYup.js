@@ -10,5 +10,5 @@ export const creteProductSchema = yup.object().shape({
   unit: yup.string().required("Requerido").matches(lettersNumbersAndSpaces, "Solo letras"),
   type: yup.string().required("Requerido").matches(lettersNumbersAndSpaces, "Solo letras"),
   category: yup.string().required("Requerido"),
-  description: yup.string().required("Requerido"),
+  /*  description: yup.string().required("Requerido"), */
 });

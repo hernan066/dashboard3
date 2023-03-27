@@ -45,7 +45,6 @@ function ProductCreate({ listCategories }) {
         showConfirmButton: false,
         timer: 2500,
       });
-      navigate("/productos/lista");
     },
     validationSchema: creteProductSchema,
   });
@@ -110,20 +109,7 @@ function ProductCreate({ listCategories }) {
               helperText={formik.errors.type}
               onChange={formik.handleChange}
             />
-            <TextField
-              multiline
-              maxRows={4}
-              margin="normal"
-              fullWidth
-              required
-              autoComplete="product_description"
-              name="description"
-              label="Descripción"
-              id="product_description"
-              error={!!formik.errors.description}
-              helperText={formik.errors.description}
-              onChange={formik.handleChange}
-            />
+
             <TextField
               id="product_category"
               margin="normal"

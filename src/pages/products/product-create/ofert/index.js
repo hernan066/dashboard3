@@ -12,20 +12,10 @@ import { useGetProductsQuery } from "api/productApi";
 
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetOfertQuery } from "api/ofertApi";
-import { useParams } from "react-router-dom";
-import OfertEdit from "./OfertEdit";
+import OfertCreate from "./OfertCreate";
 
-function EditOfert() {
-  const { id } = useParams();
+function CreateOfert() {
   const { data: listProducts, isLoading, error } = useGetProductsQuery();
-  const {
-    data: ofertById,
-    isLoading: isLoadingProduct,
-    error: errorProduct,
-  } = useGetOfertQuery(id);
-
-  console.log(ofertById);
 
   return (
     <DashboardLayout>
@@ -45,15 +35,13 @@ function EditOfert() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Editar oferta de producto
+                  Crear nueva oferta
                 </MDTypography>
               </MDBox>
               <MDBox>
-                {(isLoading || isLoadingProduct) && <Loading />}
-                {(error || errorProduct) && <Alert severity="error">{error.error}</Alert>}
-                {listProducts && ofertById && (
-                  <OfertEdit listProducts={listProducts} ofertById={ofertById} />
-                )}
+                {isLoading && <Loading />}
+                {error && <Alert severity="error">{error.error}</Alert>}
+                {listProducts && <OfertCreate listProducts={listProducts} />}
               </MDBox>
             </Card>
           </Grid>
@@ -63,4 +51,4 @@ function EditOfert() {
   );
 }
 
-export default EditOfert;
+export default CreateOfert;

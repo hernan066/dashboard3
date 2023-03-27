@@ -18,7 +18,7 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
     handleCloseMenu();
     Swal.fire({
       title: "Deseas borrar este producto?",
-      text: "Este cambio no se puede revertir",
+      text: "Al borrar el producto también se borraran la oferta y el stock asociado.",
       icon: "danger",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -62,7 +62,7 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
       PaperProps={{
         sx: {
           p: 1,
-          width: 120,
+          width: 200,
           zIndex: 20,
           "& .MuiMenuItem-root": {
             px: 1,
@@ -74,12 +74,12 @@ function MenuListProducts({ open, handleCloseMenu, productId }) {
     >
       <MenuItem onClick={() => navigate(`/productos/editar/${productId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Ver/Editar producto
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar producto
       </MenuItem>
     </Popover>
   );

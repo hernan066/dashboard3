@@ -7,11 +7,19 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { clearCart } from "redux/cartSlice";
 import CreateOrder from "./CreateOrder";
 
 function OrderLocalCreate() {
+  const dispatch = useDispatch();
   const { data: oferts, isLoading: l1, isError: e1 } = useGetOfertsQuery();
   const { data: clients, isLoading: l2, isError: e2 } = useGetClientsQuery();
+
+  useEffect(() => {
+    dispatch(clearCart());
+  }, []);
 
   return (
     <DashboardLayout>

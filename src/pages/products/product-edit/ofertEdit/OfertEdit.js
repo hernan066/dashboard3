@@ -16,7 +16,7 @@ import { usePutOfertMutation } from "api/ofertApi";
 
 function OfertEdit({ ofertById }) {
   const navigate = useNavigate();
-  const { id } = useParams();
+
   const { ofert } = ofertById.data;
 
   const [editOfert, { isLoading, isError }] = usePutOfertMutation();
@@ -62,7 +62,7 @@ function OfertEdit({ ofertById }) {
           },
         ],
       };
-
+      const id = ofert._id;
       await editOfert({ id, ...editOfertValues }).unwrap();
       Swal.fire({
         position: "center",
@@ -93,7 +93,6 @@ function OfertEdit({ ofertById }) {
             onSubmit={formik.handleSubmit}
             sx={{ width: "100%" }}
           >
-            <p>{ofert.product.name}</p>
             <TextField
               margin="normal"
               fullWidth
@@ -342,9 +341,24 @@ function OfertEdit({ ofertById }) {
               sx={{
                 mt: 3,
                 mb: 2,
+                mr: 2,
               }}
             >
               Cancelar
+            </MDButton>
+            <MDButton
+              variant="outlined"
+              color="info"
+              onClick={() => navigate("productos/lista")}
+              sx={{
+                mt: 3,
+                mb: 2,
+                /*   borderColor: colors.blueAccent[400],
+                    color: colors.blueAccent[400],
+                    "&:hover": { backgroundColor: colors.blueAccent[900] }, */
+              }}
+            >
+              Ir a lista de productos
             </MDButton>
             {isError && <Alert severity="error">Ha ocurrido un error, producto no creado</Alert>}
           </Box>

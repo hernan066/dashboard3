@@ -21,6 +21,12 @@ export const productApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 3 },
       providesTags: ["products"],
     }),
+    getProductOfert: builder.query({
+      query: (id) => `/products/ofert/${id}`,
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 3 },
+      providesTags: ["products"],
+    }),
 
     postProduct: builder.mutation({
       query: (items) => ({
@@ -65,6 +71,7 @@ export const productApi = apiSlice.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductQuery,
+  useGetProductOfertQuery,
   usePostProductMutation,
   usePutProductMutation,
   usePutProductStockMutation,
