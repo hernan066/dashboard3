@@ -98,7 +98,7 @@ function ProductCard({ product }) {
         >
           {formatPrice(product.basePrice)}
         </MDTypography>
-        {productWithStock.length === 1 && (
+        {productWithStock.length > 0 && (
           <MDTypography
             variant="h6"
             color="info"
@@ -116,7 +116,7 @@ function ProductCard({ product }) {
             Sin stock
           </MDTypography>
         )}
-        {productWithStock.length > 1 && (
+        {/*  {productWithStock.length > 1 && (
           <Box
             pr={3}
             sx={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -139,7 +139,7 @@ function ProductCard({ product }) {
               ))}
             </TextField>
           </Box>
-        )}
+        )} */}
         {product.product.stock.length === 0 && (
           <MDButton color="error" variant="gradient" disabled="true">
             Sin Stock

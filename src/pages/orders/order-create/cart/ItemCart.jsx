@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MDTypography from "components/MDTypography";
 
 import { useDispatch } from "react-redux";
-import { deleteProduct, updateProduct } from "redux/cartSlice";
+import { deleteProduct, updateProduct, isValidStockOrder } from "redux/cartSlice";
 import { formatQuantity } from "utils/quantityFormat";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -41,6 +41,11 @@ function ItemCart({ product }) {
         basePrice: formik.values.value,
       })
     );
+    if (formik.values.quantity > product.stock.stock) {
+      dispatch(isValidStockOrder(false));
+    } else {
+      dispatch(isValidStockOrder(true));
+    }
   }, [formik.values]);
 
   return (

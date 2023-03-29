@@ -13,6 +13,7 @@ const cartSlice = createSlice({
     shippingCost: 0,
     subTotal: 0,
     receiptId: null,
+    validStockQuantity: true,
   },
   reducers: {
     addProduct: (state, action) => {
@@ -59,6 +60,9 @@ const cartSlice = createSlice({
       state.shippingAddress = action.payload.shippingAddress;
       state.shippingCost = action.payload.shippingCost;
     },
+    isValidStockOrder: (state, action) => {
+      state.validStockQuantity = action.payload;
+    },
     clearCart: (state) => {
       state.products = [];
       state.shippingAddress = null;
@@ -66,6 +70,7 @@ const cartSlice = createSlice({
       state.shippingCost = 0;
       state.subTotal = 0;
       state.receiptId = null;
+      state.validStockQuantity = true;
     },
   },
 });
@@ -78,5 +83,6 @@ export const {
   clearCart,
   addClient,
   clearClient,
+  isValidStockOrder,
 } = cartSlice.actions;
 export default cartSlice.reducer;

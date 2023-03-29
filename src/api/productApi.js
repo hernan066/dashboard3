@@ -49,7 +49,7 @@ export const productApi = apiSlice.injectEndpoints({
     }),
     putProductStock: builder.mutation({
       query: ({ id, ...items }) => ({
-        url: `/products/updateStock/${id}`,
+        url: `/products/updateStock1/${id}`,
         method: "put",
         body: items,
       }),

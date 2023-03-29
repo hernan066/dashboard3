@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
@@ -18,7 +19,9 @@ import ItemCart from "./ItemCart";
 import Receipt from "../receipt/Receipt";
 
 function Cart() {
-  const { products, subTotal, client, receiptId } = useSelector((store) => store.cart);
+  const { products, subTotal, client, receiptId, validStockQuantity } = useSelector(
+    (store) => store.cart
+  );
   const [cash, setCash] = useState(0);
   const [transfer, setTransfer] = useState(0);
   const [debt, setDebt] = useState(0);
@@ -83,12 +86,15 @@ function Cart() {
         debt,
       },
     };
+    if (validStockQuantity === false) {
+      return;
+    }
 
     await createOrder(newOrder).unwrap();
 
     productsToEdit.map(async (product) => {
       const updateData = {
-        stockId: product.stockId,
+        /*  stockId: product.stockId, */
         totalQuantity: product.totalQuantity,
       };
       const id = product.productId;
@@ -244,6 +250,7 @@ function Cart() {
           variant="contained"
           loading={l1 || l2}
           onClick={handlerCreate}
+          disabled={!validStockQuantity}
           sx={{
             mt: 3,
             backgroundColor: `${colors.info.main}`,
@@ -254,6 +261,9 @@ function Cart() {
           Confirmar orden
         </LoadingButton>
         {(e1 || e2) && <Alert severity="error">Error: orden no creada!</Alert>}
+        {!validStockQuantity && (
+          <Alert severity="error">No hay suficiente stock para crear la orden</Alert>
+        )}
       </Card>
     </Box>
   );

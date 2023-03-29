@@ -10,23 +10,31 @@ import Swal from "sweetalert2";
 import { usePostOrderMutation } from "api/orderApi";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "redux/cartSlice";
+import { usePutProductStockMutation } from "api/productApi";
 import ItemCart from "./ItemCart";
 
 function Cart() {
-  const { products, shippingAddress, shippingCost, subTotal, client } = useSelector(
-    (store) => store.cart
-  );
+  const { products, shippingAddress, shippingCost, subTotal, client, validStockQuantity } =
+    useSelector((store) => store.cart);
   const { user } = useSelector((store) => store.auth);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const [createOrder, { isLoading, isError }] = usePostOrderMutation();
+  const [createOrder, { isLoading: l1, isError: e1 }] = usePostOrderMutation();
+
+  const [editProductStock, { isLoading: l2, isError: e2 }] = usePutProductStockMutation();
 
   const deliveryTruckSlit = shippingAddress ? shippingAddress.deliveryTruck.split("-") : "";
   const deliveryZoneSplit = shippingAddress ? shippingAddress.deliveryZone.split("-") : "";
 
   const handlerCreate = async () => {
+    const productsToEdit = products.map((product) => ({
+      productId: product.stock.productId,
+      stockId: product.stock._id,
+      totalQuantity: product.finalQuantity,
+    }));
+
     const productsOrder = products.map((item) => ({
       productId: item.product._id,
       name: item.product.name,
@@ -59,8 +67,22 @@ function Cart() {
 
     console.log(newOrder);
 
-    const { data } = await createOrder(newOrder).unwrap();
-    if (data) {
+    if (validStockQuantity === false) {
+      return;
+    }
+
+    await createOrder(newOrder).unwrap();
+
+    productsToEdit.map(async (product) => {
+      const updateData = {
+        /*  stockId: product.stockId, */
+        totalQuantity: product.totalQuantity,
+      };
+      const id = product.productId;
+      await editProductStock({ id, ...updateData }).unwrap();
+    });
+
+    if (!e1 || !e2) {
       Swal.fire({
         position: "center",
         icon: "success",
@@ -69,6 +91,7 @@ function Cart() {
         timer: 2500,
       });
       dispatch(clearCart());
+
       navigate("/ordenes/lista");
     }
   };
@@ -163,8 +186,9 @@ function Cart() {
         <LoadingButton
           type="submit"
           variant="contained"
-          loading={isLoading}
+          loading={l1 || l2}
           onClick={handlerCreate}
+          disabled={!validStockQuantity}
           sx={{
             mt: 3,
             backgroundColor: `${colors.info.main}`,
@@ -174,7 +198,10 @@ function Cart() {
         >
           Confirmar orden
         </LoadingButton>
-        {isError && <Alert severity="error">Error: orden no creada!</Alert>}
+        {(e1 || e2) && <Alert severity="error">Error: orden no creada!</Alert>}
+        {!validStockQuantity && (
+          <Alert severity="error">No hay suficiente stock para crear la orden</Alert>
+        )}
       </Card>
     </Box>
   );
