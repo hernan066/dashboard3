@@ -23,6 +23,7 @@ function ProductCard({ product }) {
 
   const [filterStock] = productWithStock.filter((item) => item._id === stockId);
   const totalStock = product.product.stock.reduce((acc, curr) => curr.stock + acc, 0);
+  // console.log(filterStock);
 
   const handlerClick = () => {
     dispatch(
@@ -35,6 +36,7 @@ function ProductCard({ product }) {
     );
   };
 
+  // console.log(cost);
   return (
     <Card
       sx={{
@@ -96,7 +98,7 @@ function ProductCard({ product }) {
         >
           {formatPrice(product.basePrice)}
         </MDTypography>
-        {productWithStock.length > 0 && (
+        {productWithStock.length === 1 && (
           <MDTypography
             variant="h6"
             color="info"
@@ -114,7 +116,7 @@ function ProductCard({ product }) {
             Sin stock
           </MDTypography>
         )}
-        {/*  {productWithStock.length > 1 && (
+        {productWithStock.length > 1 && (
           <Box
             pr={3}
             sx={{ width: "20%", display: "flex", justifyContent: "center", alignItems: "center" }}
@@ -137,7 +139,7 @@ function ProductCard({ product }) {
               ))}
             </TextField>
           </Box>
-        )} */}
+        )}
         {product.product.stock.length === 0 && (
           <MDButton color="error" variant="gradient" disabled="true">
             Sin Stock
