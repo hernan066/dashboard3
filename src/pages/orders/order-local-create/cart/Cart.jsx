@@ -15,6 +15,7 @@ import { formatPrice } from "utils/formaPrice";
 import MDButton from "components/MDButton";
 import { usePostOrderLocalMutation } from "api/orderApi";
 import { usePutProductStockMutation } from "api/productApi";
+import { formatQuantity } from "utils/quantityFormat";
 import ItemCart from "./ItemCart";
 import Receipt from "../receipt/Receipt";
 
@@ -95,10 +96,11 @@ function Cart() {
     productsToEdit.map(async (product) => {
       const updateData = {
         /*  stockId: product.stockId, */
-        totalQuantity: product.totalQuantity,
+        totalQuantity: formatQuantity(product.totalQuantity),
       };
       const id = product.productId;
-      await editProductStock({ id, ...updateData }).unwrap();
+      const res = await editProductStock({ id, ...updateData }).unwrap();
+      console.log(res);
     });
 
     if (!e1 || !e2) {

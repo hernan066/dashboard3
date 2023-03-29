@@ -11,6 +11,7 @@ import { usePostOrderMutation } from "api/orderApi";
 import { useNavigate } from "react-router-dom";
 import { clearCart } from "redux/cartSlice";
 import { usePutProductStockMutation } from "api/productApi";
+import { formatQuantity } from "utils/quantityFormat";
 import ItemCart from "./ItemCart";
 
 function Cart() {
@@ -76,7 +77,7 @@ function Cart() {
     productsToEdit.map(async (product) => {
       const updateData = {
         /*  stockId: product.stockId, */
-        totalQuantity: product.totalQuantity,
+        totalQuantity: formatQuantity(product.totalQuantity),
       };
       const id = product.productId;
       await editProductStock({ id, ...updateData }).unwrap();

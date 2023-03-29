@@ -22,6 +22,8 @@ function EditProductsLots() {
   const { data: ListSuppliers, isLoading: l2, isError: e2 } = useGetSuppliersQuery();
   const { data: productLot, isLoading: l3, isError: e3 } = useGetProductQuery(id);
 
+  console.log(productLot);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
