@@ -125,6 +125,64 @@ function TableStock({ stock: dataStock }) {
         ),
     },
     {
+      field: "return",
+      headerName: "Devolución",
+      flex: 0.9,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.return ? (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                height: "30px",
+                width: "30px",
+                borderRadius: "50%",
+                backgroundColor: "green",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <CheckIcon />
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                height: "30px",
+                width: "30px",
+                borderRadius: "50%",
+                backgroundColor: "red",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <CloseIcon />
+            </div>
+          </div>
+        ),
+    },
+    {
       field: "quantity",
       headerName: "Cant. Comprada",
       flex: 1,
@@ -236,7 +294,7 @@ function TableStock({ stock: dataStock }) {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Box m="40px 0 0 0" height="75vh" width="2000px">
+        <Box m="40px 0 0 0" height="75vh" width="2100px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -249,7 +307,7 @@ function TableStock({ stock: dataStock }) {
               quantity: `${formatQuantity(productsLot.quantity)}`,
               supplier: productsLot.supplier,
               product: productsLot.name,
-              cost_unit: `${formatPrice(productsLot.cost / productsLot.quantity)}`,
+              cost_unit: `${formatPrice(productsLot.unityCost)}`,
               createdAt: dateToLocalDate(productsLot.createdStock),
               updatedAt: productsLot.updateStock ? dateToLocalDate(productsLot.updateStock) : "",
               thereIsStock: productsLot.stock > 0 ? true : false,

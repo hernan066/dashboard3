@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { MenuItem, Popover } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
@@ -11,25 +12,7 @@ import { useDeleteOrderMutation, usePutOrderMutation } from "api/orderApi";
 function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, clientId }) {
   const navigate = useNavigate();
 
-  const [deleteOrder, { isSuccess, isError }] = useDeleteOrderMutation();
   const [editOrder, { isSuccess: s1, isError: e1 }] = usePutOrderMutation();
-
-  const handlerDelete = () => {
-    handleCloseMenu();
-    Swal.fire({
-      title: "Deseas borrar esta orden?",
-      text: "Este cambio no se puede revertir",
-
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Borrar",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await deleteOrder(orderId).unwrap();
-      }
-    });
-  };
 
   const handlerActivate = async () => {
     const id = orderId;
@@ -49,7 +32,7 @@ function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, cli
     await editOrder({ id, ...editOrderValues }).unwrap();
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (isError)
       Swal.fire({
         position: "center",
@@ -69,7 +52,7 @@ function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, cli
         showConfirmButton: false,
         timer: 2500,
       });
-  }, [isSuccess]);
+  }, [isSuccess]); */
   useEffect(() => {
     if (e1)
       Swal.fire({
@@ -129,12 +112,7 @@ function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, cli
       </MenuItem>
       <MenuItem onClick={() => navigate(`/ordenes/editar/${orderId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Editar Orden
-      </MenuItem>
-
-      <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
-        <DeleteIcon sx={{ mr: 1 }} />
-        Borrar orden
+        Editar/Borrar Orden
       </MenuItem>
     </Popover>
   );
