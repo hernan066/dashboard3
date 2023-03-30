@@ -16,6 +16,7 @@ import { useEffect } from "react";
 
 function ItemCart({ product }) {
   const dispatch = useDispatch();
+  console.log(product);
 
   const formik = useFormik({
     initialValues: {

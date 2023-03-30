@@ -22,7 +22,6 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const orderStore = useSelector((store) => store.order.order);
-  const originalStock = useSelector((store) => store.order.originalStock);
 
   const [editOrder, { isLoading: l1, isError: e1 }] = usePutOrderMutation();
   const [deleteOrder, { isLoading: l2, isError: e2 }] = useDeleteOrderMutation();
@@ -74,24 +73,6 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           debt: values.debt,
         },
       };
-      // arr para editar stocks
-      const updateProductsStocks = originalStock.map((product) => ({
-        productId: product.productId,
-        // negativo devolución de stock
-        // positivo agregar mas stock
-        totalQuantity: product.newQuantity - product.totalQuantity,
-        stockId: product.stockId,
-      }));
-
-      updateProductsStocks.map(async (product) => {
-        const updateData = {
-          stockId: product.stockId,
-          totalQuantity: formatQuantity(product.totalQuantity),
-        };
-        const id = product.productId;
-        await editProductStock({ id, ...updateData }).unwrap();
-      });
-
       await editOrder({ id, ...editOrderValues }).unwrap();
       Swal.fire({
         position: "center",

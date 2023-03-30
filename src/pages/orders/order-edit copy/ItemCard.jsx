@@ -6,31 +6,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import MDTypography from "components/MDTypography";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { updateOrder, deleteProductOrder, updateStock } from "redux/ordersSlice";
+import { updateOrder, deleteProductOrder } from "redux/ordersSlice";
 
 function ItemCard({ product }) {
+  console.log(product);
   const [quantity, setQuantity] = useState(product.totalQuantity);
-  const [value, setValue] = useState(product.unitPrice);
-  const [cost, setCost] = useState(product.unitCost);
+  const [value, setValue] = useState(product.totalPrice);
   const dispatch = useDispatch();
 
-  console.log(product);
   const handlerQuantity = (e) => {
     setQuantity(e.target.value);
-    dispatch(
-      updateStock({
-        stockId: product.stockId,
-        newQuantity: e.target.value,
-      })
-    );
 
     dispatch(
       updateOrder({
         id: product._id,
         totalQuantity: e.target.value,
-        totalPrice: value * e.target.value,
-        unitPrice: value,
-        unitCost: cost,
+        totalPrice: value,
       })
     );
   };
@@ -41,32 +32,7 @@ function ItemCard({ product }) {
       updateOrder({
         id: product._id,
         totalQuantity: quantity,
-        totalPrice: e.target.value * quantity,
-        unitPrice: e.target.value,
-        unitCost: cost,
-      })
-    );
-  };
-  const handlerCost = (e) => {
-    setCost(e.target.value);
-
-    dispatch(
-      updateOrder({
-        id: product._id,
-        totalQuantity: quantity,
-        totalPrice: value * quantity,
-        unitPrice: value,
-        unitCost: e.target.value,
-      })
-    );
-  };
-
-  const handleDelete = () => {
-    dispatch(deleteProductOrder(product._id));
-    dispatch(
-      updateStock({
-        stockId: product.stockId,
-        newQuantity: 0,
+        totalPrice: e.target.value,
       })
     );
   };
@@ -84,7 +50,7 @@ function ItemCard({ product }) {
     >
       <Box
         sx={{
-          width: 75,
+          width: 60,
           mr: 2,
         }}
       >
@@ -99,6 +65,7 @@ function ItemCard({ product }) {
       <Box
         sx={{
           display: "flex",
+
           flexDirection: "row",
           alignItems: "center",
           width: "100%",
@@ -117,7 +84,7 @@ function ItemCard({ product }) {
           <span>
             <MDTypography variant="subtitle2">$</MDTypography>
           </span>
-          <TextField type="number" value={value} label="Unidad" onChange={handlerValue} />
+          <TextField type="number" value={value} label="Valor total" onChange={handlerValue} />
         </Box>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
@@ -126,20 +93,14 @@ function ItemCard({ product }) {
           </span>
           <TextField
             type="number"
-            value={value * quantity}
-            label="Total"
+            value={value / quantity}
+            label="Unidad"
             disabled="true"
             /*  onChange={handlerValue} */
           />
         </Box>
-        <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>
-          <span>
-            <MDTypography variant="subtitle2">$</MDTypography>
-          </span>
-          <TextField type="number" value={cost} label="Costo" onChange={handlerCost} />
-        </Box>
 
-        <MDButton onClick={handleDelete}>
+        <MDButton onClick={() => dispatch(deleteProductOrder(product._id))}>
           <DeleteIcon />
         </MDButton>
       </Box>

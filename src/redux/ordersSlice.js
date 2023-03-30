@@ -8,10 +8,14 @@ const orderSlice = createSlice({
   name: "order",
   initialState: {
     order: null,
+    originalStock: null,
   },
   reducers: {
     addOrder: (state, action) => {
       state.order = action.payload;
+    },
+    addStock: (state, action) => {
+      state.originalStock = action.payload;
     },
     updateOrder: (state, action) => {
       const orderItems = state.order.orderItems.map((product) => {
@@ -20,6 +24,8 @@ const orderSlice = createSlice({
             ...product,
             totalPrice: +action.payload.totalPrice,
             totalQuantity: +action.payload.totalQuantity,
+            unitPrice: +action.payload.unitPrice,
+            unitCost: +action.payload.unitCost,
           };
         } else {
           return product;
@@ -33,11 +39,21 @@ const orderSlice = createSlice({
 
       state.order.total = state.order.subTotal + state.order.tax;
     },
+    updateStock: (state, action) => {
+      state.originalStock = state.originalStock.map((item) => {
+        if (item.stockId === action.payload.stockId) {
+          return {
+            ...item,
+            newQuantity: +action.payload.newQuantity,
+          };
+        } else {
+          return item;
+        }
+      });
+    },
     deleteProductOrder: (state, action) => {
       const orderItems = state.order.orderItems.filter((product) => action.payload !== product._id);
-      // console.log(orderItems);
-      // 63ecf096c6184b49ea723ee2
-      // 63ecf096c6184b49ea723ee2
+
       state.order = { ...state.order, orderItems };
 
       state.order.subTotal = state.order.orderItems.reduce((acc, cur) => {
@@ -50,5 +66,6 @@ const orderSlice = createSlice({
   },
 });
 
-export const { addOrder, updateOrder, deleteProductOrder } = orderSlice.actions;
+export const { addOrder, updateOrder, deleteProductOrder, addStock, updateStock } =
+  orderSlice.actions;
 export default orderSlice.reducer;
