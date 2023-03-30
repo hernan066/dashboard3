@@ -20,7 +20,7 @@ function ItemCart({ product }) {
 
   const formik = useFormik({
     initialValues: {
-      value: product.finalPrice,
+      value: product.basePrice,
       quantity: product.finalQuantity,
     },
 
