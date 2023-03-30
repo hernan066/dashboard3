@@ -28,6 +28,10 @@ function MenuProductsLots({ open, handleCloseMenu, productsLotsId }) {
         },
       }}
     >
+      <MenuItem onClick={() => navigate(`/productos/editar/${productsLotsId.productId}`)}>
+        <EditIcon sx={{ mr: 1 }} />
+        Ver Producto
+      </MenuItem>
       <MenuItem
         onClick={() =>
           navigate(`/productos/stock/editar/${productsLotsId.productId}?lotId=${productsLotsId.id}`)

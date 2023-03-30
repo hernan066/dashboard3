@@ -76,12 +76,6 @@ function TableListProducts({ products }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
-    {
-      field: "description",
-      headerName: "Descripción",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
 
     {
       field: "available",

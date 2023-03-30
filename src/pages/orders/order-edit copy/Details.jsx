@@ -6,28 +6,14 @@ import { Box, Card, Divider } from "@mui/material";
 import MDTypography from "components/MDTypography";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addStock, addOrder } from "redux/ordersSlice";
-
-import { formatPrice } from "utils/formaPrice";
+import { addOrder } from "redux/ordersSlice";
 import EditAddressForm from "./EditAddressForm";
 import ItemCard from "./ItemCard";
 
 function Details({ order, deliveryZones, deliveryTrucks }) {
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(addOrder(order));
-  }, []);
-
-  useEffect(() => {
-    const originalStock = order.orderItems.map((product) => ({
-      name: product.name,
-      productId: product.productId,
-      stockId: product.stockId,
-      totalQuantity: product.totalQuantity,
-      newQuantity: product.totalQuantity,
-    }));
-    dispatch(addStock(originalStock));
   }, []);
 
   const orderStore = useSelector((store) => store.order.order);
@@ -40,36 +26,38 @@ function Details({ order, deliveryZones, deliveryTrucks }) {
         width: "100%",
       }}
     >
-      <Box
-        sx={{
-          width: "75%",
-          alignSelf: "flex-start",
-        }}
-      >
-        {orderStore?.orderItems.map((product) => (
-          <ItemCard product={product} key={product._id} />
-        ))}
-      </Box>
       <Card
         sx={{
           padding: "25px",
-          width: "25%",
+          width: "66%",
+          alignSelf: "flex-start",
+        }}
+      >
+        <MDTypography variant="h6">Productos</MDTypography>
+        {orderStore?.orderItems.map((product) => (
+          <ItemCard product={product} key={product._id} />
+        ))}
+      </Card>
+      <Card
+        sx={{
+          padding: "25px",
+          width: "33%",
         }}
       >
         <MDTypography variant="h6">Resumen</MDTypography>
         <Divider />
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Subtotal</MDTypography>
-          <MDTypography variant="h6">{formatPrice(orderStore?.subTotal)}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.subTotal}</MDTypography>
         </Box>
         <Box display="flex" justifyContent="space-between">
           <MDTypography variant="body2">Envío</MDTypography>
-          <MDTypography variant="h6">{formatPrice(orderStore?.tax)}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.tax}</MDTypography>
         </Box>
         <Divider />
         <Box display="flex" justifyContent="space-between" mb={3}>
           <MDTypography variant="body2">Total</MDTypography>
-          <MDTypography variant="h6">{formatPrice(orderStore?.total)}</MDTypography>
+          <MDTypography variant="h6">${orderStore?.total}</MDTypography>
         </Box>
 
         <MDTypography variant="h6">Datos del cliente</MDTypography>

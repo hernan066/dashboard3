@@ -122,6 +122,64 @@ function TableListProductsLots({ products }) {
         ),
     },
     {
+      field: "return",
+      headerName: "Devolución",
+      flex: 0.9,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.return ? (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                height: "30px",
+                width: "30px",
+                borderRadius: "50%",
+                backgroundColor: "green",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <CheckIcon />
+            </div>
+          </div>
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                height: "30px",
+                width: "30px",
+                borderRadius: "50%",
+                backgroundColor: "red",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "white",
+              }}
+            >
+              <CloseIcon />
+            </div>
+          </div>
+        ),
+    },
+    {
       field: "quantity",
       headerName: "Cant. Comprada",
       flex: 1,
