@@ -47,6 +47,7 @@ import OrderLocalCreate from "pages/orders/order-local-create";
 import MoveProductsLots from "pages/productsLots/move-productsLots";
 import ListDistribution from "pages/distributionList";
 import ProductsSellByDay from "pages/reports/producstsSell";
+import ProductsSellByRange from "pages/reports/producstsSell/reportByRange";
 
 const routes = [
   {
@@ -455,6 +456,14 @@ const routes = [
     component: (
       <RequireAuth>
         <ProductsSellByDay />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/reportes/productos-vendidos-por-rango",
+    component: (
+      <RequireAuth>
+        <ProductsSellByRange />
       </RequireAuth>
     ),
   },
