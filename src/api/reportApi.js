@@ -24,8 +24,20 @@ export const userApi = apiSlice.injectEndpoints({
       invalidatesTags: ["reports"],
       extraOptions: { maxRetries: 0 },
     }),
+    postReportPaymentByRangeDay: builder.mutation({
+      query: (items) => ({
+        url: "/reports/reportPaymentByRangeDay",
+        method: "post",
+        body: items,
+      }),
+      invalidatesTags: ["reports"],
+      extraOptions: { maxRetries: 0 },
+    }),
   }),
 });
 
-export const { useGetTotalOrderProductsByDayQuery, usePostTotalOrderProductsByRangeMutation } =
-  userApi;
+export const {
+  useGetTotalOrderProductsByDayQuery,
+  usePostTotalOrderProductsByRangeMutation,
+  usePostReportPaymentByRangeDayMutation,
+} = userApi;

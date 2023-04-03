@@ -4,7 +4,7 @@
 /* eslint-disable react/prop-types */
 
 import "react-datepicker/dist/react-datepicker.css";
-import { Box, Grid } from "@mui/material";
+import { Alert, Box, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { formatDateMonth, dateToLocalDate } from "utils/dateFormat";
@@ -12,7 +12,10 @@ import MDTypography from "components/MDTypography";
 import MDBox from "components/MDBox";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
 import { formatPrice } from "utils/formaPrice";
-import { usePostTotalOrderProductsByRangeMutation } from "api/reportApi";
+import {
+  usePostTotalOrderProductsByRangeMutation,
+  usePostReportPaymentByRangeDayMutation,
+} from "api/reportApi";
 import { LoadingButton } from "@mui/lab";
 import colors from "assets/theme/base/colors";
 import TableReportProductsByRange from "./Table";
@@ -22,22 +25,37 @@ function ReportProductsByRange() {
   const [endDate, setEndDate] = useState(new Date().setHours(23, 59, 59, 0));
   const [updateDate, setUpdateDate] = useState(null);
   const [reports, setReports] = useState([]);
+  const [payments, setPayments] = useState([]);
 
-  const [createOfert, { isLoading, isError }] = usePostTotalOrderProductsByRangeMutation();
+  const [getTotalsOrders, { isLoading: l1, isError: e1 }] =
+    usePostTotalOrderProductsByRangeMutation();
+  const [getDataPayments, { isLoading: l2, isError: e2 }] =
+    usePostReportPaymentByRangeDayMutation();
 
   const totalCost = reports.reduce((acc, curr) => curr.totalCost + acc, 0);
   const totalSell = reports.reduce((acc, curr) => curr.total + acc, 0);
   const totalProfits = reports.reduce((acc, curr) => curr.totalProfits + acc, 0);
+
+  const totalCash = payments.reduce((acc, curr) => curr.cashTotal + acc, 0);
+  const totalTransfer = payments.reduce((acc, curr) => curr.transferTotal + acc, 0);
+  const totalDebt = payments.reduce((acc, curr) => curr.debtTotal + acc, 0);
+  const totals = payments.reduce((acc, curr) => curr.total + acc, 0);
 
   useEffect(() => {
     setUpdateDate(dateToLocalDate(new Date()));
   }, []);
 
   const handleSend = async () => {
-    const res = await createOfert({ from: startDate, to: endDate }).unwrap();
+    const res = await getTotalsOrders({ from: startDate, to: endDate }).unwrap();
+    const res2 = await getDataPayments({ from: startDate, to: endDate }).unwrap();
     setReports(res.data.report);
+    setPayments(res2.data.report);
   };
-  console.log(reports);
+
+  console.log(payments);
+  if (e1 || e2) {
+    return <Alert severity="error">Ha ocurrido un error</Alert>;
+  }
 
   return (
     <Box px={3} pb={3}>
@@ -63,7 +81,7 @@ function ReportProductsByRange() {
         <LoadingButton
           onClick={handleSend}
           variant="contained"
-          loading={isLoading}
+          loading={l1 || l2}
           sx={{
             mt: 3,
             mb: 2,
@@ -83,7 +101,7 @@ function ReportProductsByRange() {
                 <MDBox mb={1.5}>
                   <ComplexStatisticsCard
                     icon="attach_money_icon"
-                    title="Total cantidad facturada"
+                    title="Total cantidad facturada(ordenes)"
                     count={formatPrice(totalSell)}
                     percentage={{
                       color: "success",
@@ -115,6 +133,70 @@ function ReportProductsByRange() {
                     icon="attach_money_icon"
                     title="Total ganancia"
                     count={formatPrice(totalProfits)}
+                    percentage={{
+                      color: "success",
+                      amount: "",
+                      label: `Ultima actualización ${updateDate}hs`,
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+            </Grid>
+          </Box>
+          <Box mt={4} px={3}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={3} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    icon="attach_money_icon"
+                    color="dark"
+                    title="Total pagos cargados en sistema"
+                    count={formatPrice(totals)}
+                    percentage={{
+                      color: "success",
+                      amount: "",
+                      label: `Ultima actualización ${updateDate}hs`,
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={3} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    icon="attach_money_icon"
+                    color="success"
+                    title="Efectivo"
+                    count={formatPrice(totalCash)}
+                    percentage={{
+                      color: "success",
+                      amount: "",
+                      label: `Ultima actualización ${updateDate}hs`,
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={3} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="success"
+                    icon="currency_exchange_icon"
+                    title="Transferencias"
+                    count={formatPrice(totalTransfer)}
+                    percentage={{
+                      color: "success",
+                      amount: "",
+                      label: `Ultima actualización ${updateDate}hs`,
+                    }}
+                  />
+                </MDBox>
+              </Grid>
+              <Grid item xs={12} md={3} lg={3}>
+                <MDBox mb={1.5}>
+                  <ComplexStatisticsCard
+                    color="error"
+                    icon="money_off_icon"
+                    title="Pagos adeudados"
+                    count={formatPrice(totalDebt)}
                     percentage={{
                       color: "success",
                       amount: "",
