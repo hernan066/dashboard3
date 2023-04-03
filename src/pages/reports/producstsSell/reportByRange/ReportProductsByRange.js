@@ -155,7 +155,7 @@ function ReportProductsByRange() {
                     percentage={{
                       color: "success",
                       amount: "",
-                      label: `Ultima actualización ${updateDate}hs`,
+                      label: `Diferencia $${totals - totalSell}`,
                     }}
                   />
                 </MDBox>
