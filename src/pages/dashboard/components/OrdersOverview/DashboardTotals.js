@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { Grid } from "@mui/material";
 import MDBox from "components/MDBox";
@@ -5,20 +6,25 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import CharBar1 from "pages/dashboard2/components/CharBar1";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { formatPrice } from "utils/formaPrice";
+import { dateToLocalDate } from "utils/dateFormat";
 import OrdersOverview from ".";
 import Projects from "../Projects";
+import CharBar2 from "../Chart2/CharBar2";
 
-function DashboardTotals({ orders, clients, ordersByDays }) {
+function DashboardTotals({ orders, clients, ordersByDays, reports }) {
   const { sales, tasks } = reportsLineChartData;
+  const [updateDate, setUpdateDate] = useState(null);
 
   const totalClients = clients.length;
 
-  const totalBuy = orders.reduce((acc, curr) => acc + curr.total, 0);
-  const totalCash = orders.reduce((acc, curr) => acc + curr.payment.cash, 0);
-  const totalTransfer = orders.reduce((acc, curr) => acc + curr.payment.transfer, 0);
-  const totalDebt = orders.reduce((acc, curr) => acc + curr.payment.debt, 0);
+  const { totalCash, totalDebt, totalSales, totalTransfer } = orders[0];
+
+  useEffect(() => {
+    setUpdateDate(dateToLocalDate(new Date()));
+  }, []);
+
   return (
     <MDBox py={3}>
       <Grid container spacing={3}>
@@ -31,8 +37,8 @@ function DashboardTotals({ orders, clients, ordersByDays }) {
               count={totalClients}
               percentage={{
                 color: "success",
-                amount: "+55%",
-                label: "than lask week",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -42,11 +48,11 @@ function DashboardTotals({ orders, clients, ordersByDays }) {
             <ComplexStatisticsCard
               icon="leaderboard"
               title="Ventas"
-              count={formatPrice(totalBuy)}
+              count={formatPrice(totalSales)}
               percentage={{
                 color: "success",
-                amount: "+3%",
-                label: "than last month",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -60,8 +66,8 @@ function DashboardTotals({ orders, clients, ordersByDays }) {
               count={formatPrice(totalCash + totalTransfer)}
               percentage={{
                 color: "success",
-                amount: "+1%",
-                label: "than yesterday",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -76,7 +82,7 @@ function DashboardTotals({ orders, clients, ordersByDays }) {
               percentage={{
                 color: "success",
                 amount: "",
-                label: "Just updated",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -91,17 +97,7 @@ function DashboardTotals({ orders, clients, ordersByDays }) {
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={3}>
-              <ReportsLineChart
-                color="success"
-                title="daily sales"
-                description={
-                  <>
-                    (<strong>+15%</strong>) increase in today sales.
-                  </>
-                }
-                date="updated 4 min ago"
-                chart={sales}
-              />
+              <CharBar2 reports={reports} />
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>

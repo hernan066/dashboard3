@@ -14,6 +14,12 @@ export const userApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 5 },
       providesTags: ["reports"],
     }),
+    getTotalOrders: builder.query({
+      query: () => "/reports/orders",
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["reports"],
+    }),
 
     postTotalOrderProductsByRange: builder.mutation({
       query: (items) => ({
@@ -33,11 +39,22 @@ export const userApi = apiSlice.injectEndpoints({
       invalidatesTags: ["reports"],
       extraOptions: { maxRetries: 0 },
     }),
+    postReportSellByRangeDay: builder.mutation({
+      query: (items) => ({
+        url: "/reports/reportTotalSellByRangeDay",
+        method: "post",
+        body: items,
+      }),
+      invalidatesTags: ["reports"],
+      extraOptions: { maxRetries: 0 },
+    }),
   }),
 });
 
 export const {
   useGetTotalOrderProductsByDayQuery,
+  useGetTotalOrdersQuery,
   usePostTotalOrderProductsByRangeMutation,
   usePostReportPaymentByRangeDayMutation,
+  usePostReportSellByRangeDayMutation,
 } = userApi;
