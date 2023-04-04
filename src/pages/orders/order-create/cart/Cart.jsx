@@ -47,7 +47,7 @@ function Cart() {
       totalQuantity: item.finalQuantity,
       totalPrice: item.finalPrice,
       unitPrice: item.basePrice,
-      unitCost: +item.stock.cost / +item.stock.quantity,
+      unitCost: item.stock.unityCost,
       stockId: item.stock._id,
     }));
 

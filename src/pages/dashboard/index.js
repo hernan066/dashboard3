@@ -6,7 +6,12 @@ import { useGetOrdersByDaysQuery } from "api/orderApi";
 import { useGetClientsQuery } from "api/clientsApi";
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetTotalOrdersQuery, usePostReportSellByRangeDayMutation } from "api/reportApi";
+import {
+  useGetTotalOrdersQuery,
+  usePostReportSellByRangeDayMutation,
+  useGetTotalOrdersProductsQuery,
+  useGetTotalOrdersProducts2103Query,
+} from "api/reportApi";
 import { useEffect, useState } from "react";
 import DashboardTotals from "./components/OrdersOverview/DashboardTotals";
 
@@ -18,6 +23,12 @@ function Dashboard1() {
   const { data: dataOrdersByDays, isLoading: l3, isError: e3 } = useGetOrdersByDaysQuery(7);
   const [getTotalSellByRangeDay, { isLoading: l4, isError: e4 }] =
     usePostReportSellByRangeDayMutation();
+  const { data: dataOrdersProducts, isLoading: l5, isError: e5 } = useGetTotalOrdersProductsQuery();
+  const {
+    data: dataOrdersProducts2103,
+    isLoading: l6,
+    isError: e6,
+  } = useGetTotalOrdersProducts2103Query();
 
   useEffect(() => {
     const getData = async () => {
@@ -34,16 +45,23 @@ function Dashboard1() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {(l1 || l2 || l3 || l4) && <Loading />}
-      {(e1 || e2 || e3 || e4) && <Alert severity="error">Ha ocurrido un error</Alert>}
-      {dataOrders && listClients && dataOrdersByDays && report1 && (
-        <DashboardTotals
-          clients={listClients.data.clients}
-          orders={dataOrders.data.report}
-          ordersByDays={dataOrdersByDays.data.orders}
-          reports={report1}
-        />
-      )}
+      {(l1 || l2 || l3 || l4 || l5 || l6) && <Loading />}
+      {(e1 || e2 || e3 || e4 || e5 || l6) && <Alert severity="error">Ha ocurrido un error</Alert>}
+      {dataOrders &&
+        listClients &&
+        dataOrdersByDays &&
+        report1 &&
+        dataOrdersProducts &&
+        dataOrdersProducts2103 && (
+          <DashboardTotals
+            clients={listClients.data.clients}
+            orders={dataOrders.data.report}
+            ordersByDays={dataOrdersByDays.data.orders}
+            reports={report1}
+            totalProducts={dataOrdersProducts.data.report}
+            totalProducts2103={dataOrdersProducts2103.data.report}
+          />
+        )}
       <Footer />
     </DashboardLayout>
   );

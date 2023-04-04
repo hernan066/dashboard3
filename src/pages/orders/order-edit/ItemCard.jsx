@@ -106,7 +106,7 @@ function ItemCard({ product }) {
         }}
       >
         <MDTypography variant="subtitle2" sx={{ width: "30%" }}>
-          {product.description}
+          {product.name}
         </MDTypography>
 
         <Box sx={{ width: "23%", display: "flex", alignItems: "center" }}>

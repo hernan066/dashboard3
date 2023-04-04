@@ -12,8 +12,17 @@ import { dateToLocalDate } from "utils/dateFormat";
 import OrdersOverview from ".";
 import Projects from "../Projects";
 import CharBar2 from "../Chart2/CharBar2";
+import TotalProducts from "../TotalProducts/TotalProducts";
+import TotalProductsProfit from "../TotalProducts/TotalProductsProfit";
 
-function DashboardTotals({ orders, clients, ordersByDays, reports }) {
+function DashboardTotals({
+  orders,
+  clients,
+  ordersByDays,
+  reports,
+  totalProducts,
+  totalProducts2103,
+}) {
   const { sales, tasks } = reportsLineChartData;
   const [updateDate, setUpdateDate] = useState(null);
 
@@ -115,11 +124,11 @@ function DashboardTotals({ orders, clients, ordersByDays, reports }) {
       </MDBox>
       <MDBox>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={8}>
-            <Projects />
+          <Grid item xs={12} md={6} lg={6}>
+            <TotalProducts totalProducts={totalProducts} />
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <OrdersOverview />
+          <Grid item xs={12} md={6} lg={6}>
+            <TotalProductsProfit totalProducts={totalProducts2103} />
           </Grid>
         </Grid>
       </MDBox>

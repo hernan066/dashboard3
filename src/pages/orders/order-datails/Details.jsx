@@ -48,7 +48,7 @@ function Details({ order }) {
                   width: "100%",
                 }}
               >
-                <MDTypography variant="subtitle2">{product.description}</MDTypography>
+                <MDTypography variant="subtitle2">{product.name}</MDTypography>
                 <MDTypography variant="subtitle2"> Cant. {product.totalQuantity}</MDTypography>
                 <MDTypography variant="subtitle2"> Unit. {product.unit}</MDTypography>
                 <MDTypography variant="subtitle2"> ${product.totalPrice}</MDTypography>
