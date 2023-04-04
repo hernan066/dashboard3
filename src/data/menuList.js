@@ -143,11 +143,6 @@ export const menuList = [
     key: "reportes",
     subRoutes: [
       {
-        name: "Productos vendidos",
-        icon: "format_list_bulleted_icon",
-        url: "/reportes/productos-vendidos-por-dia",
-      },
-      {
         name: "Rango de ventas",
         icon: "format_list_bulleted_icon",
         url: "/reportes/productos-vendidos-por-rango",
