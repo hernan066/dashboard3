@@ -17,7 +17,7 @@ import { formatPrice } from "utils/formaPrice";
 import { formatQuantity } from "utils/quantityFormat";
 import MenuProductsLots from "./MenuProductsLots";
 
-function TableListProductsLots({ products }) {
+function TableListAvailableStock({ products }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
@@ -34,7 +34,9 @@ function TableListProductsLots({ products }) {
     setProductsLotsId(null);
   };
 
-  const stocks = products.reduce((acc, curr) => curr.stock.concat(acc), []);
+  const stocks = products
+    .reduce((acc, curr) => curr.stock.concat(acc), [])
+    .filter((product) => product.stock > 0);
 
   const columns = [
     {
@@ -287,7 +289,7 @@ function TableListProductsLots({ products }) {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Box m="40px 0 0 0" height="75vh" width="2000px">
+        <Box m="10px 0 0 0" height="75vh" width="2000px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -355,4 +357,4 @@ function TableListProductsLots({ products }) {
   );
 }
 
-export default TableListProductsLots;
+export default TableListAvailableStock;

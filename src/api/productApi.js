@@ -1,7 +1,7 @@
 import { apiSlice } from "./apiSlice";
 
 export const productApi = apiSlice.injectEndpoints({
-  keepUnusedDataFor: 60, // duración de datos en cache
+  keepUnusedDataFor: 1, // duración de datos en cache
   refetchOnMountOrArgChange: true, // revalida al montar el componente
   refetchOnFocus: true, // revalida al cambiar de foco
   refetchOnReconnect: true, // revalida al reconectar
@@ -34,7 +34,7 @@ export const productApi = apiSlice.injectEndpoints({
         method: "post",
         body: items,
       }),
-      invalidatesTags: ["products"],
+      invalidatesTags: ["products", "reports"],
       extraOptions: { maxRetries: 0 },
     }),
 
@@ -44,7 +44,7 @@ export const productApi = apiSlice.injectEndpoints({
         method: "put",
         body: items,
       }),
-      invalidatesTags: ["products"],
+      invalidatesTags: ["products", "reports"],
       extraOptions: { maxRetries: 0 },
     }),
     putProductStock: builder.mutation({
@@ -53,7 +53,7 @@ export const productApi = apiSlice.injectEndpoints({
         method: "put",
         body: items,
       }),
-      invalidatesTags: ["products"],
+      invalidatesTags: ["products", "reports"],
       extraOptions: { maxRetries: 0 },
     }),
 
@@ -62,7 +62,7 @@ export const productApi = apiSlice.injectEndpoints({
         url: `/products/${id}`,
         method: "delete",
       }),
-      invalidatesTags: ["products"],
+      invalidatesTags: ["products", "reports"],
       extraOptions: { maxRetries: 0 },
     }),
   }),

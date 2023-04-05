@@ -9,7 +9,6 @@ import CreateOfert from "pages/oferts/ofert-create";
 import EditOfert from "pages/oferts/ofert-edit";
 import RequireAuth from "router/RequireAuth";
 import ListSuppliers from "pages/suppliers/list-suppliers";
-import ListProductsLots from "pages/productsLots/list-productsLots";
 import CreateNewSupplier from "pages/suppliers/create-suppliers";
 import EditSupplier from "pages/suppliers/edit-suppliers";
 import CreateProductsLots from "pages/productsLots/create-productsLots";
@@ -48,6 +47,7 @@ import MoveProductsLots from "pages/productsLots/move-productsLots";
 import ListDistribution from "pages/distributionList";
 import ProductsSellByDay from "pages/reports/producstsSell";
 import ProductsSellByRange from "pages/reports/producstsSell/reportByRange";
+import StockMain from "pages/productsLots";
 
 const routes = [
   {
@@ -67,7 +67,7 @@ const routes = [
     ),
   },
 
-  /* usuario */
+  /* usuario  */
   {
     route: "/usuarios/lista",
     component: (
@@ -184,7 +184,7 @@ const routes = [
     route: "/productos/stock/lista",
     component: (
       <RequireAuth>
-        <ListProductsLots />
+        <StockMain />
       </RequireAuth>
     ),
   },

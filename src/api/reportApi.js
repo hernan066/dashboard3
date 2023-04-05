@@ -32,6 +32,12 @@ export const userApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 5 },
       providesTags: ["reports"],
     }),
+    getTotalStock: builder.query({
+      query: () => "/reports/reportTotalStock",
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["reports"],
+    }),
 
     postTotalOrderProductsByRange: builder.mutation({
       query: (items) => ({
@@ -66,6 +72,7 @@ export const userApi = apiSlice.injectEndpoints({
 export const {
   useGetTotalOrderProductsByDayQuery,
   useGetTotalOrdersQuery,
+  useGetTotalStockQuery,
   useGetTotalOrdersProductsQuery,
   useGetTotalOrdersProducts2103Query,
   usePostTotalOrderProductsByRangeMutation,
