@@ -81,7 +81,9 @@ export const options = {
   },
 };
 
-function CharBar2({ reports }) {
+function CharBar3({ reports }) {
+  console.log(reports);
+
   const arr = reports
     .map((item) => ({
       date: new Date(item.date),
@@ -90,17 +92,29 @@ function CharBar2({ reports }) {
     .sort((a, b) => a.date - b.date);
 
   // const info = getChartData(ordersByDays);
-  const labels = arr.map((label) => dateToLocalDateMin(label.date)).slice(1, arr.length);
 
-  const profits = arr.map((profit) => profit.totalProfit).slice(1, arr.length);
+  const labels = ["Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"];
+  const totalSell = reports.map((item) => item.totalSell);
+  const totalCost = reports.map((item) => item.totalCost);
+  const totalProfits = reports.map((item) => item.totalProfits);
 
   const data = {
     labels,
     datasets: [
       {
+        label: "Ventas",
+        data: totalSell,
+        backgroundColor: "rgba(3, 202, 252, 0.8)",
+      },
+      {
+        label: "Costo",
+        data: totalCost,
+        backgroundColor: "rgba(230, 18, 18, 0.7)",
+      },
+      {
         label: "Ganancia",
-        data: profits,
-        backgroundColor: "#ddd",
+        data: totalProfits,
+        backgroundColor: "rgba(85, 230, 18, 0.7)",
       },
     ],
   };
@@ -111,7 +125,7 @@ function CharBar2({ reports }) {
           () => (
             <MDBox
               variant="gradient"
-              bgColor="success"
+              bgColor="dark"
               borderRadius="lg"
               coloredShadow="info"
               py={2}
@@ -126,10 +140,10 @@ function CharBar2({ reports }) {
         )}
         <MDBox pt={3} pb={1} px={1}>
           <MDTypography variant="h6" textTransform="capitalize">
-            Ganancias
+            Totales mensuales
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
-            Total de los últimos 14 días.
+            Total desde el 21/03/2023
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">
@@ -146,4 +160,4 @@ function CharBar2({ reports }) {
   );
 }
 
-export default CharBar2;
+export default CharBar3;

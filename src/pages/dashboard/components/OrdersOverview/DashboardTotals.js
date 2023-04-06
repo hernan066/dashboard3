@@ -3,17 +3,15 @@
 import { Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
 import CharBar1 from "pages/dashboard2/components/CharBar1";
 import React, { useEffect, useState } from "react";
 import { formatPrice } from "utils/formaPrice";
 import { dateToLocalDate } from "utils/dateFormat";
-import OrdersOverview from ".";
-import Projects from "../Projects";
 import CharBar2 from "../Chart2/CharBar2";
 import TotalProducts from "../TotalProducts/TotalProducts";
 import TotalProductsProfit from "../TotalProducts/TotalProductsProfit";
+import CharBar3 from "../Chart3/CharBar3";
 
 function DashboardTotals({
   orders,
@@ -22,6 +20,7 @@ function DashboardTotals({
   reports,
   totalProducts,
   totalProducts2103,
+  dataOrdersByMonth,
 }) {
   const { sales, tasks } = reportsLineChartData;
   const [updateDate, setUpdateDate] = useState(null);
@@ -111,13 +110,7 @@ function DashboardTotals({
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
             <MDBox mb={3}>
-              <ReportsLineChart
-                color="dark"
-                title="completed tasks"
-                description="Last Campaign Performance"
-                date="just updated"
-                chart={tasks}
-              />
+              <CharBar3 reports={dataOrdersByMonth} />
             </MDBox>
           </Grid>
         </Grid>
