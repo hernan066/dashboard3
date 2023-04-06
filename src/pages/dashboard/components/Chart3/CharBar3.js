@@ -17,6 +17,7 @@ import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { dateToLocalDate, dateToLocalDateMin } from "utils/dateFormat";
+import { formatQuantity } from "utils/quantityFormat";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -97,6 +98,9 @@ function CharBar3({ reports }) {
   const totalSell = reports.map((item) => item.totalSell);
   const totalCost = reports.map((item) => item.totalCost);
   const totalProfits = reports.map((item) => item.totalProfits);
+  const totalProfitsPercentage = reports.map((item) => (item.totalProfits * 100) / item.totalCost);
+
+  console.log(totalProfitsPercentage);
 
   const data = {
     labels,
@@ -115,6 +119,11 @@ function CharBar3({ reports }) {
         label: "Ganancia",
         data: totalProfits,
         backgroundColor: "rgba(85, 230, 18, 0.7)",
+      },
+      {
+        label: "Ganancia%",
+        data: totalProfitsPercentage,
+        backgroundColor: "rgba(3, 252, 157, 0.7)",
       },
     ],
   };
