@@ -9,7 +9,8 @@ export const orderApi = apiSlice.injectEndpoints({
 
   endpoints: (builder) => ({
     getOrders: builder.query({
-      query: () => "/orders",
+      query: ({ page, limit, active, paid }) =>
+        `/orders/paginate?limit=${limit}&page=${page}&active=${active}&paid=${paid}`,
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
       providesTags: ["orders"],
