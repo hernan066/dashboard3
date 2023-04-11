@@ -12,6 +12,8 @@ import {
   useGetTotalOrdersProductsQuery,
   useGetTotalOrdersProducts2103Query,
   useGetTotalOrdersByMonthQuery,
+  useGetReportTotalClientDebtQuery,
+  useGetReportTotalClientBuyQuery,
 } from "api/reportApi";
 import { useEffect, useState } from "react";
 import DashboardTotals from "./components/OrdersOverview/DashboardTotals";
@@ -31,6 +33,8 @@ function Dashboard1() {
     isError: e6,
   } = useGetTotalOrdersProducts2103Query();
   const { data: dataOrdersByMonth, isLoading: l7, isError: e7 } = useGetTotalOrdersByMonthQuery();
+  const { data: dataClientsDebs, isLoading: l8, isError: e8 } = useGetReportTotalClientDebtQuery();
+  const { data: dataClientsBuy, isLoading: l9, isError: e9 } = useGetReportTotalClientBuyQuery();
 
   useEffect(() => {
     const getData = async () => {
@@ -47,8 +51,8 @@ function Dashboard1() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {(l1 || l2 || l3 || l4 || l5 || l6 || l7) && <Loading />}
-      {(e1 || e2 || e3 || e4 || e5 || e6 || e7) && (
+      {(l1 || l2 || l3 || l4 || l5 || l6 || l7 || l8 || l9) && <Loading />}
+      {(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8 || e9) && (
         <Alert severity="error">Ha ocurrido un error</Alert>
       )}
       {dataOrders &&
@@ -57,7 +61,9 @@ function Dashboard1() {
         report1 &&
         dataOrdersProducts &&
         dataOrdersProducts2103 &&
-        dataOrdersByMonth && (
+        dataOrdersByMonth &&
+        dataClientsBuy &&
+        dataClientsDebs && (
           <DashboardTotals
             clients={listClients.data.clients}
             orders={dataOrders.data.report}
@@ -66,6 +72,8 @@ function Dashboard1() {
             totalProducts={dataOrdersProducts.data.report}
             totalProducts2103={dataOrdersProducts2103.data.report}
             dataOrdersByMonth={dataOrdersByMonth.data.report}
+            dataClientsDebs={dataClientsDebs.data.report}
+            reportTotalClientBuy={dataClientsBuy.data.report}
           />
         )}
       <Footer />

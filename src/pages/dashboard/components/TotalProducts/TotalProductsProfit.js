@@ -27,7 +27,7 @@ function TotalProductsProfit({ totalProducts }) {
             alignItems: "center",
           }}
         >
-          <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "50%" }}>
+          <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "58%" }}>
             <MDTypography variant="h6" ml={2}>
               PRODUCTO
             </MDTypography>
@@ -62,7 +62,7 @@ function TotalProductsProfit({ totalProducts }) {
               alignItems: "center",
             }}
           >
-            <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "50%" }}>
+            <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "58%" }}>
               <Avatar src={product?.img} />
               <MDTypography variant="body2">{product.name}</MDTypography>
             </MDBox>

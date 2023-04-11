@@ -12,6 +12,9 @@ import CharBar2 from "../Chart2/CharBar2";
 import TotalProducts from "../TotalProducts/TotalProducts";
 import TotalProductsProfit from "../TotalProducts/TotalProductsProfit";
 import CharBar3 from "../Chart3/CharBar3";
+import TotalClientsDebt from "../ClientDebt/TotalClientDebt";
+import TotalClientsBuy from "../ClientBuy/TotalClientBuy";
+import TotalClientsProfits from "../ClientProfit/TotalClientProfit";
 
 function DashboardTotals({
   orders,
@@ -21,6 +24,8 @@ function DashboardTotals({
   totalProducts,
   totalProducts2103,
   dataOrdersByMonth,
+  dataClientsDebs,
+  reportTotalClientBuy,
 }) {
   const { sales, tasks } = reportsLineChartData;
   const [updateDate, setUpdateDate] = useState(null);
@@ -122,6 +127,19 @@ function DashboardTotals({
           </Grid>
           <Grid item xs={12} md={6} lg={6}>
             <TotalProductsProfit totalProducts={totalProducts2103} />
+          </Grid>
+        </Grid>
+      </MDBox>
+      <MDBox mt={3}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={4}>
+            <TotalClientsDebt clients={dataClientsDebs} />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TotalClientsBuy clients={reportTotalClientBuy} />
+          </Grid>
+          <Grid item xs={12} md={6} lg={4}>
+            <TotalClientsProfits clients={reportTotalClientBuy} />
           </Grid>
         </Grid>
       </MDBox>
