@@ -84,6 +84,15 @@ export const userApi = apiSlice.injectEndpoints({
       invalidatesTags: ["reports"],
       extraOptions: { maxRetries: 0 },
     }),
+    postReportClientBuyByRangeDay: builder.mutation({
+      query: (items) => ({
+        url: "/reports/reportTotalClientBuyByRangeDays",
+        method: "post",
+        body: items,
+      }),
+      invalidatesTags: ["reports"],
+      extraOptions: { maxRetries: 0 },
+    }),
   }),
 });
 
@@ -99,4 +108,5 @@ export const {
   usePostTotalOrderProductsByRangeMutation,
   usePostReportPaymentByRangeDayMutation,
   usePostReportSellByRangeDayMutation,
+  usePostReportClientBuyByRangeDayMutation,
 } = userApi;

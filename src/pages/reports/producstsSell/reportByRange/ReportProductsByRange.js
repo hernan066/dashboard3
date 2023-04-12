@@ -15,10 +15,12 @@ import { formatPrice } from "utils/formaPrice";
 import {
   usePostTotalOrderProductsByRangeMutation,
   usePostReportPaymentByRangeDayMutation,
+  usePostReportClientBuyByRangeDayMutation,
 } from "api/reportApi";
 import { LoadingButton } from "@mui/lab";
 import colors from "assets/theme/base/colors";
-import TableReportProductsByRange from "./Table";
+import TableReportClientBuy from "./TableReportClientBuy";
+import TableReportProductsByRange from "./TableReportProductsByRange";
 
 function ReportProductsByRange() {
   const [startDate, setStartDate] = useState(new Date().setHours(0, 0, 0, 0));
@@ -26,11 +28,14 @@ function ReportProductsByRange() {
   const [updateDate, setUpdateDate] = useState(null);
   const [reports, setReports] = useState([]);
   const [payments, setPayments] = useState([]);
+  const [clientsBuy, setClientBuy] = useState([]);
 
   const [getTotalsOrders, { isLoading: l1, isError: e1 }] =
     usePostTotalOrderProductsByRangeMutation();
   const [getDataPayments, { isLoading: l2, isError: e2 }] =
     usePostReportPaymentByRangeDayMutation();
+  const [getDataClientBuy, { isLoading: l3, isError: e3 }] =
+    usePostReportClientBuyByRangeDayMutation();
 
   const totalCost = reports.reduce((acc, curr) => curr.totalCost + acc, 0);
   const totalSell = reports.reduce((acc, curr) => curr.total + acc, 0);
@@ -48,12 +53,14 @@ function ReportProductsByRange() {
   const handleSend = async () => {
     const res = await getTotalsOrders({ from: startDate, to: endDate }).unwrap();
     const res2 = await getDataPayments({ from: startDate, to: endDate }).unwrap();
+    const res3 = await getDataClientBuy({ from: startDate, to: endDate }).unwrap();
     setReports(res.data.report);
     setPayments(res2.data.report);
+    setClientBuy(res3.data.report);
   };
 
   console.log(payments);
-  if (e1 || e2) {
+  if (e1 || e2 || e3) {
     return <Alert severity="error">Ha ocurrido un error</Alert>;
   }
 
@@ -81,7 +88,7 @@ function ReportProductsByRange() {
         <LoadingButton
           onClick={handleSend}
           variant="contained"
-          loading={l1 || l2}
+          loading={l1 || l2 || l3}
           sx={{
             mt: 3,
             mb: 2,
@@ -207,7 +214,26 @@ function ReportProductsByRange() {
               </Grid>
             </Grid>
           </Box>
+          <MDTypography
+            variant="h6"
+            sx={{
+              ml: 3,
+              mt: 3,
+            }}
+          >
+            Productos vendidos
+          </MDTypography>
           <TableReportProductsByRange reports={reports} />
+          <MDTypography
+            variant="h6"
+            sx={{
+              ml: 3,
+              mt: 3,
+            }}
+          >
+            Compras de clientes
+          </MDTypography>
+          <TableReportClientBuy reports={clientsBuy} totalProfits={totalProfits} />
         </Box>
       )}
     </Box>
