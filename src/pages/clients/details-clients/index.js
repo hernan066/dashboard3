@@ -9,11 +9,17 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
-import { Alert } from "@mui/material";
+import { Alert, Box } from "@mui/material";
 import { useGetClientQuery } from "api/clientsApi";
 import { useParams } from "react-router-dom";
 import { useGetClientOrderQuery } from "api/orderApi";
+import {
+  useGetReportTotalClientBuyIndividualQuery,
+  useGetReportTotalClientBuyIndividualByDayQuery,
+} from "api/reportApi";
+import { formatDateMonth } from "utils/dateFormat";
 import TableListOrders from "./TableListOrders";
+import ResumeDataClient from "./ResumeDataClient";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -63,6 +69,18 @@ function DetailsClients() {
   const { id } = useParams();
   const { data: dataClient, isLoading: l1, error: e1 } = useGetClientQuery(id);
   const { data: dataOrders, isLoading: l2, error: e2 } = useGetClientOrderQuery(id);
+  const {
+    data: dataClientBuy,
+    isLoading: l3,
+    error: e3,
+  } = useGetReportTotalClientBuyIndividualQuery(id);
+
+  const {
+    data: dataClientBuyByDay,
+    isLoading: l4,
+    error: e4,
+  } = useGetReportTotalClientBuyIndividualByDayQuery(id);
+
   const [listProducts, setListProducts] = useState(null);
   const [listTopProducts, setListTopProducts] = useState(null);
 
@@ -74,14 +92,9 @@ function DetailsClients() {
 
   useEffect(() => {
     if (listProducts) {
-      setListTopProducts(listProducts);
+      setListTopProducts(repeatSum(listProducts));
     }
   }, [listProducts]);
-
-  console.log(dataClient);
-  console.log(dataOrders);
-  console.log(listProducts);
-  console.log(listTopProducts);
 
   return (
     <DashboardLayout>
@@ -105,15 +118,24 @@ function DetailsClients() {
                 </MDTypography>
               </MDBox>
               <MDBox pt={3}>
-                {(l1 || l2) && <Loading />}
-                {(e1 || e2) && <Alert severity="error">ha ocurrido un error</Alert>}
-                {dataClient && dataOrders && listTopProducts && (
-                  <TableListOrders
-                    orders={dataOrders}
-                    client={dataClient.data.client}
-                    listTopProducts={listTopProducts}
-                  />
-                )}
+                {(l1 || l2 || l3 || l4) && <Loading />}
+                {(e1 || e2 || e3 || e4) && <Alert severity="error">ha ocurrido un error</Alert>}
+                {dataClient &&
+                  dataOrders &&
+                  listTopProducts &&
+                  dataClientBuy &&
+                  dataClientBuyByDay && (
+                    <Box m="20px">
+                      <ResumeDataClient
+                        client={dataClient.data.client}
+                        listOrders={dataOrders.data.orders}
+                        listTopProducts={listTopProducts}
+                        clientBuy={dataClientBuy.data?.report[0]}
+                        dataClientBuyByDay={dataClientBuyByDay.data.report}
+                      />
+                      <TableListOrders orders={dataOrders} />
+                    </Box>
+                  )}
               </MDBox>
             </Card>
           </Grid>

@@ -1,16 +1,21 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Avatar, Divider } from "@mui/material";
+import { Avatar, Divider, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { formatPrice } from "utils/formaPrice";
+import { formatQuantity } from "utils/quantityFormat";
+import ClientChart1 from "./chart1/ClientChar1";
+import ClientChart2 from "./chart2/ClientChart2";
 
-function ResumeDataClient({ client, listOrders, listTopProducts }) {
+function ResumeDataClient({ client, listOrders, listTopProducts, clientBuy, dataClientBuyByDay }) {
   const totalOrders = listOrders.length;
   const pendingOrders = listOrders.filter((order) => order.status === "Pendiente").length;
   const paidOrders = listOrders.filter((order) => order.paid).length;
   const unpaidOrders = listOrders.filter((order) => !order.paid).length;
-  console.log(listOrders);
+
+  console.log(clientBuy);
+
   const totalBuy = listOrders.reduce((acc, curr) => acc + curr.total, 0);
   const totalCash = listOrders.reduce((acc, curr) => acc + curr.payment.cash, 0);
   const totalTransfer = listOrders.reduce((acc, curr) => acc + curr.payment.transfer, 0);
@@ -136,7 +141,60 @@ function ResumeDataClient({ client, listOrders, listTopProducts }) {
               {totalDebt ? formatPrice(totalDebt) : "$0"}
             </MDTypography>
           </MDBox>
+
+          <MDBox
+            sx={{ display: "flex", gap: 2, justifyContent: "space-between", marginTop: "12px" }}
+          >
+            <MDTypography variant="h6">Promedio de compra: </MDTypography>
+            <MDTypography variant="h6" sx={{ color: "black" }}>
+              {clientBuy?.totalBuy ? formatPrice(totalBuy / totalOrders) : "$0"}
+            </MDTypography>
+          </MDBox>
+          <MDBox
+            sx={{ display: "flex", gap: 2, justifyContent: "space-between", marginTop: "12px" }}
+          >
+            <MDTypography variant="h6">Compras (desde el 21/03): </MDTypography>
+            <MDTypography variant="h6" sx={{ color: "black" }}>
+              {clientBuy?.totalBuy ? formatPrice(clientBuy?.totalBuy) : "$0"}
+            </MDTypography>
+          </MDBox>
+          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+            <MDTypography variant="h6">Costo (desde el 21/03): </MDTypography>
+            <MDTypography variant="h6" sx={{ color: "red" }}>
+              {clientBuy?.totalBuy ? formatPrice(clientBuy?.totalCost) : "$0"}
+            </MDTypography>
+          </MDBox>
+          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+            <MDTypography variant="h6">Ganancia (desde el 21/03): </MDTypography>
+            <MDTypography variant="h6" sx={{ color: "green" }}>
+              {clientBuy?.totalBuy ? formatPrice(clientBuy?.totalProfits) : "$0"}
+            </MDTypography>
+          </MDBox>
+          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+            <MDTypography variant="h6">Ganancia % (desde el 21/03): </MDTypography>
+            <MDTypography variant="h6" sx={{ color: "black" }}>
+              {clientBuy?.totalProfits
+                ? formatQuantity((clientBuy.totalProfits * 100) / clientBuy.totalCost)
+                : "0"}
+              %
+            </MDTypography>
+          </MDBox>
         </MDBox>
+      </MDBox>
+
+      <MDBox mt={4.5}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6} lg={6}>
+            <MDBox mb={3}>
+              <ClientChart1 dataClientBuyByDay={dataClientBuyByDay} />
+            </MDBox>
+          </Grid>
+          <Grid item xs={12} md={6} lg={6}>
+            <MDBox mb={3}>
+              <ClientChart2 dataClientBuyByDay={dataClientBuyByDay} />
+            </MDBox>
+          </Grid>
+        </Grid>
       </MDBox>
 
       <MDBox mb={5} sx={{ flex: 1, border: "1px solid #ccc", borderRadius: 1, padding: 2 }}>

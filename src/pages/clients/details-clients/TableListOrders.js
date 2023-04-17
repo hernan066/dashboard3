@@ -2,23 +2,19 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import { Box, Card, IconButton, Stack } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import { dateToLocalDate } from "utils/dateFormat";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
-import MDTypography from "components/MDTypography";
-import MDBox from "components/MDBox";
 import MenuListOrders from "./MenuListOrders";
-import ResumeDataClient from "./ResumeDataClient";
 
-function TableListOrders({ orders, client, listTopProducts }) {
+function TableListOrders({ orders }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
   const listOrders = orders.data.orders;
@@ -274,8 +270,7 @@ function TableListOrders({ orders, client, listTopProducts }) {
   ];
 
   return (
-    <Box m="20px">
-      <ResumeDataClient client={client} listOrders={listOrders} listTopProducts={listTopProducts} />
+    <Box>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
         <Box m="40px 0 0 0" height="75vh" width="2200px">
           <DataGrid

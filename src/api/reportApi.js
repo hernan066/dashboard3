@@ -56,6 +56,20 @@ export const userApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 5 },
       providesTags: ["reports"],
     }),
+    getReportTotalClientBuyIndividual: builder.query({
+      query: (id) => `/reports/reportTotalClientBuy/${id}`,
+
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["reports"],
+    }),
+    getReportTotalClientBuyIndividualByDay: builder.query({
+      query: (id) => `/reports/reportTotalClientBuyByDay/${id}`,
+
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["reports"],
+    }),
 
     postTotalOrderProductsByRange: builder.mutation({
       query: (items) => ({
@@ -103,6 +117,8 @@ export const {
   useGetTotalStockQuery,
   useGetReportTotalClientDebtQuery,
   useGetReportTotalClientBuyQuery,
+  useGetReportTotalClientBuyIndividualQuery,
+  useGetReportTotalClientBuyIndividualByDayQuery,
   useGetTotalOrdersProductsQuery,
   useGetTotalOrdersProducts2103Query,
   usePostTotalOrderProductsByRangeMutation,
