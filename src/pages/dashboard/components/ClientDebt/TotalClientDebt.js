@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 
@@ -6,9 +7,11 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { Avatar, Divider } from "@mui/material";
 import { formatPrice } from "utils/formaPrice";
+import { Link } from "react-router-dom";
 
 function TotalClientsDebt({ clients }) {
   const sliceClients = clients.slice(0, 12);
+  console.log(sliceClients);
   return (
     <Card>
       <MDBox sx={{ flex: 1, padding: 3 }}>
@@ -29,9 +32,11 @@ function TotalClientsDebt({ clients }) {
           >
             <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "50%" }}>
               <Avatar src={client?.img} />
-              <MDTypography variant="body2">
-                {client.name} {client.lastName}
-              </MDTypography>
+              <Link to={`/clientes/detalle/${client.clientId}`}>
+                <MDTypography variant="body2">
+                  {client.name} {client.lastName}
+                </MDTypography>
+              </Link>
             </MDBox>
 
             <MDTypography variant="body2" mr={1} sx={{ width: "25%", textAlign: "right" }}>

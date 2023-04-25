@@ -6,6 +6,7 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { Avatar, Divider } from "@mui/material";
 import { formatPrice } from "utils/formaPrice";
+import { Link } from "react-router-dom";
 
 function TotalClientsProfits({ clients }) {
   const sliceClients = clients
@@ -32,9 +33,11 @@ function TotalClientsProfits({ clients }) {
           >
             <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "75%" }}>
               <Avatar src={client?.img} />
-              <MDTypography variant="body2">
-                {client.name} {client.lastName}
-              </MDTypography>
+              <Link to={`/clientes/detalle/${client.clientId}`}>
+                <MDTypography variant="body2">
+                  {client.name} {client.lastName}
+                </MDTypography>
+              </Link>
             </MDBox>
 
             <MDTypography variant="body2" mr={1} sx={{ width: "25%", textAlign: "right" }}>

@@ -81,6 +81,12 @@ function TableListClients({ clients }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "points",
+      headerName: "Puntos",
+      flex: 1,
+      headerClassName: "super-app-theme--header",
+    },
 
     {
       field: "accessLevel",
@@ -127,6 +133,7 @@ function TableListClients({ clients }) {
               phone: client.user.phone,
               type: client.clientType.clientType,
               category: client.clientCategory.clientCategory,
+              points: client.points || 0,
             }))}
             columns={columns}
             getRowId={(row) => row._id}

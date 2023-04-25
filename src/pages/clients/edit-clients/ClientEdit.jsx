@@ -45,6 +45,7 @@ function ClientEdit({ types, categories, users, client }) {
       cuit: client.cuit,
       contactMeans: client.contactMeans,
       campaignName: client.campaignName,
+      points: client?.points || 0,
     },
     onSubmit: async (values) => {
       const editClientValues = {
@@ -133,6 +134,17 @@ function ClientEdit({ types, categories, users, client }) {
                 </MenuItem>
               ))}
             </TextField>
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="cuit"
+              label="CUIT"
+              value={formik.values.cuit}
+              error={!!formik.errors.cuit}
+              helperText={formik.errors.cuit}
+              onChange={formik.handleChange}
+            />
 
             <LoadingButton
               type="submit"
@@ -165,17 +177,6 @@ function ClientEdit({ types, categories, users, client }) {
           <Box sx={{ width: "50%" }}>
             <TextField
               margin="normal"
-              fullWidth
-              required
-              name="cuit"
-              label="CUIT"
-              value={formik.values.cuit}
-              error={!!formik.errors.cuit}
-              helperText={formik.errors.cuit}
-              onChange={formik.handleChange}
-            />
-            <TextField
-              margin="normal"
               required
               select
               name="contactMeans"
@@ -203,6 +204,18 @@ function ClientEdit({ types, categories, users, client }) {
               value={formik.values.campaignName}
               error={!!formik.errors.campaignName}
               helperText={formik.errors.campaignName}
+              onChange={formik.handleChange}
+            />
+
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              name="points"
+              label="Puntos"
+              value={formik.values.points}
+              error={!!formik.errors.points}
+              helperText={formik.errors.points}
               onChange={formik.handleChange}
             />
           </Box>

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { Avatar, Divider, Grid } from "@mui/material";
+import { Avatar, Box, Divider, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { formatPrice } from "utils/formaPrice";
@@ -24,41 +24,64 @@ function ResumeDataClient({ client, listOrders, listTopProducts, clientBuy, data
   return (
     <>
       <MDBox sx={{ display: "flex", gap: 5 }}>
-        <MDBox
-          mb={5}
+        <Box
           sx={{
             flex: 1,
-            border: "1px solid #ccc",
-            borderRadius: 1,
-            padding: 2,
-            alignSelf: "flex-start",
           }}
         >
-          <MDTypography variant="h5">Datos del cliente </MDTypography>
-          <Divider />
-          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
-            <MDTypography variant="h6">Nombre: </MDTypography>
-            <MDTypography variant="body2">
-              {client.user.name} {client.user.lastName}
-            </MDTypography>
+          <MDBox
+            mb={5}
+            sx={{
+              flex: 1,
+              border: "1px solid #ccc",
+              borderRadius: 1,
+              padding: 2,
+              alignSelf: "flex-start",
+            }}
+          >
+            <MDTypography variant="h5">Datos del cliente </MDTypography>
+            <Divider />
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Nombre: </MDTypography>
+              <MDTypography variant="body2">
+                {client.user.name} {client.user.lastName}
+              </MDTypography>
+            </MDBox>
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Email: </MDTypography>
+              <MDTypography variant="body2">{client.user.email}</MDTypography>
+            </MDBox>
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Teléfono: </MDTypography>
+              <MDTypography variant="body2">{client.user.phone}</MDTypography>
+            </MDBox>
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Tipo de cliente: </MDTypography>
+              <MDTypography variant="body2">{client.clientType.clientType}</MDTypography>
+            </MDBox>
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Categoría de cliente: </MDTypography>
+              <MDTypography variant="body2">{client.clientCategory.clientCategory}</MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
-            <MDTypography variant="h6">Email: </MDTypography>
-            <MDTypography variant="body2">{client.user.email}</MDTypography>
+          <MDBox
+            mb={5}
+            sx={{
+              flex: 1,
+              border: "1px solid #ccc",
+              borderRadius: 1,
+              padding: 2,
+              alignSelf: "flex-start",
+            }}
+          >
+            <MDTypography variant="h5">Puntos y recomendaciones</MDTypography>
+            <Divider />
+            <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+              <MDTypography variant="h6">Puntos: </MDTypography>
+              <MDTypography variant="body2">{client?.points || 0}</MDTypography>
+            </MDBox>
           </MDBox>
-          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
-            <MDTypography variant="h6">Teléfono: </MDTypography>
-            <MDTypography variant="body2">{client.user.phone}</MDTypography>
-          </MDBox>
-          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
-            <MDTypography variant="h6">Tipo de cliente: </MDTypography>
-            <MDTypography variant="body2">{client.clientType.clientType}</MDTypography>
-          </MDBox>
-          <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
-            <MDTypography variant="h6">Categoría de cliente: </MDTypography>
-            <MDTypography variant="body2">{client.clientCategory.clientCategory}</MDTypography>
-          </MDBox>
-        </MDBox>
+        </Box>
         <MDBox mb={5} sx={{ flex: 1, border: "1px solid #ccc", borderRadius: 1, padding: 2 }}>
           <MDTypography variant="h5">Resumen de ordenes</MDTypography>
           <Divider />
