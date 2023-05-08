@@ -4,9 +4,15 @@ import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useGetClientsQuery } from "api/clientsApi";
+import Loading from "components/DRLoading";
+import { Alert } from "@mui/material";
 import SimpleClientCreate from "./ClientSimpleCreate";
 
 function CreateSimpleClient() {
+  const { data: clients, isLoading: l1, isError: e1 } = useGetClientsQuery();
+  console.log(clients);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -29,7 +35,9 @@ function CreateSimpleClient() {
                 </MDTypography>
               </MDBox>
               <MDBox>
-                <SimpleClientCreate />
+                {l1 && <Loading />}
+                {e1 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {clients && <SimpleClientCreate clients={clients.data.clients} />}
               </MDBox>
             </Card>
           </Grid>

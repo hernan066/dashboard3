@@ -4,7 +4,7 @@
 /* eslint-disable no-underscore-dangle */
 import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
-import { Alert, Box, TextField } from "@mui/material";
+import { Alert, Autocomplete, Box, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDBox from "components/MDBox";
 import MDButton from "components/MDButton";
@@ -13,12 +13,23 @@ import { usePostClientMutation } from "api/clientsApi";
 import { usePostUserMutation } from "api/userApi";
 import Swal from "sweetalert2";
 import { createSimpleClientSchema } from "validations/client/createSimpleClientYup";
+import { useState } from "react";
 
-function SimpleClientCreate() {
+function SimpleClientCreate({ clients }) {
   const navigate = useNavigate();
 
   const [createClient, { isLoading: l1, isError: e1 }] = usePostClientMutation();
   const [createUser, { isLoading: l2, isError: e2 }] = usePostUserMutation();
+
+  const autoCompleteUsers = clients.map((client) => ({
+    id: client._id,
+    phone: client.user.phone,
+    name: client.user.name,
+    lastName: client.user.lastName,
+  }));
+
+  const [inputValue, setInputValue] = useState(null);
+  console.log(inputValue);
 
   const formik = useFormik({
     initialValues: {
@@ -29,6 +40,7 @@ function SimpleClientCreate() {
       phone: "",
       role: "",
       dni: "",
+      recommendation: inputValue,
     },
     onSubmit: async ({ name, lastName, email, phone, dni }) => {
       try {
@@ -50,8 +62,9 @@ function SimpleClientCreate() {
             clientType: "63b34fef55257d408a217911",
             clientCategory: "636a8e3e8b0abe9de10c7948",
             cuit: dni,
-            contactMeans: "",
+            contactMeans: inputValue ? "Recomendacion" : "",
             campaignName: "",
+            recommendation: inputValue.id,
           };
 
           const res2 = await createClient(client).unwrap();
@@ -140,6 +153,23 @@ function SimpleClientCreate() {
               error={!!formik.errors.dni}
               helperText={formik.errors.dni}
               onChange={formik.handleChange}
+            />
+
+            <Autocomplete
+              margin="normal"
+              options={autoCompleteUsers}
+              getOptionLabel={(options) => `${options.phone} - ${options.name} ${options.lastName}`}
+              multiple={false}
+              id="controlled-demo"
+              value={inputValue}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              onChange={(event, newValue) => {
+                setInputValue(newValue);
+              }}
+              fullWidth
+              renderInput={(params) => (
+                <TextField {...params} label="Recomendado por" variant="outlined" />
+              )}
             />
 
             <LoadingButton

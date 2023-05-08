@@ -9,7 +9,7 @@ import MDTypography from "components/MDTypography";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Loading from "components/DRLoading";
-import { Alert, Box } from "@mui/material";
+import { Alert, Box, Tab, Tabs } from "@mui/material";
 import { useGetClientQuery } from "api/clientsApi";
 import { useParams } from "react-router-dom";
 import { useGetClientOrderQuery } from "api/orderApi";
@@ -17,9 +17,9 @@ import {
   useGetReportTotalClientBuyIndividualQuery,
   useGetReportTotalClientBuyIndividualByDayQuery,
 } from "api/reportApi";
-import { formatDateMonth } from "utils/dateFormat";
-import TableListOrders from "./TableListOrders";
+import { useGetAllRecommendationByClientQuery } from "api/recommnedationApi";
 import ResumeDataClient from "./ResumeDataClient";
+import RedeemPoints from "./RedeemPoints";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -61,12 +61,18 @@ const repeatSum = (arr) => {
     }
   });
 
-  console.log(arrProductsNonDupli);
   return arrProductsNonDupli;
 };
 
 function DetailsClients() {
   const { id } = useParams();
+
+  const [page, setPage] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setPage(newValue);
+  };
+
   const { data: dataClient, isLoading: l1, error: e1 } = useGetClientQuery(id);
   const { data: dataOrders, isLoading: l2, error: e2 } = useGetClientOrderQuery(id);
   const {
@@ -80,6 +86,12 @@ function DetailsClients() {
     isLoading: l4,
     error: e4,
   } = useGetReportTotalClientBuyIndividualByDayQuery(id);
+
+  const {
+    data: recommendationData,
+    isLoading: l5,
+    error: e5,
+  } = useGetAllRecommendationByClientQuery(id);
 
   const [listProducts, setListProducts] = useState(null);
   const [listTopProducts, setListTopProducts] = useState(null);
@@ -102,29 +114,55 @@ function DetailsClients() {
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
-            <Card>
-              <MDBox
-                mx={2}
-                mt={-3}
-                py={3}
-                px={2}
-                variant="gradient"
-                bgColor="info"
-                borderRadius="lg"
-                coloredShadow="info"
+            <MDBox
+              mx={2}
+              mt={-3}
+              py={3}
+              px={2}
+              variant="gradient"
+              bgColor="info"
+              borderRadius="lg"
+              coloredShadow="info"
+            >
+              <MDTypography variant="h6" color="white">
+                Cliente {dataClient?.data?.client?.user.name || ""}{" "}
+                {dataClient?.data?.client?.user.lastName || ""}
+              </MDTypography>
+            </MDBox>
+
+            <Box
+              sx={{
+                display: "flex",
+                gap: "20px",
+                width: "100%",
+                flexDirection: "column",
+                px: 2,
+                my: 2,
+              }}
+            >
+              <Tabs value={page} onChange={handleChange} centered>
+                <Tab label="Datos del cliente" />
+                <Tab label="Editar cliente" />
+                <Tab label="Editar dirección" />
+                <Tab label="Canjear puntos" />
+              </Tabs>
+            </Box>
+            {page === 0 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
               >
-                <MDTypography variant="h6" color="white">
-                  Detalle cliente
-                </MDTypography>
-              </MDBox>
-              <MDBox pt={3}>
-                {(l1 || l2 || l3 || l4) && <Loading />}
-                {(e1 || e2 || e3 || e4) && <Alert severity="error">ha ocurrido un error</Alert>}
+                {(l1 || l2 || l3 || l4 || l5) && <Loading />}
+                {(e1 || e2 || e3 || e4 || e5) && (
+                  <Alert severity="error">ha ocurrido un error</Alert>
+                )}
                 {dataClient &&
                   dataOrders &&
                   listTopProducts &&
                   dataClientBuy &&
-                  dataClientBuyByDay && (
+                  dataClientBuyByDay &&
+                  recommendationData && (
                     <Box m="20px">
                       <ResumeDataClient
                         client={dataClient.data.client}
@@ -132,12 +170,48 @@ function DetailsClients() {
                         listTopProducts={listTopProducts}
                         clientBuy={dataClientBuy.data?.report[0]}
                         dataClientBuyByDay={dataClientBuyByDay.data.report}
+                        recommendation={recommendationData.data.recommendation}
+                        orders={dataOrders}
                       />
-                      <TableListOrders orders={dataOrders} />
                     </Box>
                   )}
-              </MDBox>
-            </Card>
+              </Card>
+            )}
+            {page === 1 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
+              >
+                {l4 && <Loading />}
+                {e4 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {/*    {ofertById?.data?.ofert ? (
+                  <OfertEdit ofertById={ofertById} />
+                ) : (
+                  <OfertCreate warning />
+                )} */}
+              </Card>
+            )}
+            {page === 2 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
+              >
+                {l2 && <Loading />}
+                {e2 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {/*  {productById && <TableStock stock={productById} />} */}
+              </Card>
+            )}
+            {page === 3 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
+              >
+                <RedeemPoints />
+              </Card>
+            )}
           </Grid>
         </Grid>
       </MDBox>
@@ -146,3 +220,52 @@ function DetailsClients() {
 }
 
 export default DetailsClients;
+
+/* <DashboardLayout>
+  <DashboardNavbar />
+  <MDBox pt={6} pb={3}>
+    <Grid container spacing={6}>
+      <Grid item xs={12}>
+        <Card>
+          <MDBox
+            mx={2}
+            mt={-3}
+            py={3}
+            px={2}
+            variant="gradient"
+            bgColor="info"
+            borderRadius="lg"
+            coloredShadow="info"
+          >
+            <MDTypography variant="h6" color="white">
+              Detalle cliente
+            </MDTypography>
+          </MDBox>
+          <MDBox pt={3}>
+            {(l1 || l2 || l3 || l4 || l5) && <Loading />}
+            {(e1 || e2 || e3 || e4 || e5) && <Alert severity="error">ha ocurrido un error</Alert>}
+            {dataClient &&
+              dataOrders &&
+              listTopProducts &&
+              dataClientBuy &&
+              dataClientBuyByDay &&
+              recommendationData && (
+                <Box m="20px">
+                  <ResumeDataClient
+                    client={dataClient.data.client}
+                    listOrders={dataOrders.data.orders}
+                    listTopProducts={listTopProducts}
+                    clientBuy={dataClientBuy.data?.report[0]}
+                    dataClientBuyByDay={dataClientBuyByDay.data.report}
+                    recommendation={recommendationData.data.recommendation}
+                    orders={dataOrders}
+                  />
+                </Box>
+              )}
+          </MDBox>
+        </Card>
+      </Grid>
+    </Grid>
+  </MDBox>
+</DashboardLayout>;
+ */
