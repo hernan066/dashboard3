@@ -21,6 +21,12 @@ export const clientApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 3 },
       providesTags: ["clients"],
     }),
+    getAddressesClient: builder.query({
+      query: (id) => `/clients/addresses/${id}`,
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 3 },
+      providesTags: ["clients"],
+    }),
 
     postClient: builder.mutation({
       query: (items) => ({
@@ -56,6 +62,7 @@ export const clientApi = apiSlice.injectEndpoints({
 export const {
   useGetClientsQuery,
   useGetClientQuery,
+  useGetAddressesClientQuery,
   usePostClientMutation,
   usePutClientMutation,
   useDeleteClientMutation,

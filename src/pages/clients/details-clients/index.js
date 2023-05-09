@@ -20,6 +20,8 @@ import {
 import { useGetAllRecommendationByClientQuery } from "api/recommnedationApi";
 import ResumeDataClient from "./ResumeDataClient";
 import RedeemPoints from "./RedeemPoints";
+import EditClient from "./editClient";
+import EditClientAddress from "./editAddress";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -183,25 +185,17 @@ function DetailsClients() {
                   mx: 2.5,
                 }}
               >
-                {l4 && <Loading />}
-                {e4 && <Alert severity="error">Ha ocurrido un error</Alert>}
-                {/*    {ofertById?.data?.ofert ? (
-                  <OfertEdit ofertById={ofertById} />
-                ) : (
-                  <OfertCreate warning />
-                )} */}
+                <EditClient />
               </Card>
             )}
             {page === 2 && (
-              <Card
+              <Box
                 sx={{
                   mx: 2.5,
                 }}
               >
-                {l2 && <Loading />}
-                {e2 && <Alert severity="error">Ha ocurrido un error</Alert>}
-                {/*  {productById && <TableStock stock={productById} />} */}
-              </Card>
+                <EditClientAddress />
+              </Box>
             )}
             {page === 3 && (
               <Card
@@ -220,52 +214,3 @@ function DetailsClients() {
 }
 
 export default DetailsClients;
-
-/* <DashboardLayout>
-  <DashboardNavbar />
-  <MDBox pt={6} pb={3}>
-    <Grid container spacing={6}>
-      <Grid item xs={12}>
-        <Card>
-          <MDBox
-            mx={2}
-            mt={-3}
-            py={3}
-            px={2}
-            variant="gradient"
-            bgColor="info"
-            borderRadius="lg"
-            coloredShadow="info"
-          >
-            <MDTypography variant="h6" color="white">
-              Detalle cliente
-            </MDTypography>
-          </MDBox>
-          <MDBox pt={3}>
-            {(l1 || l2 || l3 || l4 || l5) && <Loading />}
-            {(e1 || e2 || e3 || e4 || e5) && <Alert severity="error">ha ocurrido un error</Alert>}
-            {dataClient &&
-              dataOrders &&
-              listTopProducts &&
-              dataClientBuy &&
-              dataClientBuyByDay &&
-              recommendationData && (
-                <Box m="20px">
-                  <ResumeDataClient
-                    client={dataClient.data.client}
-                    listOrders={dataOrders.data.orders}
-                    listTopProducts={listTopProducts}
-                    clientBuy={dataClientBuy.data?.report[0]}
-                    dataClientBuyByDay={dataClientBuyByDay.data.report}
-                    recommendation={recommendationData.data.recommendation}
-                    orders={dataOrders}
-                  />
-                </Box>
-              )}
-          </MDBox>
-        </Card>
-      </Grid>
-    </Grid>
-  </MDBox>
-</DashboardLayout>;
- */
