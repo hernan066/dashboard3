@@ -19,9 +19,10 @@ import {
 } from "api/reportApi";
 import { useGetAllRecommendationByClientQuery } from "api/recommnedationApi";
 import ResumeDataClient from "./ResumeDataClient";
-import RedeemPoints from "./RedeemPoints";
+import RedeemPoints from "./redeemPoints/RedeemPoints";
 import EditClient from "./editClient";
 import EditClientAddress from "./editAddress";
+import HistoryPoints from "./historyPoints";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -147,6 +148,7 @@ function DetailsClients() {
                 <Tab label="Editar cliente" />
                 <Tab label="Editar dirección" />
                 <Tab label="Canjear puntos" />
+                <Tab label="Historial de puntos" />
               </Tabs>
             </Box>
             {page === 0 && (
@@ -194,7 +196,7 @@ function DetailsClients() {
                   mx: 2.5,
                 }}
               >
-                <EditClientAddress />
+                <EditClientAddress  client={dataClient.data.client}/>
               </Box>
             )}
             {page === 3 && (
@@ -204,6 +206,15 @@ function DetailsClients() {
                 }}
               >
                 <RedeemPoints />
+              </Card>
+            )}
+            {page === 4 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
+              >
+                <HistoryPoints />
               </Card>
             )}
           </Grid>

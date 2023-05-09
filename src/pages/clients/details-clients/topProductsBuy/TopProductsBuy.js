@@ -5,6 +5,7 @@ import { Avatar, Divider } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { formatPrice } from "utils/formaPrice";
+import { formatQuantity } from "utils/quantityFormat";
 
 export function TopProductsBuy({ listTopProducts }) {
   return (
@@ -78,7 +79,7 @@ export function TopProductsBuy({ listTopProducts }) {
             {product.description}
           </MDTypography>
           <MDTypography variant="h6" sx={{ width: "15%", textAlign: "center" }}>
-            {product.totalQuantity}
+            {formatQuantity(product.totalQuantity)}
           </MDTypography>
           <MDTypography variant="h6" mr={1} sx={{ width: "15%", textAlign: "right" }}>
             {formatPrice(product.totalPrice)}

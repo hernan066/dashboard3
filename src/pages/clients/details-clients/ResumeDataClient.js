@@ -2,13 +2,14 @@
 /* eslint-disable react/prop-types */
 import { Box, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
+
 import ClientChart1 from "./chart1/ClientChar1";
 import ClientChart2 from "./chart2/ClientChart2";
 import { DataClient } from "./dataClient/DataClient";
 import { RecAndPoints } from "./recommendationAndPoints/RecAndPoints";
 import { DataOrders } from "./dataOrders/DataOrders";
 import { TopProductsBuy } from "./topProductsBuy/TopProductsBuy";
-import TableListOrders from "./TableListOrders";
+import TableListOrders from "./tableOrders/TableList";
 
 function ResumeDataClient({
   client,
@@ -49,7 +50,7 @@ function ResumeDataClient({
       </MDBox>
 
       <TopProductsBuy listTopProducts={listTopProducts} />
-      <TableListOrders orders={orders} />
+      <TableListOrders orders={orders.data.orders} />
     </>
   );
 }

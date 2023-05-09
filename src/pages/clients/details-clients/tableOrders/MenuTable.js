@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { MenuItem, Popover } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
@@ -9,28 +9,10 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 import { useDeleteOrderMutation, usePutOrderMutation } from "api/orderApi";
 
-function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid }) {
+function MenuTable({ open, handleCloseMenu, orderId, orderActive, orderPaid, clientId }) {
   const navigate = useNavigate();
 
-  const [deleteOrder, { isSuccess, isError }] = useDeleteOrderMutation();
   const [editOrder, { isSuccess: s1, isError: e1 }] = usePutOrderMutation();
-
-  const handlerDelete = () => {
-    handleCloseMenu();
-    Swal.fire({
-      title: "Deseas borrar esta orden?",
-      text: "Este cambio no se puede revertir",
-
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Borrar",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await deleteOrder(orderId).unwrap();
-      }
-    });
-  };
 
   const handlerActivate = async () => {
     const id = orderId;
@@ -50,7 +32,7 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
     await editOrder({ id, ...editOrderValues }).unwrap();
   };
 
-  useEffect(() => {
+  /*  useEffect(() => {
     if (isError)
       Swal.fire({
         position: "center",
@@ -70,7 +52,7 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
         showConfirmButton: false,
         timer: 2500,
       });
-  }, [isSuccess]);
+  }, [isSuccess]); */
   useEffect(() => {
     if (e1)
       Swal.fire({
@@ -116,6 +98,10 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
         <VisibilityIcon sx={{ mr: 1 }} />
         Ver Orden
       </MenuItem>
+      <MenuItem onClick={() => navigate(`/clientes/detalle/${clientId}`)}>
+        <VisibilityIcon sx={{ mr: 1 }} />
+        Ver Cliente
+      </MenuItem>
       <MenuItem onClick={handlerActivate}>
         <EditIcon sx={{ mr: 1 }} />
         Activar/Desactivar
@@ -126,15 +112,10 @@ function MenuListOrders({ open, handleCloseMenu, orderId, orderActive, orderPaid
       </MenuItem>
       <MenuItem onClick={() => navigate(`/ordenes/editar/${orderId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Editar Orden
-      </MenuItem>
-
-      <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
-        <DeleteIcon sx={{ mr: 1 }} />
-        Borrar orden
+        Editar/Borrar Orden
       </MenuItem>
     </Popover>
   );
 }
 
-export default MenuListOrders;
+export default MenuTable;

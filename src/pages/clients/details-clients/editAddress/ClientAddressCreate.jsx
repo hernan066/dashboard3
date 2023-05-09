@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -14,39 +14,38 @@ import colors from "assets/theme/base/colors";
 import { createClientAddressSchema } from "validations/clientAddress/createClientAddressSchemaYup";
 import Swal from "sweetalert2";
 
-import { usePutClientAddressMutation } from "api/clientsAddressApi";
+import { usePostClientAddressMutation } from "api/clientsAddressApi";
 
-function ClientAddressEdit({ client, zones, clientAddress }) {
+function ClientAddressCreate({ client, zones }) {
   const navigate = useNavigate();
-  const { id } = useParams();
-  const [createClientAddress, { isLoading, isError }] = usePutClientAddressMutation();
+  const [createClientAddress, { isLoading, isError }] = usePostClientAddressMutation();
+  console.log(client);
 
   const formik = useFormik({
     initialValues: {
       user: "",
-      address: clientAddress.address,
-      department: clientAddress.department,
-      flor: clientAddress.flor,
-      province: clientAddress.province,
-      city: clientAddress.city,
-      zip: clientAddress.zip,
-      deliveryZone: clientAddress.deliveryZone._id,
-      type: clientAddress.type,
-      phone: clientAddress.phone,
+      address: "",
+      department: "",
+      flor: "",
+      province: "",
+      city: "",
+      zip: undefined,
+      deliveryZone: "",
+      type: "",
+      phone: "",
     },
     onSubmit: async (values) => {
-      const editClientAddress = {
+      const newClientAddress = {
         ...values,
         user: client.user._id,
         client: client._id,
       };
-
-      const res = await createClientAddress({ id, ...editClientAddress }).unwrap();
+      const res = await createClientAddress(newClientAddress).unwrap();
       if (res) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Cliente editado con éxito",
+          title: "Dirección cargada con éxito",
           showConfirmButton: false,
           timer: 2500,
         });
@@ -57,7 +56,7 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
   });
 
   return (
-    <MDBox pt={3} pb={3}>
+    <MDBox pt={2} pb={3}>
       <Box
         sx={{
           display: "flex",
@@ -78,7 +77,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               required
               name="address"
               label="Dirección"
-              value={formik.values.address}
               error={!!formik.errors.address}
               helperText={formik.errors.address}
               onChange={formik.handleChange}
@@ -88,7 +86,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               fullWidth
               name="department"
               label="Departamento (opcional)"
-              value={formik.values.department}
               error={!!formik.errors.department}
               helperText={formik.errors.department}
               onChange={formik.handleChange}
@@ -98,7 +95,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               fullWidth
               name="flor"
               label="Piso (opcional)"
-              value={formik.values.flor}
               error={!!formik.errors.flor}
               helperText={formik.errors.flor}
               onChange={formik.handleChange}
@@ -109,7 +105,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               required
               name="province"
               label="Provincia"
-              value={formik.values.province}
               error={!!formik.errors.province}
               helperText={formik.errors.province}
               onChange={formik.handleChange}
@@ -121,7 +116,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               required
               name="city"
               label="Ciudad"
-              value={formik.values.city}
               error={!!formik.errors.city}
               helperText={formik.errors.city}
               onChange={formik.handleChange}
@@ -139,7 +133,7 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
                 color: "white !important",
               }}
             >
-              Editar
+              Crear
             </LoadingButton>
             <MDButton
               variant="outlined"
@@ -152,7 +146,7 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
             >
               Cancelar
             </MDButton>
-            {isError && <Alert severity="error">Error — Dirección no actualizada</Alert>}
+            {isError && <Alert severity="error">Error — Cliente no creado</Alert>}
           </Box>
 
           <Box sx={{ width: "50%" }}>
@@ -163,7 +157,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               type="number"
               name="zip"
               label="Código postal"
-              value={formik.values.zip}
               error={!!formik.errors.zip}
               helperText={formik.errors.zip}
               onChange={formik.handleChange}
@@ -209,7 +202,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               fullWidth
               name="phone"
               label="Telefono del negocio (opcional)"
-              value={formik.values.phone}
               error={!!formik.errors.phone}
               helperText={formik.errors.phone}
               onChange={formik.handleChange}
@@ -221,4 +213,4 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
   );
 }
 
-export default ClientAddressEdit;
+export default ClientAddressCreate;
