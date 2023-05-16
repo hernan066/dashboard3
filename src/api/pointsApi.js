@@ -23,7 +23,17 @@ export const pointsApi = apiSlice.injectEndpoints({
       invalidatesTags: ["points", "clients"],
       extraOptions: { maxRetries: 0 },
     }),
+    postPointsReset: builder.mutation({
+      query: (newOrders) => ({
+        url: "/points/reset",
+        method: "post",
+        body: newOrders,
+      }),
+      invalidatesTags: ["points", "clients"],
+      extraOptions: { maxRetries: 0 },
+    }),
   }),
 });
 
-export const { useGetAllPointsByClientQuery, usePostPointsMutation } = pointsApi;
+export const { useGetAllPointsByClientQuery, usePostPointsMutation, usePostPointsResetMutation } =
+  pointsApi;

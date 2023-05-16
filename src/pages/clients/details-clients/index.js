@@ -110,6 +110,7 @@ function DetailsClients() {
       setListTopProducts(repeatSum(listProducts));
     }
   }, [listProducts]);
+  console.log(dataClient);
 
   return (
     <DashboardLayout>

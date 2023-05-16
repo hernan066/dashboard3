@@ -64,7 +64,7 @@ function SimpleClientCreate({ clients }) {
             cuit: dni,
             contactMeans: inputValue ? "Recomendacion" : "",
             campaignName: "",
-            recommendation: inputValue.id,
+            recommendation: inputValue?.id || null,
           };
 
           const res2 = await createClient(client).unwrap();

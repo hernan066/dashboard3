@@ -17,6 +17,7 @@ import OfertEdit from "./ofertEdit/OfertEdit";
 import TableStock from "./stockEdit/TableStock";
 import OfertCreate from "../product-create/ofert/OfertCreate";
 import ProductsLotsCreate from "./stockAdd/ProductsLotsCreate";
+import ProductData from "./productData";
 
 function EditProduct() {
   const { id } = useParams();
@@ -66,13 +67,15 @@ function EditProduct() {
               }}
             >
               <Tabs value={page} onChange={handleChange} centered>
+                <Tab label="Datos del producto" />
                 <Tab label="Editar datos" />
                 <Tab label="Editar oferta" />
                 <Tab label="Agregar Stock" />
                 <Tab label="Lista de stock" />
               </Tabs>
             </Box>
-            {page === 0 && (
+            {page === 0 && <ProductData />}
+            {page === 1 && (
               <Card
                 sx={{
                   mx: 2.5,
@@ -85,7 +88,7 @@ function EditProduct() {
                 )}
               </Card>
             )}
-            {page === 1 && (
+            {page === 2 && (
               <Card
                 sx={{
                   mx: 2.5,
@@ -100,7 +103,7 @@ function EditProduct() {
                 )}
               </Card>
             )}
-            {page === 3 && (
+            {page === 4 && (
               <Card
                 sx={{
                   mx: 2.5,
@@ -111,7 +114,7 @@ function EditProduct() {
                 {productById && <TableStock stock={productById} />}
               </Card>
             )}
-            {page === 2 && (
+            {page === 3 && (
               <Card
                 sx={{
                   mx: 2.5,

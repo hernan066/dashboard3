@@ -48,6 +48,7 @@ import ListDistribution from "pages/distributionList";
 import ProductsSellByDay from "pages/reports/producstsSell";
 import ProductsSellByRange from "pages/reports/producstsSell/reportByRange";
 import StockMain from "pages/productsLots";
+import ResetPoints from "pages/resetPoints";
 
 const routes = [
   {
@@ -464,6 +465,15 @@ const routes = [
     component: (
       <RequireAuth>
         <ProductsSellByRange />
+      </RequireAuth>
+    ),
+  },
+  // reset points
+  {
+    route: "/puntos/reset",
+    component: (
+      <RequireAuth>
+        <ResetPoints />
       </RequireAuth>
     ),
   },
