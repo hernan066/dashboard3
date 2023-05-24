@@ -76,7 +76,7 @@ function Dashboard1() {
             reportTotalClientBuy={dataClientsBuy.data.report}
           />
         )}
-      <Footer />
+      {/*  <Footer /> */}
     </DashboardLayout>
   );
 }

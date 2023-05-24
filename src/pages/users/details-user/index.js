@@ -100,7 +100,7 @@ function ProfileUser() {
         </Header>
       )}
 
-      <Footer />
+      {/*  <Footer /> */}
     </DashboardLayout>
   );
 }

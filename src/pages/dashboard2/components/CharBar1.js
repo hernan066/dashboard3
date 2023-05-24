@@ -7,6 +7,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  PointElement,
+  LineElement,
 } from "chart.js";
 import { useMemo } from "react";
 import { Bar } from "react-chartjs-2";
@@ -18,7 +20,16 @@ import MDTypography from "components/MDTypography";
 import { dateToLocalDate } from "utils/dateFormat";
 import { getChartData } from "utils/getChartData";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
 
 export const options = {
   responsive: true,

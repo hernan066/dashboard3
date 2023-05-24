@@ -8,7 +8,8 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
@@ -23,7 +24,7 @@ import MDTypography from "components/MDTypography";
 import { dateToLocalDate } from "utils/dateFormat";
 import { arrLastXdays } from "utils/arrLastXdays";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const options = {
   responsive: true,

@@ -31,7 +31,7 @@ function Dashboard2() {
           ordersByDays={dataOrdersByDays.data.orders}
         />
       )}
-      <Footer />
+      {/*  <Footer /> */}
     </DashboardLayout>
   );
 }

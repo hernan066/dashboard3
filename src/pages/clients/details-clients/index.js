@@ -114,7 +114,7 @@ function DetailsClients() {
 
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      {/*   <DashboardNavbar /> */}
       <MDBox pt={6} pb={3}>
         <Grid container spacing={6}>
           <Grid item xs={12}>
@@ -197,7 +197,7 @@ function DetailsClients() {
                   mx: 2.5,
                 }}
               >
-                <EditClientAddress  client={dataClient.data.client}/>
+                <EditClientAddress client={dataClient.data.client} />
               </Box>
             )}
             {page === 3 && (

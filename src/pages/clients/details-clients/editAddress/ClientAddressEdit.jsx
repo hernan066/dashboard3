@@ -1,10 +1,5 @@
-/* eslint-disable array-callback-return */
-/* eslint-disable consistent-return */
-/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/jsx-boolean-value */
-/* eslint-disable no-underscore-dangle */
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LoadingButton } from "@mui/lab";
 import { Alert, Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
@@ -13,13 +8,18 @@ import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
 import { createClientAddressSchema } from "validations/clientAddress/createClientAddressSchemaYup";
 import Swal from "sweetalert2";
-
 import { usePutClientAddressMutation } from "api/clientsAddressApi";
+import { geoLocalization } from "api/geoApi";
+import { useEffect, useState } from "react";
+import Loading from "components/DRLoading";
+import Leaflet from "./Leaflet";
 
 function ClientAddressEdit({ client, zones, clientAddress }) {
   const navigate = useNavigate();
-  const { id } = useParams();
+
   const [createClientAddress, { isLoading, isError }] = usePutClientAddressMutation();
+  const [coords, setCoord] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -30,9 +30,11 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
       province: clientAddress.province,
       city: clientAddress.city,
       zip: clientAddress.zip,
-      deliveryZone: clientAddress.deliveryZone._id,
+      deliveryZone: clientAddress.deliveryZone,
       type: clientAddress.type,
       phone: clientAddress.phone,
+      lat: clientAddress?.lat || 0,
+      lng: clientAddress?.lng || 0,
     },
     onSubmit: async (values) => {
       const editClientAddress = {
@@ -41,7 +43,10 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
         client: client._id,
       };
 
-      const res = await createClientAddress({ id, ...editClientAddress }).unwrap();
+      const res = await createClientAddress({
+        id: clientAddress._id,
+        ...editClientAddress,
+      }).unwrap();
       if (res) {
         Swal.fire({
           position: "center",
@@ -50,11 +55,20 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
           showConfirmButton: false,
           timer: 2500,
         });
-        // navigate("/clientes/direcciones/lista");
       }
     },
     validationSchema: createClientAddressSchema,
   });
+
+  useEffect(() => {
+    setLoading(true);
+    const getGeo = async () => {
+      const geo = await geoLocalization(clientAddress.address, clientAddress.city);
+      setCoord(geo?.results[0]?.geometry.location);
+    };
+    getGeo();
+    setLoading(false);
+  }, []);
 
   return (
     <MDBox pt={3} pb={3}>
@@ -71,7 +85,7 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
           onSubmit={formik.handleSubmit}
           sx={{ mt: 1, mx: 2, display: "flex", gap: 3, width: "100%" }}
         >
-          <Box sx={{ width: "50%" }}>
+          <Box mt={3} sx={{ width: "50%" }}>
             <TextField
               margin="normal"
               fullWidth
@@ -126,36 +140,6 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               helperText={formik.errors.city}
               onChange={formik.handleChange}
             />
-
-            <LoadingButton
-              type="submit"
-              variant="contained"
-              loading={isLoading}
-              sx={{
-                mt: 3,
-                mb: 2,
-                mr: 2,
-                backgroundColor: `${colors.info.main}`,
-                color: "white !important",
-              }}
-            >
-              Editar
-            </LoadingButton>
-            <MDButton
-              variant="outlined"
-              color="info"
-              onClick={() => navigate(-1)}
-              sx={{
-                mt: 3,
-                mb: 2,
-              }}
-            >
-              Cancelar
-            </MDButton>
-            {isError && <Alert severity="error">Error — Dirección no actualizada</Alert>}
-          </Box>
-
-          <Box sx={{ width: "50%" }}>
             <TextField
               margin="normal"
               fullWidth
@@ -214,7 +198,63 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
               helperText={formik.errors.phone}
               onChange={formik.handleChange}
             />
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              type="number"
+              name="lat"
+              label="Latitud en base de datos"
+              value={formik.values.lat}
+              error={!!formik.errors.lat}
+              helperText={formik.errors.lat}
+              onChange={formik.handleChange}
+            />
+            <TextField
+              margin="normal"
+              fullWidth
+              required
+              type="number"
+              name="lng"
+              label="Longitud en base de datos"
+              value={formik.values.lng}
+              error={!!formik.errors.lng}
+              helperText={formik.errors.lng}
+              onChange={formik.handleChange}
+            />
+
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              loading={isLoading}
+              sx={{
+                mt: 3,
+                mb: 2,
+                mr: 2,
+                backgroundColor: `${colors.info.main}`,
+                color: "white !important",
+              }}
+            >
+              Editar
+            </LoadingButton>
+            <MDButton
+              variant="outlined"
+              color="info"
+              onClick={() => navigate(-1)}
+              sx={{
+                mt: 3,
+                mb: 2,
+              }}
+            >
+              Cancelar
+            </MDButton>
+            {isError && <Alert severity="error">Error — Dirección no actualizada</Alert>}
           </Box>
+
+          <Box mt={1.5} sx={{ width: "50%", height: 540 }}>
+            {!coords ? <Loading /> : <Leaflet coords={coords} clientAddress={clientAddress} />}
+          </Box>
+          {/*  <Box sx={{ width: "50%" }}>{loading ? <Loading /> : <Map coords={coords} />}</Box> */}
         </Box>
       </Box>
     </MDBox>
