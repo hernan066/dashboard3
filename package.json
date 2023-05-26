@@ -24,6 +24,7 @@
     "@mui/lab": "5.0.0-alpha.131",
     "@mui/material": "5.13.2",
     "@mui/styled-engine": "5.13.2",
+    "@mui/system": "^5.13.2",
     "@mui/x-data-grid": "^6.5.0",
     "@mui/x-data-grid-generator": "^6.5.0",
     "@reduxjs/toolkit": "^1.9.5",

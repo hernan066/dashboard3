@@ -24,7 +24,7 @@ function TableActiveOrders() {
     data: [],
     total: 0,
     page: 1,
-    pageSize: 10,
+    pageSize: 100,
   });
 
   const {

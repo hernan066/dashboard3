@@ -24,7 +24,7 @@ function TableUnpaidOrders() {
     data: [],
     total: 0,
     page: 1,
-    pageSize: 10,
+    pageSize: 100,
   });
 
   const {
@@ -421,9 +421,7 @@ function TableUnpaidOrders() {
                 },
               },
             }}
-            // nuevos
             autoHeight
-            // rows={pageState.data}
             rowCount={pageState.total}
             loading={l1}
             rowsPerPageOptions={[10, 30, 50, 70, 100]}
