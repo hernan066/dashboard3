@@ -1,13 +1,11 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
-import { Alert, Box, IconButton, Stack } from "@mui/material";
+import { Alert, Box, IconButton } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
 import { dateToLocalDate } from "utils/dateFormat";
@@ -17,21 +15,27 @@ import { formatPrice } from "utils/formaPrice";
 import { useGetOrdersQuery } from "api/orderApi";
 import MenuTable from "pages/orders/componets/MenuTable";
 
+const PAGE_SIZE = 10;
+
 function TableActiveOrders() {
   /* -------------------------Pagination-------------------------------- */
 
   const [pageState, setPageState] = useState({
     data: [],
     total: 0,
-    page: 1,
-    pageSize: 100,
+    page: 0,
+    pageSize: PAGE_SIZE,
   });
 
   const {
     data,
     isLoading: l1,
     error,
-  } = useGetOrdersQuery({ page: pageState.page, limit: pageState.pageSize, active: "true" });
+  } = useGetOrdersQuery({ page: pageState.page + 1, limit: pageState.pageSize, active: "true" });
+
+  const handlePaginationModelChange = (newState) => {
+    setPageState({ ...pageState, page: newState.page, pageSize: newState.pageSize });
+  };
 
   useEffect(() => {
     setPageState((old) => ({
@@ -57,7 +61,6 @@ function TableActiveOrders() {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
 
-  const navigate = useNavigate();
   const [open, setOpen] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [orderActive, setOrderActive] = useState(null);
@@ -344,23 +347,6 @@ function TableActiveOrders() {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
-        <Stack direction="row" alignItems="center" mb={5}>
-          <MDButton
-            sx={{ marginRight: "10px" }}
-            color="dark"
-            variant="gradient"
-            onClick={() => navigate("/ordenes/nueva")}
-          >
-            Orden de reparto
-          </MDButton>
-          <MDButton
-            color="info"
-            variant="gradient"
-            onClick={() => navigate("/ordenes/nueva-local")}
-          >
-            Orden entrega local
-          </MDButton>
-        </Stack>
         <Box m="40px 0 0 0" height="75vh" width="2300px">
           <DataGrid
             checkboxSelection
@@ -418,21 +404,15 @@ function TableActiveOrders() {
             }}
             // nuevos
             autoHeight
-            // rows={pageState.data}
-            rowCount={pageState.total}
             loading={l1}
-            rowsPerPageOptions={[10, 30, 50, 70, 100, 500]}
-            pagination
-            page={pageState.page - 1}
-            pageSize={pageState.pageSize}
             paginationMode="server"
-            onPageChange={(newPage) => {
-              setPageState((old) => ({ ...old, page: newPage + 1 }));
+            rowCount={pageState.total}
+            paginationModel={{
+              page: pageState.page,
+              pageSize: pageState.pageSize,
             }}
-            onPageSizeChange={(newPageSize) =>
-              setPageState((old) => ({ ...old, pageSize: newPageSize }))
-            }
-            // columns={columns}
+            pageSizeOptions={[10, 50, 100]}
+            onPaginationModelChange={(e) => handlePaginationModelChange(e)}
           />
         </Box>
       </Box>
