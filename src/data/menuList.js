@@ -71,6 +71,11 @@ export const menuList = [
         icon: "holiday_village_icon",
         url: "/clientes/direcciones/lista",
       },
+      {
+        name: "Localizacion",
+        icon: "location_on_icon",
+        url: "/clientes/localizacion",
+      },
     ],
   },
   {
