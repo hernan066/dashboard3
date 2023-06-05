@@ -12,6 +12,7 @@ import { Alert } from "@mui/material";
 import { useGetClientAddressesQuery } from "api/clientsAddressApi";
 import { useLoadScript } from "@react-google-maps/api";
 import MapsLocations from "./MapsLocations";
+import MapsHeat from "./MapsHeat";
 
 function LocationsPage() {
   const { data, isLoading, error } = useGetClientAddressesQuery();
@@ -19,7 +20,7 @@ function LocationsPage() {
   
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY,
-    libraries: ["places"],
+    libraries: ["places", "visualization"],
   });
 
   return (
@@ -43,10 +44,11 @@ function LocationsPage() {
                   Localizaciones
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
+              <MDBox pt={3} sx={{minHeight: "70vh"}}>
                 {isLoading && !isLoaded && <Loading />}
                 {error && <Alert severity="error">Ha ocurrido un error</Alert>}
                 {data && <MapsLocations clientAddress={data.data.clientAddress} />} 
+                {data && <MapsHeat clientAddress={data.data.clientAddress} />} 
               </MDBox>
             </Card>
           </Grid>
