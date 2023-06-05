@@ -72,7 +72,7 @@ export const menuList = [
         url: "/clientes/direcciones/lista",
       },
       {
-        name: "Localizacion",
+        name: "Localización",
         icon: "location_on_icon",
         url: "/clientes/localizacion",
       },
