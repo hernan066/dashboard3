@@ -27,7 +27,8 @@ function CustomMarker({ lat, lng, client }) {
             <h2>
               {client.user.name} {client.user.lastName}
             </h2>
-            <h3 style={{ marginBottom: "5px" }}>{client.address}</h3>
+            <h3>{client.address}</h3>
+            <h3 style={{ marginBottom: "5px" }}>{client.deliveryZone.name}</h3>
             <Link to={`/clientes/detalle/${client.client._id}`}>Ver Cliente</Link>
           </div>
         </InfoWindow>
