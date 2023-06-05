@@ -49,6 +49,7 @@ import ProductsSellByDay from "pages/reports/producstsSell";
 import ProductsSellByRange from "pages/reports/producstsSell/reportByRange";
 import StockMain from "pages/productsLots";
 import ResetPoints from "pages/resetPoints";
+import LocationsPage from "pages/locations";
 
 const routes = [
   {
@@ -279,6 +280,14 @@ const routes = [
     component: (
       <RequireAuth>
         <EditClientAddress />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/clientes/localizacion",
+    component: (
+      <RequireAuth>
+        <LocationsPage />
       </RequireAuth>
     ),
   },
