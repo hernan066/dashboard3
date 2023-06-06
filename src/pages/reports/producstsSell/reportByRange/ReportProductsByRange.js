@@ -16,19 +16,23 @@ import {
   usePostTotalOrderProductsByRangeMutation,
   usePostReportPaymentByRangeDayMutation,
   usePostReportClientBuyByRangeDayMutation,
+  usePostReportSellByRangeDayMutation,
 } from "api/reportApi";
 import { LoadingButton } from "@mui/lab";
 import colors from "assets/theme/base/colors";
 import TableReportClientBuy from "./TableReportClientBuy";
 import TableReportProductsByRange from "./TableReportProductsByRange";
+import TableReportSellZones from "./TableReportSellZones";
 
 function ReportProductsByRange() {
   const [startDate, setStartDate] = useState(new Date().setHours(0, 0, 0, 0));
   const [endDate, setEndDate] = useState(new Date().setHours(23, 59, 59, 0));
   const [updateDate, setUpdateDate] = useState(null);
+
   const [reports, setReports] = useState([]);
   const [payments, setPayments] = useState([]);
   const [clientsBuy, setClientBuy] = useState([]);
+  const [sellZones, setSellZones] = useState([]);
 
   const [getTotalsOrders, { isLoading: l1, isError: e1 }] =
     usePostTotalOrderProductsByRangeMutation();
@@ -36,6 +40,7 @@ function ReportProductsByRange() {
     usePostReportPaymentByRangeDayMutation();
   const [getDataClientBuy, { isLoading: l3, isError: e3 }] =
     usePostReportClientBuyByRangeDayMutation();
+  const [getSellData, { isLoading: l4, isError: e4 }] = usePostReportSellByRangeDayMutation();
 
   const totalCost = reports.reduce((acc, curr) => curr.totalCost + acc, 0);
   const totalSell = reports.reduce((acc, curr) => curr.total + acc, 0);
@@ -54,13 +59,16 @@ function ReportProductsByRange() {
     const res = await getTotalsOrders({ from: startDate, to: endDate }).unwrap();
     const res2 = await getDataPayments({ from: startDate, to: endDate }).unwrap();
     const res3 = await getDataClientBuy({ from: startDate, to: endDate }).unwrap();
+    const res4 = await getSellData({ from: startDate, to: endDate }).unwrap();
     setReports(res.data.report);
     setPayments(res2.data.report);
     setClientBuy(res3.data.report);
+    setSellZones(res4.data.zones);
   };
 
-  console.log(payments);
-  if (e1 || e2 || e3) {
+  console.log(sellZones);
+
+  if (e1 || e2 || e3 || e4) {
     return <Alert severity="error">Ha ocurrido un error</Alert>;
   }
 
@@ -88,7 +96,7 @@ function ReportProductsByRange() {
         <LoadingButton
           onClick={handleSend}
           variant="contained"
-          loading={l1 || l2 || l3}
+          loading={l1 || l2 || l3 || l4}
           sx={{
             mt: 3,
             mb: 2,
@@ -234,6 +242,16 @@ function ReportProductsByRange() {
             Compras de clientes
           </MDTypography>
           <TableReportClientBuy reports={clientsBuy} totalProfits={totalProfits} />
+          <MDTypography
+            variant="h6"
+            sx={{
+              ml: 3,
+              mt: 3,
+            }}
+          >
+            Ventas por zonas
+          </MDTypography>
+          <TableReportSellZones sellZones={sellZones} totalProfits={totalProfits} />
         </Box>
       )}
     </Box>
