@@ -8,6 +8,8 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import MenuListClientAddress from "./MenuListClientAddress";
 
 function TableListClientAddress({ clientAddress }) {
@@ -20,6 +22,7 @@ function TableListClientAddress({ clientAddress }) {
   const [menuId, setMenuId] = useState(null);
 
   const handleOpenMenu = (id, event) => {
+    console.log(id, event);
     setOpen(event.currentTarget);
     setMenuId(id);
   };
@@ -33,7 +36,7 @@ function TableListClientAddress({ clientAddress }) {
     {
       field: "user",
       headerName: "Cliente",
-      flex: 1,
+      flex: 1.5,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
@@ -53,7 +56,7 @@ function TableListClientAddress({ clientAddress }) {
     {
       field: "address",
       headerName: "Dirección",
-      flex: 1,
+      flex: 1.5,
       headerClassName: "super-app-theme--header",
     },
     {
@@ -86,14 +89,58 @@ function TableListClientAddress({ clientAddress }) {
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
+    {
+      field: "clientId",
+      headerName: "Cliente Id",
+      flex: 2,
+      headerClassName: "super-app-theme--header",
+    },
+    {
+      field: "lat",
+      headerName: "Geo",
+      flex: 0.8,
+      headerClassName: "super-app-theme--header",
+      renderCell: (params) =>
+        params.row.lat ? (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "green",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CheckIcon />
+          </div>
+        ) : (
+          <div
+            style={{
+              height: "30px",
+              width: "30px",
+              borderRadius: "50%",
+              backgroundColor: "red",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "white",
+            }}
+          >
+            <CloseIcon />
+          </div>
+        ),
+    },
 
     {
       field: "accessLevel",
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { _id } }) => (
-        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(_id, e)}>
+      renderCell: ({ row: { clientId } }) => (
+        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(clientId, e)}>
           <MoreVertIcon />
         </IconButton>
       ),
@@ -112,7 +159,7 @@ function TableListClientAddress({ clientAddress }) {
             Crear
           </MDButton>
         </Stack>
-        <Box m="40px 0 0 0" height="75vh" width="1500px">
+        <Box m="40px 0 0 0" height="75vh" width="2000px">
           <DataGrid
             checkboxSelection
             disableSelectionOnClick
@@ -123,6 +170,7 @@ function TableListClientAddress({ clientAddress }) {
               email: address?.user?.email,
               phone: address?.user?.phone,
               zone: address?.deliveryZone?.name,
+              clientId: address?.client?._id,
             }))}
             columns={columns}
             getRowId={(row) => row._id}

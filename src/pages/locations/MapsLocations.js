@@ -39,6 +39,7 @@ function CustomMarker({ lat, lng, client }) {
 
 function MapsLocations({ clientAddress }) {
   const filterClientAddress = clientAddress.filter((client) => client.lat);
+  console.log(filterClientAddress.length);
 
   const center = useMemo(() => ({ lat: -34.570428718491605, lng: -58.743382510475065 }), []); // -34.570428718491605, -58.743382510475065
   const options = useMemo(

@@ -62,7 +62,7 @@ function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
       PaperProps={{
         sx: {
           p: 1,
-          width: 120,
+          width: 130,
           zIndex: 20,
           "& .MuiMenuItem-root": {
             px: 1,
@@ -72,14 +72,14 @@ function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/clientes/direcciones/editar/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/clientes/detalle/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Ver cliente
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar
       </MenuItem>
     </Popover>
   );
