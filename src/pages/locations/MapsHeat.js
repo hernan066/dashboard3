@@ -6,9 +6,13 @@ import { zones } from "./Zones";
 
 function MapsHeat({ clientAddress }) {
   const filterClientAddress = clientAddress.filter((client) => client.lat);
-  const dataHeat = filterClientAddress.map(
+  /* const dataHeat = filterClientAddress.map(
     (client) => new window.google.maps.LatLng(client.lat, client.lng)
-  );
+  ); */
+  const dataHeat = filterClientAddress.map((client) => ({
+    location: new window.google.maps.LatLng(client.lat, client.lng),
+    weight: 5,
+  }));
 
   const center = useMemo(() => ({ lat: -34.570428718491605, lng: -58.743382510475065 }), []); // -34.570428718491605, -58.743382510475065
   const options = useMemo(
@@ -45,7 +49,7 @@ function MapsHeat({ clientAddress }) {
       <GoogleMap zoom={13} center={center} mapContainerClassName="map-container" options={options}>
         <Marker position={center} icon="https://i.ibb.co/nbm4b4x/pngegg.png" />
 
-        <HeatmapLayerF data={dataHeat} options={{ radius: 40 }} />
+        <HeatmapLayerF data={dataHeat} options={{ radius: 30, maxIntensity: 10 }} />
 
         <Polygon paths={zones.zona1} options={optionsPolygon} />
         <Polygon paths={zones.zona2} options={optionsPolygon} />
