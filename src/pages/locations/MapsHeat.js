@@ -4,6 +4,19 @@ import { GoogleMap, HeatmapLayerF, Marker, Polygon } from "@react-google-maps/ap
 import { useMemo } from "react";
 import { zones } from "./Zones";
 
+const optionZones = {
+  fillColor: "lightblue",
+  fillOpacity: 0.2,
+  strokeColor: "blue",
+  strokeOpacity: 1,
+  strokeWeight: 2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  geodesic: false,
+  zIndex: 1,
+};
+
 function MapsHeat({ clientAddress }) {
   const filterClientAddress = clientAddress.filter((client) => client.lat);
   /* const dataHeat = filterClientAddress.map(
@@ -28,18 +41,45 @@ function MapsHeat({ clientAddress }) {
     }),
     []
   );
-  const optionsPolygon = useMemo(
+  const zone1 = useMemo(
     () => ({
+      ...optionZones,
+      fillColor: "red",
+    }),
+    []
+  );
+  const zone2 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "green",
+    }),
+    []
+  );
+  const zone3 = useMemo(
+    () => ({
+      ...optionZones,
       fillColor: "lightblue",
-      fillOpacity: 0.3,
-      strokeColor: "blue",
-      strokeOpacity: 1,
-      strokeWeight: 2,
-      clickable: false,
-      draggable: false,
-      editable: false,
-      geodesic: false,
-      zIndex: 1,
+    }),
+    []
+  );
+  const zone4 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "BlueViolet",
+    }),
+    []
+  );
+  const zone5 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "DarkGoldenRod",
+    }),
+    []
+  );
+  const zone6 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "DeepPink",
     }),
     []
   );
@@ -51,12 +91,12 @@ function MapsHeat({ clientAddress }) {
 
         <HeatmapLayerF data={dataHeat} options={{ radius: 30, maxIntensity: 10 }} />
 
-        <Polygon paths={zones.zona1} options={optionsPolygon} />
-        <Polygon paths={zones.zona2} options={optionsPolygon} />
-        <Polygon paths={zones.zona3} options={optionsPolygon} />
-        <Polygon paths={zones.zona4} options={optionsPolygon} />
-        <Polygon paths={zones.zona5} options={optionsPolygon} />
-        <Polygon paths={zones.zona6} options={optionsPolygon} />
+        <Polygon paths={zones.zona1} options={zone1} />
+        <Polygon paths={zones.zona2} options={zone2} />
+        <Polygon paths={zones.zona3} options={zone3} />
+        <Polygon paths={zones.zona4} options={zone4} />
+        <Polygon paths={zones.zona5} options={zone5} />
+        <Polygon paths={zones.zona6} options={zone6} />
       </GoogleMap>
     </Box>
   );

@@ -5,6 +5,19 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { zones } from "./Zones";
 
+const optionZones = {
+  fillColor: "lightblue",
+  fillOpacity: 0.2,
+  strokeColor: "blue",
+  strokeOpacity: 1,
+  strokeWeight: 2,
+  clickable: false,
+  draggable: false,
+  editable: false,
+  geodesic: false,
+  zIndex: 1,
+};
+
 function CustomMarker({ lat, lng, client }) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -20,7 +33,15 @@ function CustomMarker({ lat, lng, client }) {
     textAlign: "center",
   };
   return (
-    <Marker position={{ lat, lng }} onClick={handleOpen}>
+    <Marker
+      position={{ lat, lng }}
+      onClick={handleOpen}
+      icon={
+        client.client.active
+          ? "https://ik.imagekit.io/mrprwema7/geo-icon-16__2__FMgqGb84R.png?updatedAt=1686144731319"
+          : null
+      }
+    >
       {open && (
         <InfoWindow position={{ lat, lng }} onCloseClick={handleClose}>
           <div style={divStyle}>
@@ -55,18 +76,45 @@ function MapsLocations({ clientAddress }) {
     }),
     []
   );
-  const optionsPolygon = useMemo(
+  const zone1 = useMemo(
     () => ({
+      ...optionZones,
+      fillColor: "red",
+    }),
+    []
+  );
+  const zone2 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "green",
+    }),
+    []
+  );
+  const zone3 = useMemo(
+    () => ({
+      ...optionZones,
       fillColor: "lightblue",
-      fillOpacity: 0.3,
-      strokeColor: "blue",
-      strokeOpacity: 1,
-      strokeWeight: 2,
-      clickable: false,
-      draggable: false,
-      editable: false,
-      geodesic: false,
-      zIndex: 1,
+    }),
+    []
+  );
+  const zone4 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "BlueViolet",
+    }),
+    []
+  );
+  const zone5 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "DarkGoldenRod",
+    }),
+    []
+  );
+  const zone6 = useMemo(
+    () => ({
+      ...optionZones,
+      fillColor: "DeepPink",
     }),
     []
   );
@@ -80,12 +128,12 @@ function MapsLocations({ clientAddress }) {
           <CustomMarker lat={client.lat} lng={client.lng} client={client} key={client._id} />
         ))}
 
-        <Polygon paths={zones.zona1} options={optionsPolygon} />
-        <Polygon paths={zones.zona2} options={optionsPolygon} />
-        <Polygon paths={zones.zona3} options={optionsPolygon} />
-        <Polygon paths={zones.zona4} options={optionsPolygon} />
-        <Polygon paths={zones.zona5} options={optionsPolygon} />
-        <Polygon paths={zones.zona6} options={optionsPolygon} />
+        <Polygon paths={zones.zona1} options={zone1} />
+        <Polygon paths={zones.zona2} options={zone2} />
+        <Polygon paths={zones.zona3} options={zone3} />
+        <Polygon paths={zones.zona4} options={zone4} />
+        <Polygon paths={zones.zona5} options={zone5} />
+        <Polygon paths={zones.zona6} options={zone6} />
       </GoogleMap>
     </Box>
   );
