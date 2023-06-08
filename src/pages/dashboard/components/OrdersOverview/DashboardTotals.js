@@ -38,6 +38,8 @@ function DashboardTotals({
     setUpdateDate(dateToLocalDate(new Date()));
   }, []);
 
+  const totalActivesClients = clients.filter((client) => client.active).length;
+
   return (
     <MDBox py={3}>
       <Grid container spacing={3}>
@@ -46,12 +48,12 @@ function DashboardTotals({
             <ComplexStatisticsCard
               color="dark"
               icon="person_add"
-              title="Clientes"
-              count={totalClients}
+              title="Clientes Activos"
+              count={totalActivesClients}
               percentage={{
                 color: "success",
                 amount: "",
-                label: `Actualizado ${updateDate}hs`,
+                label: `Total clientes ${totalClients}`,
               }}
             />
           </MDBox>
