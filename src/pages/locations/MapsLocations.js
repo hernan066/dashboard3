@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { zones } from "./Zones";
 
 const optionZones = {
-  fillColor: "lightblue",
+  fillColor: "#e91e63",
   fillOpacity: 0.2,
   strokeColor: "blue",
   strokeOpacity: 1,
@@ -79,42 +79,42 @@ function MapsLocations({ clientAddress }) {
   const zone1 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "red",
+      fillColor: "#e91e63",
     }),
     []
   );
   const zone2 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "green",
+      fillColor: "#7b809a",
     }),
     []
   );
   const zone3 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "lightblue",
+      fillColor: "#1A73E8",
     }),
     []
   );
   const zone4 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "BlueViolet",
+      fillColor: "#4CAF50",
     }),
     []
   );
   const zone5 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "DarkGoldenRod",
+      fillColor: "#fb8c00",
     }),
     []
   );
   const zone6 = useMemo(
     () => ({
       ...optionZones,
-      fillColor: "DeepPink",
+      fillColor: "#F44335",
     }),
     []
   );

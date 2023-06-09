@@ -13,11 +13,12 @@ import { useGetClientAddressesQuery } from "api/clientsAddressApi";
 import { useLoadScript } from "@react-google-maps/api";
 import MapsLocations from "./MapsLocations";
 import MapsHeat from "./MapsHeat";
+import TotalsCards from "./TotalsCards";
 
 function LocationsPage() {
   const { data, isLoading, error } = useGetClientAddressesQuery();
   console.log(data);
-  
+
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY,
     libraries: ["places", "visualization"],
@@ -44,11 +45,12 @@ function LocationsPage() {
                   Localizaciones
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3} sx={{minHeight: "70vh"}}>
+              <MDBox pt={3} sx={{ minHeight: "70vh" }}>
                 {isLoading && !isLoaded && <Loading />}
                 {error && <Alert severity="error">Ha ocurrido un error</Alert>}
-                {data && <MapsLocations clientAddress={data.data.clientAddress} />} 
-                {data && <MapsHeat clientAddress={data.data.clientAddress} />} 
+                {data && <TotalsCards clientAddress={data.data.clientAddress} />}
+                {data && <MapsLocations clientAddress={data.data.clientAddress} />}
+                {data && <MapsHeat clientAddress={data.data.clientAddress} />}
               </MDBox>
             </Card>
           </Grid>
