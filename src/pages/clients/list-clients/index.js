@@ -10,6 +10,7 @@ import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
 import { useGetClientsQuery } from "api/clientsApi";
 import TableListClients from "./TableListClient";
+import TotalClientsCards from "./TotalClientsCards";
 
 function ListClients() {
   const { data, isLoading, isError } = useGetClientsQuery();
@@ -39,6 +40,7 @@ function ListClients() {
               <MDBox pt={3}>
                 {isLoading && <Loading />}
                 {isError && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {data && <TotalClientsCards clients={data.data.clients} />}
                 {data && <TableListClients clients={data.data.clients} />}
               </MDBox>
             </Card>
