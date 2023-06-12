@@ -7,6 +7,7 @@ import MDTypography from "components/MDTypography";
 import { Avatar, Divider } from "@mui/material";
 import { formatPrice } from "utils/formaPrice";
 import { formatQuantity } from "utils/quantityFormat";
+import { Link } from "react-router-dom";
 
 function TotalProductsProfit({ totalProducts }) {
   const sliceProducts = totalProducts.slice(0, 19);
@@ -64,7 +65,9 @@ function TotalProductsProfit({ totalProducts }) {
           >
             <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "58%" }}>
               <Avatar src={product?.img} />
-              <MDTypography variant="body2">{product.name}</MDTypography>
+              <Link to={`/productos/editar/${product?.productId}`}>
+                <MDTypography variant="body2">{product.name}</MDTypography>
+              </Link>
             </MDBox>
 
             <MDTypography variant="body2" sx={{ width: "15%", textAlign: "center" }}>
