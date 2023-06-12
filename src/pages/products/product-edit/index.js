@@ -12,12 +12,16 @@ import { useGetProductQuery, useGetProductOfertQuery } from "api/productApi";
 import { useGetSuppliersQuery } from "api/supplierApi";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import {
+  useGetTotalIndividualProductQuery,
+  useGetTotalIndividualProductLast30DaysQuery,
+} from "api/reportApi";
 import ProductEdit from "./dataEdit/ProductEdit";
 import OfertEdit from "./ofertEdit/OfertEdit";
 import TableStock from "./stockEdit/TableStock";
 import OfertCreate from "../product-create/ofert/OfertCreate";
 import ProductsLotsCreate from "./stockAdd/ProductsLotsCreate";
-import ProductData from "./productData";
+import DataProduct from "./productData/DataProduct";
 
 function EditProduct() {
   const { id } = useParams();
@@ -33,7 +37,18 @@ function EditProduct() {
   const { data: ListSuppliers, isLoading: l3, isError: e3 } = useGetSuppliersQuery();
   // oferta
 
-  const { data: ofertById, isLoading: l4, error: e4 } = useGetProductOfertQuery(id); //  ver
+  const { data: ofertById, isLoading: l4, error: e4 } = useGetProductOfertQuery(id);
+
+  const {
+    data: totalProductSell,
+    isLoading: l5,
+    error: e5,
+  } = useGetTotalIndividualProductQuery(id);
+  const {
+    data: totalProductSellLast30Days,
+    isLoading: l6,
+    error: e6,
+  } = useGetTotalIndividualProductLast30DaysQuery(id);
 
   return (
     <DashboardLayout>
@@ -74,7 +89,25 @@ function EditProduct() {
                 <Tab label="Lista de stock" />
               </Tabs>
             </Box>
-            {page === 0 && <ProductData />}
+
+            {page === 0 && (
+              <Card
+                sx={{
+                  mx: 2.5,
+                }}
+              >
+                {(l2 || l4 || l5 || l6) && <Loading />}
+                {(e2 || e4 || e5 || e6) && <Alert severity="error">Ha ocurrido un error</Alert>}
+                {productById && ofertById && totalProductSell && totalProductSellLast30Days && (
+                  <DataProduct
+                    productById={productById}
+                    ofertById={ofertById.data.ofert}
+                    totalProductSell={totalProductSell.data.report}
+                    totalProductSellLast30Days={totalProductSellLast30Days.data.report}
+                  />
+                )}
+              </Card>
+            )}
             {page === 1 && (
               <Card
                 sx={{
