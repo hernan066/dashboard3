@@ -26,6 +26,9 @@ function DashboardTotals({
   dataOrdersByMonth,
   dataClientsDebs,
   reportTotalClientBuy,
+  totalCategorySell,
+  totalCategoryStock,
+  totalCategoryBuy,
 }) {
   const { sales, tasks } = reportsLineChartData;
   const [updateDate, setUpdateDate] = useState(null);
@@ -33,6 +36,10 @@ function DashboardTotals({
   const totalClients = clients.length;
 
   const { totalCash, totalDebt, totalSales, totalTransfer } = orders[0];
+
+  const [totalSell] = totalCategorySell;
+  const [totalStock] = totalCategoryStock;
+  const [totalBuy] = totalCategoryBuy;
 
   useEffect(() => {
     setUpdateDate(dateToLocalDate(new Date()));
@@ -94,6 +101,53 @@ function DashboardTotals({
               icon="cancel_presentation_icon"
               title="Deudas clientes"
               count={formatPrice(totalDebt)}
+              percentage={{
+                color: "success",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
+              }}
+            />
+          </MDBox>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3} mt={1}>
+        <Grid item xs={12} md={4} lg={4}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard
+              color="warning"
+              icon="inventory"
+              title="Stock Cajones de Pollo"
+              count={totalStock?.actualStock || 0}
+              percentage={{
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
+              }}
+            />
+          </MDBox>
+        </Grid>
+        <Grid item xs={12} md={4} lg={4}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard
+              icon="arrow_upward"
+              title="Cajones de pollo vendidos hoy"
+              count={totalSell?.totalQuantitySell || 0}
+              color="success"
+              percentage={{
+                color: "success",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
+              }}
+            />
+          </MDBox>
+        </Grid>
+        <Grid item xs={12} md={4} lg={4}>
+          <MDBox mb={1.5}>
+            <ComplexStatisticsCard
+              color="error"
+              icon="arrow_downward"
+              title="Cajones de pollo comprados hoy"
+              count={totalBuy?.buyToday || 0}
               percentage={{
                 color: "success",
                 amount: "",

@@ -4,10 +4,15 @@ import { formatPrice } from "utils/formaPrice";
 import { formatQuantity } from "utils/quantityFormat";
 
 function DataProduct({ productById, ofertById, totalProductSell, totalProductSellLast30Days }) {
+  console.log(productById);
+  console.log(ofertById);
   console.log(totalProductSell);
+  console.log(totalProductSellLast30Days);
   const stock = productById.stock.reduce((acc, curr) => acc + curr.stock, 0);
   const [totalSell] = totalProductSell;
   const [totalSell30days] = totalProductSellLast30Days;
+
+  console.log(totalSell30days);
   return (
     <Box p={3} sx={{ display: "flex", gap: "20px" }}>
       <Box sx={{ border: "1px solid #ccc", width: "550px" }}>
@@ -40,7 +45,7 @@ function DataProduct({ productById, ofertById, totalProductSell, totalProductSel
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Precio Actual ({productById.unit})</MDTypography>
-          <MDTypography variant="h6">{formatPrice(ofertById.retailPrice)}</MDTypography>
+          <MDTypography variant="h6">{formatPrice(ofertById?.retailPrice || 0)}</MDTypography>
         </Box>
 
         <Divider />
@@ -49,21 +54,27 @@ function DataProduct({ productById, ofertById, totalProductSell, totalProductSel
         </MDTypography>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Cantidad vendida</MDTypography>
-          <MDTypography variant="h6">{totalSell30days.count} kg</MDTypography>
+          <MDTypography variant="h6">{totalSell30days?.count || 0} kg</MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total venta</MDTypography>
-          <MDTypography variant="h6">{formatPrice(totalSell30days.total)}</MDTypography>
+          <MDTypography variant="h6">{formatPrice(totalSell30days?.total || 0)}</MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total ganancia</MDTypography>
-          <MDTypography variant="h6">{formatPrice(totalSell30days.totalProfits)}</MDTypography>
+          <MDTypography variant="h6">
+            {formatPrice(totalSell30days?.totalProfits || 0)}
+          </MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total ganancia%</MDTypography>
-          <MDTypography variant="h6">{`${formatQuantity(
-            (totalSell30days.totalProfits * 100) / totalSell30days.total
-          )}%`}</MDTypography>
+          {!totalSell30days ? (
+            <MDTypography variant="h6">0%</MDTypography>
+          ) : (
+            <MDTypography variant="h6">{`${formatQuantity(
+              (totalSell30days.totalProfits * 100) / totalSell30days.total
+            )}%`}</MDTypography>
+          )}
         </Box>
         <Divider />
         <MDTypography sx={{ margin: "5px 0" }} variant="h5">
@@ -71,21 +82,25 @@ function DataProduct({ productById, ofertById, totalProductSell, totalProductSel
         </MDTypography>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Cantidad vendida</MDTypography>
-          <MDTypography variant="h6">{totalSell.count} kg</MDTypography>
+          <MDTypography variant="h6">{totalSell?.count || 0} kg</MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total venta</MDTypography>
-          <MDTypography variant="h6">{formatPrice(totalSell.total)}</MDTypography>
+          <MDTypography variant="h6">{formatPrice(totalSell?.total || 0)}</MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total ganancia</MDTypography>
-          <MDTypography variant="h6">{formatPrice(totalSell.totalProfits)}</MDTypography>
+          <MDTypography variant="h6">{formatPrice(totalSell?.totalProfits || 0)}</MDTypography>
         </Box>
         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
           <MDTypography variant="h6">Total ganancia%</MDTypography>
-          <MDTypography variant="h6">{`${formatQuantity(
-            (totalSell.totalProfits * 100) / totalSell.total
-          )}%`}</MDTypography>
+          {totalSell ? (
+            <MDTypography variant="h6">{`${formatQuantity(
+              (totalSell.totalProfits * 100) / totalSell.total
+            )}%`}</MDTypography>
+          ) : (
+            <MDTypography variant="h6">0%</MDTypography>
+          )}
         </Box>
       </Box>
     </Box>
