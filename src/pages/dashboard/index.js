@@ -14,9 +14,7 @@ import {
   useGetTotalOrdersByMonthQuery,
   useGetReportTotalClientDebtQuery,
   useGetReportTotalClientBuyQuery,
-  useGetReportTotalOneCategorySellTodayQuery,
-  useGetReportTotalStockOneCategoryTodayQuery,
-  useGetReportTotalOneCategoryBuyTodayQuery,
+  useGetCategoryReportQuery,
 } from "api/reportApi";
 import { useEffect, useState } from "react";
 import DashboardTotals from "./components/OrdersOverview/DashboardTotals";
@@ -42,17 +40,7 @@ function Dashboard1() {
     data: dataCategory,
     isLoading: l10,
     isError: e10,
-  } = useGetReportTotalOneCategorySellTodayQuery("cajon de pollos");
-  const {
-    data: stockCategory,
-    isLoading: l11,
-    isError: e11,
-  } = useGetReportTotalStockOneCategoryTodayQuery("cajon de pollos");
-  const {
-    data: buyCategory,
-    isLoading: l12,
-    isError: e12,
-  } = useGetReportTotalOneCategoryBuyTodayQuery("cajon de pollos");
+  } = useGetCategoryReportQuery("cajon de pollos");
 
   useEffect(() => {
     const getData = async () => {
@@ -71,8 +59,8 @@ function Dashboard1() {
   return (
     <DashboardLayout>
       <DashboardNavbar />
-      {(l1 || l2 || l3 || l4 || l5 || l6 || l7 || l8 || l9 || l10 || l11 || l12) && <Loading />}
-      {(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8 || e9 || e10 || e11 || e12) && (
+      {(l1 || l2 || l3 || l4 || l5 || l6 || l7 || l8 || l9 || l10) && <Loading />}
+      {(e1 || e2 || e3 || e4 || e5 || e6 || e7 || e8 || e9 || e10) && (
         <Alert severity="error">Ha ocurrido un error</Alert>
       )}
       {dataOrders &&
@@ -84,9 +72,7 @@ function Dashboard1() {
         dataOrdersByMonth &&
         dataClientsBuy &&
         dataClientsDebs &&
-        dataCategory &&
-        stockCategory &&
-        buyCategory && (
+        dataCategory && (
           <DashboardTotals
             clients={listClients.data.clients}
             orders={dataOrders.data.report}
@@ -97,9 +83,7 @@ function Dashboard1() {
             dataOrdersByMonth={dataOrdersByMonth.data.report}
             dataClientsDebs={dataClientsDebs.data.report}
             reportTotalClientBuy={dataClientsBuy.data.report}
-            totalCategorySell={dataCategory.data.report}
-            totalCategoryStock={stockCategory.data.report}
-            totalCategoryBuy={buyCategory.data.report}
+            dataCategory={dataCategory.data.report}
           />
         )}
       {/*  <Footer /> */}

@@ -26,9 +26,7 @@ function DashboardTotals({
   dataOrdersByMonth,
   dataClientsDebs,
   reportTotalClientBuy,
-  totalCategorySell,
-  totalCategoryStock,
-  totalCategoryBuy,
+  dataCategory,
 }) {
   const { sales, tasks } = reportsLineChartData;
   const [updateDate, setUpdateDate] = useState(null);
@@ -36,10 +34,6 @@ function DashboardTotals({
   const totalClients = clients.length;
 
   const { totalCash, totalDebt, totalSales, totalTransfer } = orders[0];
-
-  const [totalSell] = totalCategorySell;
-  const [totalStock] = totalCategoryStock;
-  const [totalBuy] = totalCategoryBuy;
 
   useEffect(() => {
     setUpdateDate(dateToLocalDate(new Date()));
@@ -117,7 +111,7 @@ function DashboardTotals({
               color="warning"
               icon="inventory"
               title="Stock Cajones de Pollo"
-              count={totalStock?.actualStock || 0}
+              count={dataCategory?.stock?.actualStock || 0}
               percentage={{
                 color: "secondary",
                 amount: "",
@@ -131,12 +125,19 @@ function DashboardTotals({
             <ComplexStatisticsCard
               icon="arrow_upward"
               title="Cajones de pollo vendidos hoy"
-              count={totalSell?.totalQuantitySell || 0}
+              count={dataCategory?.totalSell?.totalQuantitySell || 0}
               color="success"
               percentage={{
                 color: "success",
                 amount: "",
-                label: `Actualizado ${updateDate}hs`,
+                label: `En Local ${
+                  dataCategory?.totalSellLocal?.totalQuantityLocalSell || 0
+                }, en reparto ${
+                  dataCategory?.totalSellLocal?.totalQuantityLocalSell
+                    ? dataCategory.totalSell.totalQuantitySell -
+                      dataCategory.totalSellLocal.totalQuantityLocalSell
+                    : dataCategory?.totalSell?.totalQuantitySell || 0
+                }`,
               }}
             />
           </MDBox>
@@ -147,7 +148,7 @@ function DashboardTotals({
               color="error"
               icon="arrow_downward"
               title="Cajones de pollo comprados hoy"
-              count={totalBuy?.buyToday || 0}
+              count={dataCategory?.totalBuy?.buyToday || 0}
               percentage={{
                 color: "success",
                 amount: "",
