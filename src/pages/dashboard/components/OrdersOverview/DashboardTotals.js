@@ -130,9 +130,9 @@ function DashboardTotals({
               percentage={{
                 color: "success",
                 amount: "",
-                label: `En Local ${
+                label: `En Reparto ${
                   dataCategory?.totalSellLocal?.totalQuantityLocalSell || 0
-                }, en reparto ${
+                }, en Local ${
                   dataCategory?.totalSellLocal?.totalQuantityLocalSell
                     ? dataCategory.totalSell.totalQuantitySell -
                       dataCategory.totalSellLocal.totalQuantityLocalSell
