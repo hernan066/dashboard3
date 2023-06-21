@@ -15,6 +15,11 @@ export const menuList = [
         icon: "signal_cellular_alt_icon",
         url: "/dashboard/hoy",
       },
+      {
+        name: "Cajones de pollo",
+        icon: "signal_cellular_alt_icon",
+        url: "/dashboard/cajones_de_pollo",
+      },
     ],
   },
   {

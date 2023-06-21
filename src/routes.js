@@ -50,6 +50,7 @@ import ProductsSellByRange from "pages/reports/producstsSell/reportByRange";
 import StockMain from "pages/productsLots";
 import ResetPoints from "pages/resetPoints";
 import LocationsPage from "pages/locations";
+import Dashboard3 from "pages/dashboard3";
 
 const routes = [
   {
@@ -65,6 +66,14 @@ const routes = [
     component: (
       <RequireAuth>
         <Dashboard2 />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/dashboard/cajones_de_pollo",
+    component: (
+      <RequireAuth>
+        <Dashboard3 />
       </RequireAuth>
     ),
   },

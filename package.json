@@ -34,6 +34,7 @@
     "@testing-library/user-event": "14.4.3",
     "axios": "^1.4.0",
     "chart.js": "4.3.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "chroma-js": "2.4.2",
     "formik": "^2.2.9",
     "google-map-react": "^2.2.1",
@@ -87,6 +88,7 @@
     ]
   },
   "devDependencies": {
+    "@faker-js/faker": "^8.0.2",
     "eslint": "8.41.0",
     "eslint-config-airbnb": "19.0.4",
     "eslint-config-prettier": "8.8.0",

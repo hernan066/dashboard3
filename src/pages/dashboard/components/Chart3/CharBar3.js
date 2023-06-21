@@ -27,6 +27,9 @@ export const options = {
     legend: {
       display: false,
     },
+    datalabels: {
+      color: "transparent",
+    },
   },
   interaction: {
     intersect: false,

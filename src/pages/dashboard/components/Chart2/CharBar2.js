@@ -26,6 +26,9 @@ export const options = {
     legend: {
       display: false,
     },
+    datalabels: {
+      color: "transparent",
+    },
   },
   interaction: {
     intersect: false,
@@ -82,6 +85,7 @@ export const options = {
 };
 
 function CharBar2({ reports }) {
+  console.log(reports);
   const arr = reports
     .map((item) => ({
       date: new Date(item.date),

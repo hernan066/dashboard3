@@ -122,9 +122,16 @@ export const userApi = apiSlice.injectEndpoints({
       extraOptions: { maxRetries: 0 },
     }),
 
-    // nuevos rutas con querys
+    // category
     getCategoryReport: builder.query({
       query: (id) => `/reports/category/${id}?stock=1&totalSell=1&totalBuy=1&totalSellLocal=1`,
+
+      // keepUnusedDataFor: 3,
+      extraOptions: { maxRetries: 5 },
+      providesTags: ["reports"],
+    }),
+    getCategoryReportByDay: builder.query({
+      query: (id) => `/reports/category/orderByDay/${id}`,
 
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
@@ -147,6 +154,7 @@ export const {
   useGetTotalIndividualProductQuery,
   useGetTotalIndividualProductLast30DaysQuery,
   useGetCategoryReportQuery,
+  useGetCategoryReportByDayQuery,
 
   usePostTotalOrderProductsByRangeMutation,
   usePostReportPaymentByRangeDayMutation,
