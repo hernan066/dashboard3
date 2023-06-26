@@ -31,6 +31,8 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
       shippingCost: client.deliveryZone?.cost || undefined,
       deliveryZone: `${client.deliveryZone?._id}-${client.deliveryZone?.name}` || "",
       deliveryTruck: "",
+      lat: client.lat,
+      lng: client.lng,
     },
     onSubmit: async (values) => {
       dispatch(

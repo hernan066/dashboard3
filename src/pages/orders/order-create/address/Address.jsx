@@ -46,46 +46,6 @@ function Address({ clientAddresses, setPage, zones, deliveryTrucks }) {
         gap: "30px",
       }}
     >
-      {/*   <Card
-        sx={{
-          display: "flex",
-
-          flexDirection: "column",
-          width: "50%",
-          padding: "25px",
-          alignSelf: "flex-start",
-        }}
-      >
-        <MDTypography variant="h6">Buscar usuario</MDTypography>
-
-        <TextField
-          value={search}
-          label="Buscar por número de dni/cuit o nombre"
-          onChange={handlerFilterChanges}
-          fullWidth
-          margin="normal"
-        />
-        {filterUser.length > 0 && <MDTypography variant="h6"> Resultados </MDTypography>}
-
-        {filterUser.map((clientA) => (
-          <Box
-            key={clientA.user.phone}
-            sx={{
-              display: "flex",
-              border: "1px solid #ccc",
-              padding: "5px",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "20px",
-            }}
-          >
-            <MDTypography variant="body2">{`Telefono ${clientA.user.phone} // ${clientA.user.name} ${clientA.user.lastName} // ${clientA.address}`}</MDTypography>
-            <MDButton color="info" size="small" onClick={() => dispatch(addClient(clientA))}>
-              Cargar
-            </MDButton>
-          </Box>
-        ))}
-      </Card> */}
       <Card
         sx={{
           display: "flex",
