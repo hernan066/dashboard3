@@ -10,12 +10,14 @@ import { userApi } from "api/userApi";
 import authReducer from "./authSlice";
 import cartReducer from "./cartSlice";
 import orderReducer from "./ordersSlice";
+import positionsReducer from "./positionSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     cart: cartReducer,
     order: orderReducer,
+    positions: positionsReducer,
     [userApi.reducerPath]: userApi.reducer,
     [productApi.reducerPath]: productApi.reducer,
     [categoryApi.reducerPath]: categoryApi.reducer,

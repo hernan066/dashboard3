@@ -1,18 +1,14 @@
-/* eslint-disable no-plusplus */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-plusplus */
 /* eslint-disable react/prop-types */
-import { Grid } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import MDBox from "components/MDBox";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
-import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
-import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
-import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
-import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
-import React from "react";
 import { formatPrice } from "utils/formaPrice";
-import OrdersOverview from "./OrdersOverview";
+import { useEffect, useState } from "react";
+import { dateToLocalDate } from "utils/dateFormat";
 import CardTodayProducts from "./CardTodayProducts";
-import CharBar1 from "./CharBar1";
+import MapDelivery from "./MapDelivery";
 
 const getListProducts = (orders) => {
   const listOfProducts = orders.map((product) => product.orderItems);
@@ -58,10 +54,10 @@ const repeatSum = (arr) => {
   return arrProductsNonDupli;
 };
 
-function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
-  const { sales, tasks } = reportsLineChartData;
+function DashboardToday({ orders, activeOrders }) {
   console.log(activeOrders);
-  console.log(orders);
+  const [updateDate, setUpdateDate] = useState(null);
+  // console.log(orders);
 
   const totalBuy = activeOrders.reduce((acc, curr) => acc + curr.total, 0);
   const totalCash = activeOrders.reduce((acc, curr) => acc + curr.payment.cash, 0);
@@ -72,9 +68,11 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
   const pendingOrders = activeOrders.filter((order) => order.status === "Pendiente");
   const refusedOrders = activeOrders.filter((order) => order.status === "Rechazado");
 
-  const totalOrders = orders.length;
-
   const listProducts = repeatSum(getListProducts(activeOrders));
+
+  useEffect(() => {
+    setUpdateDate(dateToLocalDate(new Date()));
+  }, []);
   return (
     <MDBox py={3}>
       <Grid container spacing={3}>
@@ -86,9 +84,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ordenes activas"
               count={activeOrders.length}
               percentage={{
-                color: "success",
-                amount: "+55%",
-                label: "than lask week",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -100,9 +98,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ordenes pendientes"
               count={pendingOrders.length}
               percentage={{
-                color: "success",
-                amount: "+3%",
-                label: "than last month",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -115,9 +113,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ordenes entregadas"
               count={deliveredOrders.length}
               percentage={{
-                color: "success",
-                amount: "+1%",
-                label: "than yesterday",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -130,9 +128,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ordenes rechazadas"
               count={refusedOrders.length}
               percentage={{
-                color: "success",
+                color: "secondary",
                 amount: "",
-                label: "Just updated",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -146,9 +144,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ventas"
               count={formatPrice(totalBuy)}
               percentage={{
-                color: "success",
-                amount: "+55%",
-                label: "than lask week",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -161,9 +159,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Pagos en efectivo"
               count={formatPrice(totalCash)}
               percentage={{
-                color: "success",
-                amount: "+3%",
-                label: "than last month",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -176,9 +174,9 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Transferencias"
               count={formatPrice(totalTransfer)}
               percentage={{
-                color: "success",
-                amount: "+1%",
-                label: "than yesterday",
+                color: "secondary",
+                amount: "",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
@@ -191,56 +189,23 @@ function DashboardToday({ orders, clients, activeOrders, ordersByDays }) {
               title="Ordenes adeudadas"
               count={formatPrice(totalDebt)}
               percentage={{
-                color: "success",
+                color: "secondary",
                 amount: "",
-                label: "Just updated",
+                label: `Actualizado ${updateDate}hs`,
               }}
             />
           </MDBox>
         </Grid>
       </Grid>
-      <MDBox mt={4.5}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={3}>
-              <CharBar1 ordersByDays={ordersByDays} />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={3}>
-              <ReportsLineChart
-                color="success"
-                title="daily sales"
-                description={
-                  <>
-                    (<strong>+15%</strong>) increase in today sales.
-                  </>
-                }
-                date="updated 4 min ago"
-                chart={sales}
-              />
-            </MDBox>
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <MDBox mb={3}>
-              <ReportsLineChart
-                color="dark"
-                title="completed tasks"
-                description="Last Campaign Performance"
-                date="just updated"
-                chart={tasks}
-              />
-            </MDBox>
-          </Grid>
-        </Grid>
+      <MDBox my={4.5}>
+        <Card>
+          <MapDelivery orders={orders} />
+        </Card>
       </MDBox>
       <MDBox>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={8}>
+          <Grid item xs={12} md={12} lg={12}>
             <CardTodayProducts listProducts={listProducts} />
-          </Grid>
-          <Grid item xs={12} md={6} lg={4}>
-            <OrdersOverview />
           </Grid>
         </Grid>
       </MDBox>

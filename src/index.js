@@ -4,9 +4,8 @@ import ReactDOM from "react-dom";
 import { HashRouter } from "react-router-dom";
 import App from "App";
 import { Provider } from "react-redux";
-
-// Material Dashboard 2 React Context Provider
 import { MaterialUIControllerProvider } from "context";
+
 import { store } from "./redux/store";
 
 ReactDOM.render(

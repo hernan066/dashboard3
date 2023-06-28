@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/prop-types */
 /* eslint-disable no-underscore-dangle */
 import { Box, IconButton, Stack } from "@mui/material";
@@ -19,17 +20,19 @@ function TableListClientAddress({ clientAddress }) {
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
-  const [menuId, setMenuId] = useState(null);
+  const [clientId, setClientId] = useState(null);
+  const [addressId, setAddressId] = useState(null);
 
-  const handleOpenMenu = (id, event) => {
-    console.log(id, event);
+  const handleOpenMenu = (clientId, addressId, event) => {
     setOpen(event.currentTarget);
-    setMenuId(id);
+    setClientId(clientId);
+    setAddressId(addressId);
   };
 
   const handleCloseMenu = () => {
     setOpen(null);
-    setMenuId(null);
+    setClientId(null);
+    setAddressId(null);
   };
 
   const columns = [
@@ -139,8 +142,8 @@ function TableListClientAddress({ clientAddress }) {
       headerName: "Menu",
       headerClassName: "super-app-theme--header",
 
-      renderCell: ({ row: { clientId } }) => (
-        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(clientId, e)}>
+      renderCell: ({ row: { clientId, _id } }) => (
+        <IconButton size="large" color="inherit" onClick={(e) => handleOpenMenu(clientId, _id, e)}>
           <MoreVertIcon />
         </IconButton>
       ),
@@ -210,7 +213,12 @@ function TableListClientAddress({ clientAddress }) {
         </Box>
       </Box>
 
-      <MenuListClientAddress open={open} handleCloseMenu={handleCloseMenu} menuId={menuId} />
+      <MenuListClientAddress
+        open={open}
+        handleCloseMenu={handleCloseMenu}
+        clientId={clientId}
+        addressId={addressId}
+      />
     </>
   );
 }

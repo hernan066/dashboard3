@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { useDeleteClientAddressMutation } from "api/clientsAddressApi";
 import { useEffect } from "react";
 
-function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
+function MenuListClientAddress({ open, handleCloseMenu, clientId, addressId }) {
   const navigate = useNavigate();
 
   const [deleteClientAddress, { isError, isSuccess }] = useDeleteClientAddressMutation();
@@ -25,7 +25,7 @@ function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
       confirmButtonText: "Borrar",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await deleteClientAddress(menuId).unwrap();
+        await deleteClientAddress(addressId).unwrap();
       }
     });
   };
@@ -72,7 +72,7 @@ function MenuListClientAddress({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
-      <MenuItem onClick={() => navigate(`/clientes/detalle/${menuId}`)}>
+      <MenuItem onClick={() => navigate(`/clientes/detalle/${clientId}`)}>
         <EditIcon sx={{ mr: 1 }} />
         Ver cliente
       </MenuItem>

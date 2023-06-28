@@ -11,9 +11,9 @@ export const menuList = [
         url: "/dashboard/totales",
       },
       {
-        name: "Hoy",
+        name: "Reparto",
         icon: "signal_cellular_alt_icon",
-        url: "/dashboard/hoy",
+        url: "/dashboard/reparto",
       },
       {
         name: "Cajones de pollo",

@@ -62,7 +62,7 @@ const routes = [
     ),
   },
   {
-    route: "/dashboard/hoy",
+    route: "/dashboard/reparto",
     component: (
       <RequireAuth>
         <Dashboard2 />
