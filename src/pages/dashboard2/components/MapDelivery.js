@@ -105,9 +105,14 @@ function DeliveryMarker({ data, orders }) {
 function MapDelivery({ orders, activeOrders }) {
   const filterOrders = orders.filter((order) => order.shippingAddress.lat);
   const activeFilterOrders = activeOrders.filter((order) => order.shippingAddress.lat);
+  const faltantes = activeOrders
+    .filter((order) => !order.shippingAddress.lat)
+    .map((order) => order.shippingAddress);
 
   console.log(activeOrders);
   console.log(activeFilterOrders);
+  console.log("------Direcciones que les falta las coordenadas----------");
+  console.log(faltantes);
 
   const dispatch = useDispatch();
   const { positions } = useSelector((store) => store.positions);
