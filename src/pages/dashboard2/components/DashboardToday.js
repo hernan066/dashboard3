@@ -70,6 +70,8 @@ function DashboardToday({ orders, activeOrders }) {
 
   const listProducts = repeatSum(getListProducts(activeOrders));
 
+  const geoLocationOrders = activeOrders.filter((order) => order.shippingAddress.lat).length;
+
   useEffect(() => {
     setUpdateDate(dateToLocalDate(new Date()));
   }, []);
@@ -86,7 +88,7 @@ function DashboardToday({ orders, activeOrders }) {
               percentage={{
                 color: "secondary",
                 amount: "",
-                label: `Actualizado ${updateDate}hs`,
+                label: `Geo localizables ${geoLocationOrders}`,
               }}
             />
           </MDBox>
@@ -199,7 +201,7 @@ function DashboardToday({ orders, activeOrders }) {
       </Grid>
       <MDBox my={4.5}>
         <Card>
-          <MapDelivery orders={orders} />
+          <MapDelivery orders={orders} activeOrders={activeOrders} />
         </Card>
       </MDBox>
       <MDBox>

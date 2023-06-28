@@ -101,9 +101,13 @@ function DeliveryMarker({ data, orders }) {
   );
 }
 
-function MapDelivery({ orders }) {
+function MapDelivery({ orders, activeOrders }) {
   const filterOrders = orders.filter((order) => order.shippingAddress.lat);
-  console.log(filterOrders);
+  const activeFilterOrders = activeOrders.filter((order) => order.shippingAddress.lat);
+
+  console.log(activeOrders);
+  console.log(activeFilterOrders);
+
   const dispatch = useDispatch();
   const { positions } = useSelector((store) => store.positions);
   const { socket, online } = useSocket(`${process.env.REACT_APP_SOCKET_URL}/orders/delivery`);
@@ -137,7 +141,7 @@ function MapDelivery({ orders }) {
         {positions.length > 0 &&
           positions.map((truck) => <DeliveryMarker data={truck} orders={orders} />)}
 
-        {filterOrders.map((order) => (
+        {activeFilterOrders.map((order) => (
           <ClientMarker data={order} />
         ))}
 
