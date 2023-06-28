@@ -139,7 +139,7 @@ function MapDelivery({ orders, activeOrders }) {
         <Marker position={center} icon="https://i.ibb.co/nbm4b4x/pngegg.png" />
 
         {positions.length > 0 &&
-          positions.map((truck) => <DeliveryMarker data={truck} orders={orders} />)}
+          positions.map((truck) => <DeliveryMarker data={truck} orders={activeOrders} />)}
 
         {activeFilterOrders.map((order) => (
           <ClientMarker data={order} />
