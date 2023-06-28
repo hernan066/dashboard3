@@ -79,11 +79,12 @@ function DeliveryMarker({ data, orders }) {
     padding: 10,
     textAlign: "center",
   };
+
   return (
     <Marker
       onClick={handleOpen}
       position={{ lat: data.lat, lng: data.lng }}
-      icon="https://i.ibb.co/p0vpNJ6/6643396-1.png"
+      icon="https://i.ibb.co/SJdVf1D/geo-icon-16-3.png"
     >
       {open && (
         <InfoWindow position={{ lat: data.lat, lng: data.lng }} onCloseClick={handleClose}>
