@@ -49,6 +49,8 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
       transfer: order?.payment?.transfer || 0,
       debt: order?.payment?.debt || 0,
       paid: order?.paid || false,
+      lat: order?.shippingAddress.lat || null,
+      lng: order?.shippingAddress.lng || null,
     },
     onSubmit: async (values) => {
       const editOrderValues = {
@@ -67,6 +69,8 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           province: values.province,
           city: values.city,
           zip: values.zip,
+          lat: values.lat,
+          lng: values.lng,
         },
         payment: {
           cash: values.cash,
@@ -84,12 +88,14 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
       }));
 
       updateProductsStocks.map(async (product) => {
-        const updateData = {
-          stockId: product.stockId,
-          totalQuantity: formatQuantity(product.totalQuantity),
-        };
-        const id = product.productId;
-        await editProductStock({ id, ...updateData }).unwrap();
+        if (product.totalQuantity !== 0) {
+          const updateData = {
+            stockId: product.stockId,
+            totalQuantity: formatQuantity(product.totalQuantity),
+          };
+          const id = product.productId;
+          await editProductStock({ id, ...updateData }).unwrap();
+        }
       });
 
       await editOrder({ id, ...editOrderValues }).unwrap();
@@ -261,6 +267,30 @@ function EditAddressForm({ zones, deliveryTrucks, order }) {
           value={formik.values.zip}
           error={!!formik.errors.zip}
           helperText={formik.errors.zip}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="lat"
+          label="Latitud"
+          type="number"
+          value={formik.values.lat}
+          error={!!formik.errors.lat}
+          helperText={formik.errors.lat}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="lng"
+          label="Longitud"
+          type="number"
+          value={formik.values.lng}
+          error={!!formik.errors.lng}
+          helperText={formik.errors.lng}
           onChange={formik.handleChange}
         />
 

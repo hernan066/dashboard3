@@ -27,6 +27,8 @@ export const editOrderAddressSchema = yup.object().shape({
   tax: yup.number().required("Requerido"),
   deliveryZone: yup.string().required("Requerido"),
   deliveryTruck: yup.string().required("Requerido"), */
+  lat: yup.number().required("Requerido"),
+  lng: yup.number().required("Requerido"),
   status: yup.string().required("Requerido"),
   active: yup.string().required("Requerido"),
 });
