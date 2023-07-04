@@ -102,21 +102,20 @@ function DeliveryMarker({ data, orders }) {
   );
 }
 
-function MapDelivery({ orders, activeOrders }) {
-  const filterOrders = orders.filter((order) => order.shippingAddress.lat);
+function MapDelivery({ activeOrders }) {
   const activeFilterOrders = activeOrders.filter((order) => order.shippingAddress.lat);
-  const faltantes = activeOrders
-    .filter((order) => !order.shippingAddress.lat)
-    .map((order) => order.shippingAddress);
+  useMemo(() => {
+    const faltantes = activeOrders
+      .filter((order) => !order.shippingAddress.lat)
+      .map((order) => order.shippingAddress);
 
-  console.log(activeOrders);
-  console.log(activeFilterOrders);
-  console.log("------Direcciones que les falta las coordenadas----------");
-  console.log(faltantes);
+    console.log("------Direcciones que les falta las coordenadas----------");
+    console.log(faltantes);
+  }, []);
 
   const dispatch = useDispatch();
   const { positions } = useSelector((store) => store.positions);
-  const { socket, online } = useSocket(`${process.env.REACT_APP_SOCKET_URL}/orders/delivery`);
+  const { socket } = useSocket(`${process.env.REACT_APP_SOCKET_URL}/orders/delivery`);
 
   const center = useMemo(() => ({ lat: -34.570428718491605, lng: -58.743382510475065 }), []); // -34.570428718491605, -58.743382510475065
   const options = useMemo(

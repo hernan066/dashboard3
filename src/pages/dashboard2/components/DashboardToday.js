@@ -201,7 +201,7 @@ function DashboardToday({ orders, activeOrders }) {
       </Grid>
       <MDBox my={4.5}>
         <Card>
-          <MapDelivery orders={orders} activeOrders={activeOrders} />
+          <MapDelivery activeOrders={activeOrders} />
         </Card>
       </MDBox>
       <MDBox>

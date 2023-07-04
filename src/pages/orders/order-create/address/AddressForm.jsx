@@ -3,15 +3,16 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/jsx-boolean-value */
 /* eslint-disable no-underscore-dangle */
-import { useNavigate } from "react-router-dom";
+
 import { LoadingButton } from "@mui/lab";
 import { Box, MenuItem, TextField } from "@mui/material";
 import { useFormik } from "formik";
 import MDButton from "components/MDButton";
 import colors from "assets/theme/base/colors";
-import { creteOrderAddressSchema } from "validations/oferts/createOrderAddressYup";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addShippingAddress, clearClient } from "redux/cartSlice";
+import { creteOrderAddressSchema } from "validations/orders/createOrderAddressYup";
 
 function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
   const { client } = useSelector((store) => store.cart);
@@ -31,10 +32,11 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
       shippingCost: client.deliveryZone?.cost || undefined,
       deliveryZone: `${client.deliveryZone?._id}-${client.deliveryZone?.name}` || "",
       deliveryTruck: "",
-      lat: client.lat,
-      lng: client.lng,
+      lat: client?.lat || undefined,
+      lng: client?.lng || undefined,
     },
     onSubmit: async (values) => {
+      console.log(values);
       dispatch(
         addShippingAddress({
           shippingAddress: values,
@@ -174,6 +176,30 @@ function AddressForm({ setManualForm, setPage, zones, deliveryTrucks }) {
           value={formik.values.zip}
           error={!!formik.errors.zip}
           helperText={formik.errors.zip}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="lat"
+          label="Latitud"
+          type="number"
+          value={formik.values.lat}
+          error={!!formik.errors.lat}
+          helperText={formik.errors.lat}
+          onChange={formik.handleChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          required
+          name="lng"
+          label="Longitud"
+          type="number"
+          value={formik.values.lng}
+          error={!!formik.errors.lng}
+          helperText={formik.errors.lng}
           onChange={formik.handleChange}
         />
         <TextField
