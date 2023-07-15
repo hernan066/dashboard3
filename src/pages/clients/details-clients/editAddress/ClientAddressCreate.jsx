@@ -15,6 +15,7 @@ import { createClientAddressSchema } from "validations/clientAddress/createClien
 import Swal from "sweetalert2";
 
 import { usePostClientAddressMutation } from "api/clientsAddressApi";
+import { provinces } from "data/province";
 
 function ClientAddressCreate({ client, zones }) {
   const navigate = useNavigate();
@@ -101,15 +102,22 @@ function ClientAddressCreate({ client, zones }) {
             />
             <TextField
               margin="normal"
-              fullWidth
               required
+              select
+              fullWidth
               name="province"
               label="Provincia"
+              value={formik.values.province}
               error={!!formik.errors.province}
               helperText={formik.errors.province}
               onChange={formik.handleChange}
-            />
-
+            >
+              {provinces.map((province) => (
+                <MenuItem key={province} value={province}>
+                  {province}
+                </MenuItem>
+              ))}
+            </TextField>
             <TextField
               margin="normal"
               fullWidth

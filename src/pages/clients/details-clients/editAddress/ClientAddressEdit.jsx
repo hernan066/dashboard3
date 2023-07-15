@@ -12,6 +12,7 @@ import { usePutClientAddressMutation } from "api/clientsAddressApi";
 import { geoLocalization } from "api/geoApi";
 import { useEffect, useState } from "react";
 import Loading from "components/DRLoading";
+import { provinces } from "data/province";
 import Leaflet from "./Leaflet";
 
 function ClientAddressEdit({ client, zones, clientAddress }) {
@@ -119,15 +120,22 @@ function ClientAddressEdit({ client, zones, clientAddress }) {
             />
             <TextField
               margin="normal"
-              fullWidth
               required
+              select
+              fullWidth
               name="province"
               label="Provincia"
               value={formik.values.province}
               error={!!formik.errors.province}
               helperText={formik.errors.province}
               onChange={formik.handleChange}
-            />
+            >
+              {provinces.map((province) => (
+                <MenuItem key={province} value={province}>
+                  {province}
+                </MenuItem>
+              ))}
+            </TextField>
 
             <TextField
               margin="normal"
