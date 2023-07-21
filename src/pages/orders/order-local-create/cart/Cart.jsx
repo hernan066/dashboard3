@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-underscore-dangle */
@@ -34,6 +35,12 @@ function Cart() {
   const [editProductStock, { isLoading: l2, isError: e2 }] = usePutProductStockMutation();
 
   const handlerCreate = async () => {
+    /* return console.table({
+      efectivo: cash,
+      transferencia: transfer,
+      subTotal,
+      pagado: cash + transfer,
+    }); */
     const productsToEdit = products.map((product) => ({
       productId: product.stock.productId,
       stockId: product.stock._id,
@@ -80,11 +87,11 @@ function Cart() {
       status: "Entregado",
       receiptId,
       deliveryDate: new Date(),
-      paid: cash + transfer === subTotal,
+      paid: +cash + +transfer === subTotal,
       payment: {
-        cash,
-        transfer,
-        debt,
+        cash: +cash,
+        transfer: +transfer,
+        debt: +debt,
       },
     };
     if (validStockQuantity === false) {
@@ -190,13 +197,15 @@ function Cart() {
           type="number"
           label="Efectivo"
           margin="normal"
-          InputProps={{ inputProps: { min: "0" } }}
+          InputProps={{ inputProps: { min: 0 } }}
           value={cash}
-          onChange={(e) => setCash(e.target.value)}
+          onChange={(e) => {
+            setTransfer(e.target.value);
+          }}
         />
         <TextField
           type="number"
-          InputProps={{ inputProps: { min: "0" } }}
+          InputProps={{ inputProps: { min: 0 } }}
           label="Transferencia"
           margin="normal"
           value={transfer}
@@ -204,7 +213,7 @@ function Cart() {
         />
         <TextField
           type="number"
-          InputProps={{ inputProps: { min: "0" } }}
+          InputProps={{ inputProps: { min: 0 } }}
           label="Deuda"
           margin="normal"
           value={debt}
