@@ -83,7 +83,7 @@ function DefaultNavbar({ transparent, light }) {
         })}
       >
         <MDTypography variant="button" fontWeight="bold" color={light ? "white" : "dark"}>
-          DR Dashboard
+          Administrador
         </MDTypography>
       </MDBox>
       {mobileView && <DefaultNavbarMobile open={mobileNavbar} close={closeMobileNavbar} />}

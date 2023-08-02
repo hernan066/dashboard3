@@ -1,16 +1,9 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
-import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
-import MuiLink from "@mui/material/Link";
-import FacebookIcon from "@mui/icons-material/Facebook";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import GoogleIcon from "@mui/icons-material/Google";
 import MDBox from "components/MDBox";
-import MDTypography from "components/MDTypography";
 import BasicLayout from "layouts/authentication/components/BasicLayout";
 import bgImage from "assets/images/bg-sign-in-basic.jpeg";
-import { Box, TextField } from "@mui/material";
-import { useState } from "react";
+import { Alert, Box, TextField, Typography, useMediaQuery } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import LoadingButton from "@mui/lab/LoadingButton";
@@ -25,11 +18,9 @@ const schema = yup.object().shape({
 });
 
 function Basic() {
-  const [errMsg, setErrMsg] = useState("");
-
-  // const { startLogin, errorMessage, status } = useAuthStore();
+  const matches = useMediaQuery("(min-width:600px)");
   const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading, isError, error }] = useLoginMutation();
 
   const navigate = useNavigate();
 
@@ -44,16 +35,7 @@ function Basic() {
         dispatch(setCredentials({ ...userData }));
         navigate("/");
       } catch (err) {
-        if (!err?.originalStatus) {
-          // isLoading: true until timeout occurs
-          setErrMsg("No Server Response");
-        } else if (err.originalStatus === 400) {
-          setErrMsg("Missing Username or Password");
-        } else if (err.originalStatus === 401) {
-          setErrMsg("Unauthorized");
-        } else {
-          setErrMsg("Login Failed");
-        }
+        console.log(err);
       }
     },
     validationSchema: schema,
@@ -61,68 +43,64 @@ function Basic() {
 
   return (
     <BasicLayout image={bgImage}>
-      <Card>
-        <MDBox
-          variant="gradient"
-          bgColor="info"
-          borderRadius="lg"
-          coloredShadow="info"
-          mx={2}
-          mt={-3}
-          p={2}
-          mb={1}
-          textAlign="center"
+      <Box
+        sx={{
+          border: "1px solid #666",
+          borderRadius: "10px",
+          backgroundColor: "#f1f1f1",
+          width: `${matches ? "100%" : "95%"}`,
+        }}
+      >
+        <Typography
+          sx={{ textAlign: "center", marginTop: "40px", letterSpacing: "4px", fontSize: "22px" }}
         >
-          <MDTypography variant="h4" fontWeight="medium" color="white" mt={1}>
-            Sign in
-          </MDTypography>
-          <Grid container spacing={3} justifyContent="center" sx={{ mt: 1, mb: 2 }}>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <FacebookIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GitHubIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-            <Grid item xs={2}>
-              <MDTypography component={MuiLink} href="#" variant="body1" color="white">
-                <GoogleIcon color="inherit" />
-              </MDTypography>
-            </Grid>
-          </Grid>
-        </MDBox>
+          INGRESAR
+        </Typography>
+
         <MDBox pt={4} pb={3} px={3}>
           {/* form */}
           <Box component="form" noValidate onSubmit={formik.handleSubmit} sx={{ mt: 1 }}>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              error={!!formik.errors.email}
-              helperText={formik.errors.email}
-              onChange={formik.handleChange}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              error={!!formik.errors.password}
-              helperText={formik.errors.password}
-              onChange={formik.handleChange}
-            />
+            <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <img
+                src="https://ik.imagekit.io/mrprwema7/user_OkKLt0tst.png?updatedAt=1688138561573"
+                alt="icono usuario"
+                style={{ width: "30px", height: "30px" }}
+              />
+
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                error={!!formik.errors.email}
+                helperText={formik.errors.email}
+                onChange={formik.handleChange}
+              />
+            </Box>
+            <Box sx={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <img
+                src="https://ik.imagekit.io/mrprwema7/password_sMXDhy2rr.png?updatedAt=1688138561435"
+                alt="icono password"
+                style={{ width: "30px", height: "30px" }}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                error={!!formik.errors.password}
+                helperText={formik.errors.password}
+                onChange={formik.handleChange}
+              />
+            </Box>
 
             <LoadingButton
               type="submit"
@@ -135,33 +113,17 @@ function Basic() {
                 color: "#fff",
               }}
             >
-              Ingresar
+              Enviar
             </LoadingButton>
-            {errMsg && <p style={{ color: "red" }}>{errMsg}</p>}
+            {isError && (
+              <Alert severity="warning">{error.data?.msg || "Ha ocurrido un error"}</Alert>
+            )}
           </Box>
           {/* form */}
         </MDBox>
-      </Card>
+      </Box>
     </BasicLayout>
   );
 }
 
 export default Basic;
-
-/*  <MDBox display="flex" alignItems="center" ml={-1}>
-              <Switch checked={rememberMe} onChange={handleSetRememberMe} />
-              <MDTypography
-                variant="button"
-                fontWeight="regular"
-                color="text"
-                onClick={handleSetRememberMe}
-                sx={{ cursor: "pointer", userSelect: "none", ml: -1 }}
-              >
-                &nbsp;&nbsp;Recuerdame
-              </MDTypography>
-            </MDBox>
-            <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                Ingresar
-              </MDButton>
-            </MDBox> */

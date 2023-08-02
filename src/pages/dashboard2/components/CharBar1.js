@@ -121,7 +121,7 @@ function CharBar1({ ordersByDays }) {
           () => (
             <MDBox
               variant="gradient"
-              bgColor="info"
+              bgColor="secondary"
               borderRadius="lg"
               coloredShadow="info"
               py={2}

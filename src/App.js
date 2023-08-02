@@ -28,7 +28,6 @@ import themeDarkRTL from "assets/theme-dark/theme-rtl";
 import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
-import SignIn from "layouts/authentication/sign-in";
 
 // Material Dashboard 2 React routes
 import routes from "routes";
@@ -37,9 +36,10 @@ import routes from "routes";
 import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "context";
 
 // Images
-import brandWhite from "assets/images/logo-ct.png";
+import brandWhite from "assets/images/logo.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 import PersistLogin from "router/PersistRoute";
+import SignIn from "layouts/authentication/sign-in";
 
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();

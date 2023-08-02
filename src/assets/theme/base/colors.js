@@ -1,24 +1,3 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-/**
- * The base colors for the Material Dashboard 2 PRO React.
- * You can add new color using this file.
- * You can customized the colors for the entire Material Dashboard 2 PRO React using thie file.
- */
-
 const colors = {
   background: {
     default: "#f0f2f5",
@@ -55,9 +34,13 @@ const colors = {
   },
 
   info: {
+    main: "#ee1702",
+    focus: "#f65f53",
+  },
+  /* info: {
     main: "#1A73E8",
     focus: "#1662C4",
-  },
+  }, */
 
   success: {
     main: "#4CAF50",
@@ -70,8 +53,8 @@ const colors = {
   },
 
   error: {
-    main: "#F44335",
-    focus: "#f65f53",
+    main: "#9b0404",
+    focus: "#9b0404",
   },
 
   light: {
@@ -107,9 +90,13 @@ const colors = {
       state: "#495361",
     },
 
-    info: {
+    /*  info: {
       main: "#49a3f1",
       state: "#1A73E8",
+    }, */
+    info: {
+      main: "#cb1403",
+      state: "#ee1702", // #ee1702
     },
 
     success: {
@@ -123,8 +110,8 @@ const colors = {
     },
 
     error: {
-      main: "#EF5350",
-      state: "#E53935",
+      main: "#49a3f1",
+      state: "#1A73E8",
     },
 
     light: {
@@ -245,10 +232,11 @@ const colors = {
   coloredShadows: {
     primary: "#e91e62",
     secondary: "#110e0e",
-    info: "#00bbd4",
+    info: "#ee1702",
+    /*  info: "#00bbd4", */
     success: "#4caf4f",
     warning: "#ff9900",
-    error: "#f44336",
+    error: "#00bbd4",
     light: "#adb5bd",
     dark: "#404040",
   },
