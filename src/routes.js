@@ -2,7 +2,6 @@ import CreateNewUser from "pages/users/new-user";
 import EditUser from "pages/users/edit-user";
 import ListUsers from "pages/users/list-users";
 import CreateProduct from "pages/products/product-create";
-import EditProduct from "pages/products/product-edit";
 import ListOferts from "pages/oferts/oferts-list";
 import CreateOfert from "pages/oferts/ofert-create";
 import EditOfert from "pages/oferts/ofert-edit";
@@ -53,6 +52,7 @@ import Dashboard3 from "pages/dashboard3";
 import Products from "pages/products";
 import NewCategory from "pages/products/category-create";
 import EditCategory from "pages/products/category-edit";
+import ProductDetail from "pages/products/pruduct-detail";
 
 const routes = [
   {
@@ -132,10 +132,10 @@ const routes = [
     ),
   },
   {
-    route: "/productos/editar/:id",
+    route: "/productos/detalle/:id",
     component: (
       <RequireAuth>
-        <EditProduct />
+        <ProductDetail />
       </RequireAuth>
     ),
   },

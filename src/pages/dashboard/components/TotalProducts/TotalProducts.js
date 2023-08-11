@@ -64,7 +64,7 @@ function TotalProducts({ totalProducts }) {
           >
             <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "50%" }}>
               <Avatar src={product?.img} />
-              <Link to={`/productos/editar/${product?.productId}`}>
+              <Link to={`/productos/detalle/${product?.productId}`}>
                 <MDTypography variant="body2">{product.name}</MDTypography>
               </Link>
             </MDBox>
