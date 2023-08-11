@@ -9,15 +9,11 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import MDButton from "components/MDButton";
 import colors from "assets/theme-dark/base/colors";
 import { useMaterialUIController } from "context";
-import CheckIcon from "@mui/icons-material/Check";
-import CloseIcon from "@mui/icons-material/Close";
-
 import MenuListUsers from "./MenuListUsers";
 
-function TableListProducts({ products }) {
+function TableListCategories({ categories }) {
   const [controller] = useMaterialUIController();
   const { darkMode } = controller;
-  const listProducts = products.products;
 
   const navigate = useNavigate();
   const [open, setOpen] = useState(null);
@@ -47,74 +43,18 @@ function TableListProducts({ products }) {
     {
       field: "name",
       headerName: "Nombre",
-      flex: 3,
+      flex: 1,
       cellClassName: "name-column--cell",
       headerClassName: "super-app-theme--header",
     },
 
     {
-      field: "brand",
-      headerName: "Marca",
-      flex: 1.4,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "unit",
-      headerName: "Unidad",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "category",
-      headerName: "Categoria",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-    },
-    {
-      field: "type",
-      headerName: "Tipo",
+      field: "_id",
+      headerName: "ID",
       flex: 1,
       headerClassName: "super-app-theme--header",
     },
 
-    {
-      field: "available",
-      headerName: "Disponible",
-      flex: 1,
-      headerClassName: "super-app-theme--header",
-      renderCell: (params) =>
-        params.row.available ? (
-          <div
-            style={{
-              height: "30px",
-              width: "30px",
-              borderRadius: "50%",
-              backgroundColor: "green",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            <CheckIcon />
-          </div>
-        ) : (
-          <div
-            style={{
-              height: "30px",
-              width: "30px",
-              borderRadius: "50%",
-              backgroundColor: "red",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-            }}
-          >
-            <CloseIcon />
-          </div>
-        ),
-    },
     {
       field: "accessLevel",
       headerName: "Menu",
@@ -132,8 +72,12 @@ function TableListProducts({ products }) {
     <>
       <Box m="20px">
         <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <MDButton color="dark" variant="gradient" onClick={() => navigate("/productos/nuevo")}>
-            Nuevo producto
+          <MDButton
+            color="dark"
+            variant="gradient"
+            onClick={() => navigate("/productos/categoria/nueva")}
+          >
+            Nueva categoria
           </MDButton>
         </Stack>
         <Box m="40px 0 0 0" height="75vh">
@@ -141,19 +85,7 @@ function TableListProducts({ products }) {
             checkboxSelection
             disableSelectionOnClick
             components={{ Toolbar: GridToolbar }}
-            rows={listProducts.map((product) => ({
-              _id: product._id,
-              img:
-                product.img ||
-                "https://ik.imagekit.io/mrprwema7/No_image_available.svg_f8oa-E8hq.png?ik-sdk-version=javascript-1.4.3&updatedAt=1669124011945",
-              name: product.name,
-              brand: product.brand,
-              unit: product.unit,
-              category: product?.category?.name,
-              type: product.type,
-              available: product.available,
-              description: product.description,
-            }))}
+            rows={categories}
             columns={columns}
             getRowId={(row) => row._id}
             sx={{
@@ -192,9 +124,9 @@ function TableListProducts({ products }) {
         </Box>
       </Box>
 
-      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} productId={productId} />
+      <MenuListUsers open={open} handleCloseMenu={handleCloseMenu} categoryId={productId} />
     </>
   );
 }
 
-export default TableListProducts;
+export default TableListCategories;

@@ -1,7 +1,6 @@
 import CreateNewUser from "pages/users/new-user";
 import EditUser from "pages/users/edit-user";
 import ListUsers from "pages/users/list-users";
-import ListProducts from "pages/products/products-list";
 import CreateProduct from "pages/products/product-create";
 import EditProduct from "pages/products/product-edit";
 import ListOferts from "pages/oferts/oferts-list";
@@ -51,6 +50,9 @@ import StockMain from "pages/productsLots";
 import ResetPoints from "pages/resetPoints";
 import LocationsPage from "pages/locations";
 import Dashboard3 from "pages/dashboard3";
+import Products from "pages/products";
+import NewCategory from "pages/products/category-create";
+import EditCategory from "pages/products/category-edit";
 
 const routes = [
   {
@@ -114,10 +116,10 @@ const routes = [
   /* Productos */
 
   {
-    route: "/productos/lista",
+    route: "/productos",
     component: (
       <RequireAuth>
-        <ListProducts />
+        <Products />
       </RequireAuth>
     ),
   },
@@ -134,6 +136,22 @@ const routes = [
     component: (
       <RequireAuth>
         <EditProduct />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/productos/categoria/nueva",
+    component: (
+      <RequireAuth>
+        <NewCategory />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/productos/categoria/editar/:id",
+    component: (
+      <RequireAuth>
+        <EditCategory />
       </RequireAuth>
     ),
   },

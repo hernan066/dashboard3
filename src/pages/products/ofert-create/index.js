@@ -1,17 +1,20 @@
-/* eslint-disable prettier/prettier */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
+
+// Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+
+// Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
+import { useGetProductsQuery } from "api/productApi";
+
 import Loading from "components/DRLoading";
 import { Alert } from "@mui/material";
-import { useGetProductsQuery } from "api/productApi";
-import TableListProducts from "./TableListProducts";
+import OfertCreate from "./OfertCreate";
 
-
-function ListProducts() {
+function CreateOfert() {
   const { data: listProducts, isLoading, error } = useGetProductsQuery();
 
   return (
@@ -32,13 +35,13 @@ function ListProducts() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Lista de Productos
+                  Crear nueva oferta
                 </MDTypography>
               </MDBox>
-              <MDBox pt={3}>
+              <MDBox>
                 {isLoading && <Loading />}
                 {error && <Alert severity="error">{error.error}</Alert>}
-                {listProducts && <TableListProducts products={listProducts} />}
+                {listProducts && <OfertCreate listProducts={listProducts} />}
               </MDBox>
             </Card>
           </Grid>
@@ -48,4 +51,4 @@ function ListProducts() {
   );
 }
 
-export default ListProducts;
+export default CreateOfert;

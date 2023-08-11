@@ -1,0 +1,154 @@
+@import url(https://fonts.googleapis.com/css?family=Satisfy);
+@import url(https://fonts.googleapis.com/css?family=Acme);
+
+.box-wrapper {
+  background-color: #fff;
+  overflow: hidden;
+  width: 320px;
+  box-shadow: 0px 5px 43px rgba(0, 0, 0, 0.48);
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+}
+.box-wrapper img {
+  max-width: 100%;
+  background-color: #ebebeb;
+  filter: drop-shadow(0px 5px 8px rgba(9, 0, 0, 0.545));
+  flex: 0.7;
+}
+.box-wrapper .success {
+  position: absolute;
+  top: 50%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  z-index: 999;
+}
+.expanded .box-wrapper .success {
+  opacity: 1;
+  transition: opacity 0.3s 0.6s;
+}
+.box-wrapper .success:before,
+.box-wrapper .success:after {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: #fff;
+}
+.box-wrapper .success:before {
+  width: 40px;
+  height: 20px;
+  transform: rotate(45deg);
+}
+.box-wrapper .success:after {
+  width: 88px;
+  height: 20px;
+  transform: rotate(-45deg);
+  top: -16px;
+  left: 8px;
+}
+
+.title {
+  font-size: 1.5em;
+  line-height: 30px;
+  letter-spacing: 2px;
+  font-weight: 900;
+  *text-transform: uppercase;
+  margin: 0;
+  font-family: "Acme", sans-serif;
+  margin-bottom: 20px;
+}
+
+.desc {
+  font-family: var(--font-2);
+  font-size: 15px;
+}
+
+.box-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.box-content:before {
+  content: "";
+  width: 200%;
+  height: 100px;
+  position: absolute;
+  display: block;
+  background-color: #fff;
+  transform: rotate(-8deg);
+  top: -50px;
+  left: -10%;
+  z-index: -1;
+}
+.box-content .buy {
+  display: block;
+  top: -80px;
+  right: 30px;
+  z-index: 2;
+  width: 70px;
+  height: 70px;
+  position: absolute;
+}
+.box-content .buy span {
+  width: 70px;
+  height: 70px;
+  background-color: #ff0700;
+  display: block;
+  border-radius: 50%;
+  position: absolute;
+  font-size: 36px;
+  color: #fff;
+  transition: all 0.3s ease;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+}
+.box-content .buy span i {
+  padding: 15px;
+}
+.expanded .box-content .buy span {
+  width: 750px;
+  height: 750px;
+}
+.expanded .box-content .buy span i {
+  display: none;
+}
+.box-content .price {
+  font-size: 2em;
+  font-weight: 900;
+  display: block;
+  width: 100px;
+  margin: 20px auto 0;
+  position: relative;
+  font-family: "Satisfy", cursive;
+}
+.box-content .price:after,
+.box-content .price:before {
+  content: "";
+  height: 1px;
+  width: 50px;
+  display: block;
+  position: absolute;
+  background-color: #ddd;
+  top: 18px;
+}
+.box-content .price:before {
+  left: -50px;
+}
+.box-content .price:after {
+  right: -50px;
+}
+.box-content .footer ul {
+  list-style: none;
+  padding: 0;
+  margin: 1em 0;
+}
+.box-content .footer ul li {
+  color: #efd829;
+}

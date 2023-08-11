@@ -40,9 +40,9 @@ export const menuList = [
     key: "productos",
     subRoutes: [
       {
-        name: "Lista productos",
+        name: "Productos",
         icon: "format_list_bulleted_icon",
-        url: "/productos/lista",
+        url: "/productos",
       },
       {
         name: "Proveedores",
@@ -53,11 +53,6 @@ export const menuList = [
         name: "Stock",
         icon: "list_alt",
         url: "/productos/stock/lista",
-      },
-      {
-        name: "Ofertas (web)",
-        icon: "loyalty",
-        url: "/productos/ofertas/lista",
       },
     ],
   },
