@@ -44,7 +44,7 @@ function Dashboard1() {
 
   useEffect(() => {
     const getData = async () => {
-      const from = new Date(new Date().setDate(new Date().getDate() - 31));
+      const from = new Date(new Date().setDate(new Date().getDate() - 16));
       const to = new Date();
 
       const { data } = await getTotalSellByRangeDay({ from, to }).unwrap();
