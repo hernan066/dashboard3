@@ -160,17 +160,21 @@ function DashboardTotals({
       </Grid>
       <MDBox mt={4.5}>
         <Grid container spacing={3}>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <MDBox mb={3}>
               <CharBar1 ordersByDays={ordersByDays} />
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+          <Grid item xs={12} md={6} lg={6}>
             <MDBox mb={3}>
               <CharBar2 reports={reports} />
             </MDBox>
           </Grid>
-          <Grid item xs={12} md={6} lg={4}>
+        </Grid>
+      </MDBox>
+      <MDBox mt={4.5}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={12} lg={12}>
             <MDBox mb={3}>
               <CharBar3 reports={dataOrdersByMonth} />
             </MDBox>

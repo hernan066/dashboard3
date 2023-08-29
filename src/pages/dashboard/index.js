@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import Footer from "examples/Footer";
+
 import { useGetOrdersByDaysQuery } from "api/orderApi";
 import { useGetClientsQuery } from "api/clientsApi";
 import Loading from "components/DRLoading";
@@ -44,7 +44,7 @@ function Dashboard1() {
 
   useEffect(() => {
     const getData = async () => {
-      const from = new Date(new Date().setDate(new Date().getDate() - 16));
+      const from = new Date(new Date().setDate(new Date().getDate() - 31));
       const to = new Date();
 
       const { data } = await getTotalSellByRangeDay({ from, to }).unwrap();
@@ -53,8 +53,6 @@ function Dashboard1() {
     };
     getData();
   }, []);
-
-  console.log(dataCategory);
 
   return (
     <DashboardLayout>

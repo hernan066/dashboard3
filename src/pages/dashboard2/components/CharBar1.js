@@ -123,7 +123,7 @@ function CharBar1({ ordersByDays }) {
               variant="gradient"
               bgColor="secondary"
               borderRadius="lg"
-              coloredShadow="info"
+              coloredShadow="dark"
               py={2}
               pr={0.5}
               mt={-5}

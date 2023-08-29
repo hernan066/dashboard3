@@ -85,7 +85,6 @@ export const options = {
 };
 
 function CharBar2({ reports }) {
-  console.log(reports);
   const arr = reports
     .map((item) => ({
       date: new Date(item.date),
@@ -117,7 +116,7 @@ function CharBar2({ reports }) {
               variant="gradient"
               bgColor="success"
               borderRadius="lg"
-              coloredShadow="info"
+              coloredShadow="dark"
               py={2}
               pr={0.5}
               mt={-5}
@@ -133,7 +132,7 @@ function CharBar2({ reports }) {
             Ganancias
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
-            Total de los últimos 14 días.
+            Total de los últimos 30 días.
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">
