@@ -4,10 +4,13 @@
 import { Avatar, Divider } from "@mui/material";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { Link, createSearchParams, useParams } from "react-router-dom";
 import { formatPrice } from "utils/formaPrice";
 import { formatQuantity } from "utils/quantityFormat";
 
 export function TopProductsBuy({ listTopProducts }) {
+  const { id } = useParams();
+  console.log(listTopProducts);
   return (
     <MDBox mb={5} sx={{ flex: 1, border: "1px solid #ccc", borderRadius: 1, padding: 2 }}>
       <MDTypography variant="h5">Top productos comprados</MDTypography>
@@ -62,29 +65,38 @@ export function TopProductsBuy({ listTopProducts }) {
       </MDBox>
 
       {listTopProducts.map((product) => (
-        <MDBox
-          mb={1}
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
+        <Link
+          to={{
+            pathname: `/clientes/detalle/producto/${product.productId}`,
+            search: `?${createSearchParams({
+              cliente: `${id}`,
+            })}`,
           }}
         >
-          <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "35%" }}>
-            <Avatar src={product.img} />
-            <MDTypography variant="body2">{product.name}</MDTypography>
-          </MDBox>
+          <MDBox
+            mb={1}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <MDBox sx={{ display: "flex", gap: 3, alignItems: "center", width: "35%" }}>
+              <Avatar src={product.img} />
+              <MDTypography variant="body2">{product.name}</MDTypography>
+            </MDBox>
 
-          <MDTypography variant="body2" sx={{ width: "35%", textAlign: "center" }}>
-            {product.description}
-          </MDTypography>
-          <MDTypography variant="h6" sx={{ width: "15%", textAlign: "center" }}>
-            {formatQuantity(product.totalQuantity)}
-          </MDTypography>
-          <MDTypography variant="h6" mr={1} sx={{ width: "15%", textAlign: "right" }}>
-            {formatPrice(product.totalPrice)}
-          </MDTypography>
-        </MDBox>
+            <MDTypography variant="body2" sx={{ width: "35%", textAlign: "center" }}>
+              {product.description}
+            </MDTypography>
+            <MDTypography variant="h6" sx={{ width: "15%", textAlign: "center" }}>
+              {formatQuantity(product.totalQuantity)}
+            </MDTypography>
+            <MDTypography variant="h6" mr={1} sx={{ width: "15%", textAlign: "right" }}>
+              {formatPrice(product.totalPrice)}
+            </MDTypography>
+          </MDBox>
+        </Link>
       ))}
     </MDBox>
   );

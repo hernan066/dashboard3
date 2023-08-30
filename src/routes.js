@@ -53,6 +53,7 @@ import Products from "pages/products";
 import NewCategory from "pages/products/category-create";
 import EditCategory from "pages/products/category-edit";
 import ProductDetail from "pages/products/pruduct-detail";
+import DetailClientProduct from "pages/clients/details-clients-products";
 
 const routes = [
   {
@@ -281,6 +282,14 @@ const routes = [
     component: (
       <RequireAuth>
         <DetailsClients />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/clientes/detalle/producto/:id",
+    component: (
+      <RequireAuth>
+        <DetailClientProduct />
       </RequireAuth>
     ),
   },

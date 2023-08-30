@@ -71,14 +71,15 @@ export const userApi = apiSlice.injectEndpoints({
       providesTags: ["reports"],
     }),
     getTotalIndividualProduct: builder.query({
-      query: (id) => `/reports/totalIndividualProduct/${id}`,
+      query: ({ id, client = "" }) => `/reports/totalIndividualProduct/${id}?client=${client}`,
 
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },
       providesTags: ["reports"],
     }),
     getTotalIndividualProductLast30Days: builder.query({
-      query: (id) => `/reports/totalIndividualProductLast30days/${id}`,
+      query: ({ id, client = "" }) =>
+        `/reports/totalIndividualProductLast30days/${id}?client=${client}`,
 
       // keepUnusedDataFor: 3,
       extraOptions: { maxRetries: 5 },

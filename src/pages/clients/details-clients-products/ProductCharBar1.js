@@ -1,32 +1,26 @@
-/* eslint-disable no-unreachable-loop */
-/* eslint-disable array-callback-return */
-/* eslint-disable no-plusplus */
-/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
 import { useMemo } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Icon from "@mui/material/Icon";
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
 import { dateToLocalDate } from "utils/dateFormat";
-import { arrLastXdays } from "utils/arrLastXdays";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const options = {
+export const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -90,34 +84,48 @@ const options = {
   },
 };
 
-function ClientChart1({ dataClientBuyByDay }) {
-  const labels = arrLastXdays(30);
+function ProductCharBar1({ reports }) {
+  console.log(reports);
 
-  const finalData = labels.map((day) => {
-    for (let i = 0; i < dataClientBuyByDay.length; i++) {
-      if (day === dataClientBuyByDay[i].date) {
-        return {
-          ...dataClientBuyByDay[i],
-        };
-      }
-    }
-    return {
-      ...dataClientBuyByDay[0],
-      date: day,
-      totalCost: 0,
-      totalBuy: 0,
-      totalProfits: 0,
-    };
-  });
+  const arr = reports
+    .map((item) => ({
+      date: new Date(item.date),
+      totalProfit: item.totalProfits,
+    }))
+    .sort((a, b) => a.date - b.date);
+
+  // const info = getChartData(ordersByDays);
+
+  const labels = ["Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"];
+  const totalSell = reports.map((item) => item.total);
+  const totalCost = reports.map((item) => item.totalCost);
+  const totalProfits = reports.map((item) => item.totalProfits);
+  const totalProfitsPercentage = reports.map((item) => (item.totalProfits * 100) / item.totalCost);
+
+  console.log(totalProfitsPercentage);
 
   const data = {
     labels,
     datasets: [
       {
-        label: "Total comprado",
-        data: finalData.map((d) => d.totalBuy),
-        borderColor: "rgb(255, 255, 255)",
-        backgroundColor: "rgba(255, 255, 255, 0.5)",
+        label: "Ventas",
+        data: totalSell,
+        backgroundColor: "rgba(3, 202, 252, 0.8)",
+      },
+      {
+        label: "Costo",
+        data: totalCost,
+        backgroundColor: "rgba(230, 18, 18, 0.7)",
+      },
+      {
+        label: "Ganancia",
+        data: totalProfits,
+        backgroundColor: "rgba(85, 230, 18, 0.7)",
+      },
+      {
+        label: "Ganancia%",
+        data: totalProfitsPercentage,
+        backgroundColor: "rgba(3, 252, 157, 0.7)",
       },
     ],
   };
@@ -128,25 +136,25 @@ function ClientChart1({ dataClientBuyByDay }) {
           () => (
             <MDBox
               variant="gradient"
-              bgColor="success"
+              bgColor="secondary"
               borderRadius="lg"
-              coloredShadow="info"
+              coloredShadow="dark"
               py={2}
               pr={0.5}
               mt={-5}
               /* height="16rem" */
             >
-              <Line options={options} data={data} />
+              <Bar options={options} data={data} />
             </MDBox>
           ),
           []
         )}
         <MDBox pt={3} pb={1} px={1}>
           <MDTypography variant="h6" textTransform="capitalize">
-            Gráfico de compras
+            Totales mensuales
           </MDTypography>
           <MDTypography component="div" variant="button" color="text" fontWeight="light">
-            Total de los últimos 30 días.
+            Total desde el 21/03/2023
           </MDTypography>
           <Divider />
           <MDBox display="flex" alignItems="center">
@@ -163,4 +171,4 @@ function ClientChart1({ dataClientBuyByDay }) {
   );
 }
 
-export default ClientChart1;
+export default ProductCharBar1;

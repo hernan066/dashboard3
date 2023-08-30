@@ -43,12 +43,12 @@ function EditProduct() {
     data: totalProductSell,
     isLoading: l5,
     error: e5,
-  } = useGetTotalIndividualProductQuery(id);
+  } = useGetTotalIndividualProductQuery({ id });
   const {
     data: totalProductSellLast30Days,
     isLoading: l6,
     error: e6,
-  } = useGetTotalIndividualProductLast30DaysQuery(id);
+  } = useGetTotalIndividualProductLast30DaysQuery({ id });
 
   return (
     <DashboardLayout>
