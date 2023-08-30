@@ -1,3 +1,5 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
@@ -85,22 +87,54 @@ export const options = {
 };
 
 function ProductCharBar1({ reports }) {
-  console.log(reports);
+  // Crear un objeto para almacenar las ventas por mes
+  const salesForMonth = {};
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  // Llenar el objeto con las ventas existentes
+  for (const report of reports) {
+    salesForMonth[report.month] = {
+      totalCost: report.totalCost,
+      totalProfits: report.totalProfits,
+      total: report.total,
+      year: report.year,
+    };
+  }
+  for (const month of months) {
+    if (!salesForMonth.hasOwnProperty(month)) {
+      salesForMonth[month] = {
+        totalCost: 0,
+        totalProfits: 0,
+        total: 0,
+        year: 0,
+      };
+    }
+  }
 
-  const arr = reports
-    .map((item) => ({
-      date: new Date(item.date),
-      totalProfit: item.totalProfits,
-    }))
-    .sort((a, b) => a.date - b.date);
+  const oneYearSales = months.map((month) => ({
+    month,
+    ...salesForMonth[month],
+  }));
 
-  // const info = getChartData(ordersByDays);
-
-  const labels = ["Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"];
-  const totalSell = reports.map((item) => item.total);
-  const totalCost = reports.map((item) => item.totalCost);
-  const totalProfits = reports.map((item) => item.totalProfits);
-  const totalProfitsPercentage = reports.map((item) => (item.totalProfits * 100) / item.totalCost);
+  const labels = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  const totalSell = oneYearSales.map((item) => item.total);
+  const totalCost = oneYearSales.map((item) => item.totalCost);
+  const totalProfits = oneYearSales.map((item) => item.totalProfits);
+  const totalProfitsPercentage = oneYearSales.map(
+    (item) => (item.totalProfits * 100) / item.totalCost
+  );
 
   console.log(totalProfitsPercentage);
 

@@ -127,6 +127,7 @@ function CharBar3({ reports }) {
     "Julio",
     "Agosto",
     "Septiembre",
+    "Octubre",
     "Noviembre",
     "Diciembre",
   ];

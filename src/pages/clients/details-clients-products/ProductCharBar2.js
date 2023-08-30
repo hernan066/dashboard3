@@ -1,3 +1,5 @@
+/* eslint-disable no-prototype-builtins */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
@@ -87,17 +89,43 @@ export const options = {
 function ProductCharBar2({ reports }) {
   console.log(reports);
 
-  const arr = reports
-    .map((item) => ({
-      date: new Date(item.date),
-      totalProfit: item.totalProfits,
-    }))
-    .sort((a, b) => a.date - b.date);
+  // Crear un objeto para almacenar las ventas por mes
+  const salesForMonth = {};
+  const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  // Llenar el objeto con las ventas existentes
+  for (const report of reports) {
+    salesForMonth[report.month] = {
+      count: report.count,
+    };
+  }
+  for (const month of months) {
+    if (!salesForMonth.hasOwnProperty(month)) {
+      salesForMonth[month] = {
+        count: 0,
+      };
+    }
+  }
 
-  // const info = getChartData(ordersByDays);
+  const oneYearSales = months.map((month) => ({
+    month,
+    ...salesForMonth[month],
+  }));
 
-  const labels = ["Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto"];
-  const totalSell = reports.map((item) => item.count);
+  const labels = [
+    "Enero",
+    "Febrero",
+    "Marzo",
+    "Abril",
+    "Mayo",
+    "Junio",
+    "Julio",
+    "Agosto",
+    "Septiembre",
+    "Octubre",
+    "Noviembre",
+    "Diciembre",
+  ];
+  const totalSell = oneYearSales.map((item) => item.count);
 
   const data = {
     labels,
