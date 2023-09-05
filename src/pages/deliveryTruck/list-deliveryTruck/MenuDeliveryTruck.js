@@ -61,7 +61,7 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
       PaperProps={{
         sx: {
           p: 1,
-          width: 120,
+          width: 190,
           zIndex: 20,
           "& .MuiMenuItem-root": {
             px: 1,
@@ -71,14 +71,19 @@ function MenuDeliveryTruck({ open, handleCloseMenu, menuId }) {
         },
       }}
     >
+      <MenuItem onClick={() => navigate(`/distribucion/repartidores/detalle/${menuId}`)}>
+        <EditIcon sx={{ mr: 1 }} />
+        Ver Repartidor
+      </MenuItem>
+
       <MenuItem onClick={() => navigate(`/distribucion/repartidores/editar/${menuId}`)}>
         <EditIcon sx={{ mr: 1 }} />
-        Edit
+        Editar Repartidor
       </MenuItem>
 
       <MenuItem sx={{ color: "error.main" }} onClick={handlerDelete}>
         <DeleteIcon sx={{ mr: 1 }} />
-        Delete
+        Borrar repartidor
       </MenuItem>
     </Popover>
   );

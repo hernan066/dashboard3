@@ -54,6 +54,7 @@ import NewCategory from "pages/products/category-create";
 import EditCategory from "pages/products/category-edit";
 import ProductDetail from "pages/products/pruduct-detail";
 import DetailClientProduct from "pages/clients/details-clients-products";
+import DetailsDeliveryTruck from "pages/deliveryTruck/details-deliveryTruck";
 
 const routes = [
   {
@@ -484,6 +485,14 @@ const routes = [
     component: (
       <RequireAuth>
         <EditDeliveryTruck />
+      </RequireAuth>
+    ),
+  },
+  {
+    route: "/distribucion/repartidores/detalle/:id",
+    component: (
+      <RequireAuth>
+        <DetailsDeliveryTruck />
       </RequireAuth>
     ),
   },

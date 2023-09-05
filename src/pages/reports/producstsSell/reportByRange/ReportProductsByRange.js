@@ -66,8 +66,6 @@ function ReportProductsByRange() {
     setSellZones(res4.data.zones);
   };
 
-  console.log(sellZones);
-
   if (e1 || e2 || e3 || e4) {
     return <Alert severity="error">Ha ocurrido un error</Alert>;
   }
