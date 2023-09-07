@@ -10,15 +10,18 @@ import { Link } from "react-router-dom";
 
 function TotalClientsProfits({ clients }) {
   const sliceClients = clients
+    .filter((client) => client.name !== "consumidor " && client.name !== "Caleb" && !client.active)
     .slice(0, 13)
-    .filter((client) => client.name !== "consumidor " && client.name !== "Caleb")
     .sort((a, b) => b.totalProfits - a.totalProfits);
   return (
     <Card>
       <MDBox sx={{ flex: 1, padding: 3 }}>
-        <MDTypography variant="h6"> Top 12 Clientes que dejan mas ganancia</MDTypography>
+        <MDTypography variant="h6">
+          {" "}
+          Top 12 Clientes <span style={{ color: "red" }}>Inactivos</span> con mas ganancia
+        </MDTypography>
         <MDTypography variant="button" fontWeight="regular" color="text">
-          Desde el 21/03/2023
+          Ultima compra hace más de 20 días.
         </MDTypography>
         <Divider />
 

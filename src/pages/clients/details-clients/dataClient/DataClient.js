@@ -41,6 +41,12 @@ export function DataClient({ client }) {
         <MDTypography variant="h6">Categoría de cliente: </MDTypography>
         <MDTypography variant="body2">{client.clientCategory.clientCategory}</MDTypography>
       </MDBox>
+      <MDBox sx={{ display: "flex", gap: 2, justifyContent: "space-between" }}>
+        <MDTypography variant="h6">Estado: </MDTypography>
+        <MDTypography variant="body2" sx={{ color: "blue", fontWeight: 800 }}>
+          {client?.active ? "ACTIVO" : "INACTIVO"}
+        </MDTypography>
+      </MDBox>
     </MDBox>
   );
 }

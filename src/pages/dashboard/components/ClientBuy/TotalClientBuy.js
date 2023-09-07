@@ -11,15 +11,19 @@ import { Link } from "react-router-dom";
 
 function TotalClientsBuy({ clients }) {
   const sliceClients = clients
+    .filter((client) => client.name !== "consumidor " && client.name !== "Caleb" && client.active)
     .slice(0, 13)
-    .filter((client) => client.name !== "consumidor " && client.name !== "Caleb");
+    .sort((a, b) => b.totalProfits - a.totalProfits);
 
   return (
     <Card>
       <MDBox sx={{ flex: 1, padding: 3 }}>
-        <MDTypography variant="h6"> Top 12 Clientes con más compras</MDTypography>
+        <MDTypography variant="h6">
+          {" "}
+          Top 12 Clientes <span style={{ color: "green" }}>Activos</span> con mas ganancia
+        </MDTypography>
         <MDTypography variant="button" fontWeight="regular" color="text">
-          Desde el 21/03/2023
+          Han comprado los últimos 20 días.
         </MDTypography>
         <Divider />
 
@@ -42,7 +46,7 @@ function TotalClientsBuy({ clients }) {
             </MDBox>
 
             <MDTypography variant="body2" mr={1} sx={{ width: "25%", textAlign: "right" }}>
-              {formatPrice(client?.totalBuy)}
+              {formatPrice(client?.totalProfits)}
             </MDTypography>
           </MDBox>
         ))}
