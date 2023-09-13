@@ -11,15 +11,18 @@ import Loading from "components/DRLoading";
 import { Alert, Box, Tab, Tabs } from "@mui/material";
 import { useGetClientsQuery } from "api/clientsApi";
 import { useGetReportTotalClientBuyQuery } from "api/reportApi";
+import { useGetConfigQuery } from "api/configApi";
 import TableListClients from "./TableListClient";
 import TotalClientsCards from "./TotalClientsCards";
 import TableListClientsActive from "./TableListClientActive";
 import TableListClientsInactive from "./TableListClientInactive";
+import Config from "./Config";
 
 function ListClients() {
   const { data: dataClients, isLoading: l1, isError: e1 } = useGetClientsQuery();
   const { data: dataClientsBuy, isLoading: l2, isError: e2 } = useGetReportTotalClientBuyQuery();
-  console.log(dataClientsBuy);
+  const { data: dataConfig, isLoading: l3, isError: e3 } = useGetConfigQuery();
+  console.log(dataConfig);
 
   const [page, setPage] = useState(0);
 
@@ -61,6 +64,7 @@ function ListClients() {
                 <Tab label="Lista de clientes" />
                 <Tab label="Clientes activos" />
                 <Tab label="Clientes inactivos" />
+                <Tab label="Configuración" />
               </Tabs>
             </Box>
             {page === 0 && (
@@ -104,6 +108,19 @@ function ListClients() {
                   {dataClientsBuy && (
                     <TableListClientsInactive clients={dataClientsBuy.data.report} />
                   )}
+                </Card>
+              </Box>
+            )}
+            {page === 3 && (
+              <Box
+                sx={{
+                  mt: 4,
+                }}
+              >
+                <Card sx={{ margin: "0 20px" }}>
+                  {l3 && <Loading />}
+                  {e3 && <Alert severity="error">Ha ocurrido un error</Alert>}
+                  {dataConfig && <Config config={dataConfig.config} />}
                 </Card>
               </Box>
             )}
