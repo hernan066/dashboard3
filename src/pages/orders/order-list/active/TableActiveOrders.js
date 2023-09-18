@@ -12,8 +12,11 @@ import { dateToLocalDate } from "utils/dateFormat";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { formatPrice } from "utils/formaPrice";
-import { useGetOrdersQuery } from "api/orderApi";
+import { useGetOrdersQuery, usePutOrderSetInactiveAllMutation } from "api/orderApi";
 import MenuTable from "pages/orders/componets/MenuTable";
+import { Stack } from "@mui/system";
+import Swal from "sweetalert2";
+import { LoadingButton } from "@mui/lab";
 
 const PAGE_SIZE = 10;
 
@@ -66,6 +69,8 @@ function TableActiveOrders() {
   const [orderActive, setOrderActive] = useState(null);
   const [orderPaid, setOrderPaid] = useState(null);
   const [clientId, setClientId] = useState(null);
+
+  const [setAllOrdersInactive, { isLoading, isError }] = usePutOrderSetInactiveAllMutation();
 
   const handleOpenMenu = (id, event, active, paid, cliId) => {
     setOpen(event.currentTarget);
@@ -340,6 +345,32 @@ function TableActiveOrders() {
     },
   ];
 
+  const handleActive = async () => {
+    const res = await setAllOrdersInactive().unwrap();
+    console.log(res);
+    if (res.ok) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Ordenes modificadas con éxito",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isError)
+      Swal.fire({
+        position: "center",
+        icon: "error",
+        title: "Error",
+        text: "Ha ocurrido un error",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+  }, [isError]);
+
   if (error) {
     return <Alert severity="error">Ha ocurrido un error</Alert>;
   }
@@ -347,6 +378,22 @@ function TableActiveOrders() {
   return (
     <>
       <Box m="20px" sx={{ overflowX: "scroll" }}>
+        <Stack direction="row" alignItems="center" mb={5}>
+          <LoadingButton
+            onClick={handleActive}
+            variant="contained"
+            loading={isLoading}
+            sx={{
+              mt: 3,
+              mb: 2,
+              mr: 2,
+              backgroundColor: `${colors.info.main}`,
+              color: "white !important",
+            }}
+          >
+            Cambiar todas las ordenes a inactivas
+          </LoadingButton>
+        </Stack>
         <Box m="40px 0 0 0" height="75vh" width="2300px">
           <DataGrid
             checkboxSelection

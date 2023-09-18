@@ -76,6 +76,14 @@ export const orderApi = apiSlice.injectEndpoints({
       invalidatesTags: ["orders"],
       extraOptions: { maxRetries: 0 },
     }),
+    putOrderSetInactiveAll: builder.mutation({
+      query: () => ({
+        url: `/orders/setAllOrdersToInactive`,
+        method: "put",
+      }),
+      invalidatesTags: ["orders"],
+      extraOptions: { maxRetries: 0 },
+    }),
 
     deleteOrder: builder.mutation({
       query: (id) => ({
@@ -98,5 +106,6 @@ export const {
   usePostOrderMutation,
   usePostOrderLocalMutation,
   usePutOrderMutation,
+  usePutOrderSetInactiveAllMutation,
   useDeleteOrderMutation,
 } = orderApi;
