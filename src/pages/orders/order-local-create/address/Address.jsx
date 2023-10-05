@@ -22,7 +22,7 @@ function Address({ clients, setPage }) {
   const handlerSearch = () => {
     const result = clients.filter((clientAddr) => {
       if (
-        clientAddr.cuit.toString().includes(search) ||
+        clientAddr.user.phone.toString().includes(search) ||
         clientAddr.user.name.toString().toLowerCase().includes(search.toLowerCase()) ||
         clientAddr.user.lastName.toString().toLowerCase().includes(search.toLowerCase())
       ) {
@@ -85,7 +85,7 @@ function Address({ clients, setPage }) {
               marginBottom: "20px",
             }}
           >
-            <MDTypography variant="body2">{`DNI/CUIT:  ${clientA.cuit} || Nombre: ${clientA.user.name} ${clientA.user.lastName}`}</MDTypography>
+            <MDTypography variant="body2">{`Teléfono:  ${clientA.user.phone} || Nombre: ${clientA.user.name} ${clientA.user.lastName}`}</MDTypography>
             <MDButton
               color="info"
               size="small"
